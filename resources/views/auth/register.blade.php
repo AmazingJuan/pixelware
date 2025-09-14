@@ -13,13 +13,13 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        {{-- Name --}}
+                        {{-- Username --}}
                         <div class="mb-3">
-                            <label for="name" class="form-label">@lang('Full Name')</label>
-                            <input id="name" type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   name="name" value="{{ old('name') }}" required autofocus>
-                            @error('name')
+                            <label for="username" class="form-label">@lang('Username')</label>
+                            <input id="username" type="text" 
+                                class="form-control @error('username') is-invalid @enderror" 
+                                name="username" value="{{ old('username') }}" required autofocus>
+                            @error('username')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>
