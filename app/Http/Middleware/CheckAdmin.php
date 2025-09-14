@@ -9,7 +9,7 @@ class CheckAdmin
 {
     public function handle(Request $request, Closure $next): mixed
     {
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
+        if (! auth()->check() || auth()->user()->role !== 'admin') {
             return redirect('/')->with('error', 'Access denied.');
         }
 

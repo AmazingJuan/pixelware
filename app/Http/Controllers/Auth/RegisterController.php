@@ -62,5 +62,4 @@ class RegisterController extends Controller
             'balance' => 0,
         ]);
     }
-
 }
