@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name') }}</title>
+    <title>{{ config('app.name') }} - Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
@@ -14,8 +14,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg shadow-sm" style="background-color:#1E3A8A;">
         <div class="container">
-            <a href="{{ route('home') }}" class="navbar-brand fw-bold text-light">
-                {{ config('app.name') }}
+            <a href="{{ route('admin.dashboard') }}" class="navbar-brand fw-bold text-light">
+                {{ config('app.name') }} - @lang('Admin Dashboard')
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -24,15 +24,6 @@
 
             <div id="navbarContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-
-                    @auth
-                        <li class="nav-item ms-3">
-                            <span class="nav-link text-warning fw-bold">
-                                @lang('Balance'): ${{ number_format(auth()->user()->getBalance(), 0, ',', '.') }}
-                            </span>
-                        </li>
-                    @endauth
-
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link text-light">@lang('app.navbar.home')</a>
                     </li>
@@ -52,9 +43,10 @@
                     @else
                         @if(auth()->user()->isAdmin())
                             <li class="nav-item">
-                                <a class="nav-link btn" style="background-color:#60A5FA; color:#1E3A8A; margin-left:0.5rem;"
+                                <a class="nav-link btn btn-sm"
+                                   style="background-color:#60A5FA; color:#1E3A8A; margin-left:0.5rem;"
                                    href="{{ route('admin.dashboard') }}">
-                                    Admin Dashboard
+                                    @lang('Admin Dashboard')
                                 </a>
                             </li>
                         @endif
@@ -71,6 +63,11 @@
             </div>
         </div>
     </nav>
+
+    <!-- Page Title -->
+    <header class="py-4 bg-secondary text-center text-light shadow-sm">
+        <h1 class="m-0">@yield('page-title', __('Admin Dashboard'))</h1>
+    </header>
 
     <!-- Main Content -->
     <main class="flex-grow-1 py-4">

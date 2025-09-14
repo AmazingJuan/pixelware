@@ -13,4 +13,5 @@ Route::prefix('products')->group(function (): void {
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
     Route::get('/', 'App\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard');
+    Route::resource('users', 'App\Http\Controllers\Admin\UserController'); // Added resource route for user management
 });
