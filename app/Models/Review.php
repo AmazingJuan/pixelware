@@ -1,10 +1,115 @@
 <?php
 
+/*
+ * Review.php
+ * Model for managing product reviews in the application.
+ * Author: Juan Avendaño
+*/
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Review extends Model
 {
-    //
+    /**
+     * Attributes:
+     *
+     * $this->attributes['id']         - int                        - Primary key identifier
+     * $this->attributes['comment']    - string                     - Review comment
+     * $this->attributes['rating']     - int                        - Review rating (1-5)
+     * $this->attributes['user_id']    - int                        - Reviewer user ID
+     * $this->attributes['product_id'] - int                        - Reviewed product ID
+     * $this->attributes['created_at'] - \Illuminate\Support\Carbon - Review creation timestamp
+     */
+    protected $fillable = [
+        'comment',
+        'rating',
+        'user_id',
+        'product_id',
+    ];
+
+    public $timestamps = false;
+
+    // Getters.
+
+    public function getId(): int
+    {
+        return $this->attributes['id'];
+    }
+
+    public function getComment(): string
+    {
+        return $this->attributes['comment'];
+    }
+
+    public function getRating(): int
+    {
+        return $this->attributes['rating'];
+    }
+
+    public function getUserId(): int
+    {
+        return $this->attributes['user_id'];
+    }
+
+    public function getProductId(): int
+    {
+        return $this->attributes['product_id'];
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    public function getCreatedAt(): Carbon
+    {
+        return Carbon::parse($this->attributes['created_at']);
+    }
+
+    // Setters.
+
+    public function setId(int $id): void
+    {
+        $this->attributes['id'] = $id;
+    }
+
+    public function setComment(string $comment): void
+    {
+        $this->attributes['comment'] = $comment;
+    }
+
+    public function setRating(int $rating): void
+    {
+        $this->attributes['rating'] = $rating;
+    }
+
+    public function setUserId(int $user_id): void
+    {
+        $this->attributes['user_id'] = $user_id;
+    }
+
+    public function setProductId(int $product_id): void
+    {
+        $this->attributes['product_id'] = $product_id;
+    }
+
+    // Relationships.
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

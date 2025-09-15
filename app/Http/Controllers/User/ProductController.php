@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * ProductController.php
+ * Controller for managing products in the application.
+ * Author: Juan Avendaño
+*/
+
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
@@ -41,6 +47,7 @@ class ProductController extends Controller
 
         $viewData = [];
         $viewData['product'] = $product;
+        $viewData['productReviews'] = $product->getReviews();
 
         return view('user.products.show', compact('viewData'));
     }

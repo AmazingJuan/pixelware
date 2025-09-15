@@ -19,4 +19,16 @@ return [
         'buy' => 'Buy',
         'back' => 'Back',
     ],
+    'reviews' => [
+        'title' => 'Reviews',
+        'empty' => 'No reviews yet.',
+        'fields' => [
+            'rating' => 'Rating',
+            'select_rating' => 'Select a rating',
+            'comment' => 'Comment',
+        ],
+        'actions' => [
+            'submit' => 'Submit Review',
+        ],
+    ],
 ];

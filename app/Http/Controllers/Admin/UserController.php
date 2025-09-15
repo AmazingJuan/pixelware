@@ -1,16 +1,31 @@
 <?php
 
+/*
+ *
+ * UserController.php
+ * Controller for managing users in the admin panel.
+ * Author: Santiago Manco
+*/
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Repositories\UserRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function index(): RedirectResponse
     {
         return redirect()->route('admin.dashboard');
@@ -33,7 +48,7 @@ class UserController extends Controller
 
         $data['password'] = Hash::make($data['password']);
 
-        User::create($data);
+        $this->userRepository->create($data);
 
         return redirect()->route('users.index')->with('success', __('User created successfully'));
     }
@@ -59,14 +74,16 @@ class UserController extends Controller
             unset($data['password']);
         }
 
-        $user->update($data);
+        $this->userRepository->update($data, $user);
 
         return redirect()->route('users.index')->with('success', __('User updated successfully'));
     }
 
     public function destroy(User $user): RedirectResponse
     {
-        $user->delete();
+
+        $this->userRepository->delete($user);
+
         return redirect()->route('users.index')->with('success', __('User deleted successfully'));
     }
 }

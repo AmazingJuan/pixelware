@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * User.php
+ * Model for managing users in the application.
+ * Author: Santiago Manco
+*/
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,21 +25,20 @@ class User extends Authenticatable
      * $this->attributes['email']               - string                     - User email
      * $this->attributes['name']                - string                     - Full name
      * $this->attributes['address']             - array|null                 - User address (JSON)
-     * $this->attributes['credit_card_details'] - array|null                 - Credit card info (JSON)
      * $this->attributes['chat_history_ai']     - array|null                 - AI chat history (JSON)
      * $this->attributes['balance']             - int                        - Account balance
      * $this->attributes['role']                - string                     - User role ('admin' or 'customer')
      * $this->attributes['remember_token']      - string|null                - Token for "remember me" sessions
-     * $this->attributes['created_at']          - \Illuminate\Support\Carbon  - Record creation timestamp
-     * $this->attributes['updated_at']          - \Illuminate\Support\Carbon  - Record last update timestamp
+     * $this->attributes['created_at']          - \Illuminate\Support\Carbon - Record creation timestamp
+     * $this->attributes['updated_at']          - \Illuminate\Support\Carbon - Record last update timestamp
      */
+    
     protected $fillable = [
         'username',
         'password',
         'email',
         'name',
         'address',
-        'credit_card_details',
         'chat_history_ai',
         'balance',
         'role',
@@ -46,49 +51,104 @@ class User extends Authenticatable
 
     protected $casts = [
         'address' => 'array',
-        'credit_card_details' => 'array',
         'chat_history_ai' => 'array',
     ];
 
-    public function getUsername(): string
+    // Getters.
+
+    public function getId(): int
     {
-        return $this->username;
+        return $this->attributes['id'];
     }
 
-    public function setUsername(string $username): void
+    public function getUsername(): string
     {
-        $this->username = $username;
+        return $this->attributes['username'];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->attributes['password'];
     }
 
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->attributes['email'];
     }
 
-    public function setEmail(string $email): void
+    public function getName(): string
     {
-        $this->email = $email;
+        return $this->attributes['name'];
     }
 
-    public function getRole(): string
+    public function getAddress(): ?array
     {
-        return $this->role;
+        return $this->attributes['address'];
     }
 
-    public function setRole(string $role): void
+    public function getChatHistoryAi(): ?array
     {
-        $this->role = $role;
+        return $this->attributes['chat_history_ai'];
     }
 
     public function getBalance(): int
     {
-        return $this->balance;
+        return $this->attributes['balance'];
+    }
+
+    public function getRole(): string
+    {
+        return $this->attributes['role'];
+    }
+
+    // Setters.
+
+    public function setId(int $id): void
+    {
+        $this->attributes['id'] = $id;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->attributes['username'] = $username;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->attributes['password'] = $password;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->attributes['email'] = $email;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->attributes['name'] = $name;
+    }
+
+    public function setAddress(?array $address): void
+    {
+        $this->attributes['address'] = $address;
+    }
+
+    public function setChatHistoryAi(?array $chat_history_ai): void
+    {
+        $this->attributes['chat_history_ai'] = $chat_history_ai;
     }
 
     public function setBalance(int $balance): void
     {
-        $this->balance = $balance;
+        $this->attributes['balance'] = $balance;
     }
+
+    public function setRole(string $role): void
+    {
+        $this->attributes['role'] = $role;
+    }
+
+    // Relationships.
 
     public function orders()
     {
@@ -100,12 +160,14 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
-    public function isAdmin()
+    // Util methods.
+
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
 
-    public function isCustomer()
+    public function isCustomer(): bool
     {
         return $this->role === 'customer';
     }
