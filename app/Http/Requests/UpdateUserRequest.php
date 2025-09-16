@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * UpdateUserRequest.php
+ * Request class for updating user data.
+ * Author: Santiago Manco
+ */
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,7 +19,7 @@ class UpdateUserRequest extends FormRequest
 
     public function rules(): array
     {
-        $userId = $this->route('user')->id;
+        $userId = $this->route('user')->getId();
 
         return [
             'username' => 'required|unique:users,username,'.$userId,
