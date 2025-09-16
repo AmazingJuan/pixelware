@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * StoreUserRequest.php
+ * Request class for validating user data.
+ * Author: Santiago Manco
+ */
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

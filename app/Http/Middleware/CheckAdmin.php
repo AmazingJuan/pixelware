@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * CheckAdmin.php
+ * Middleware for checking if the user is an admin.
+ * Author: Santiago Manco
+ */
+
 namespace App\Http\Middleware;
 
 use Closure;
