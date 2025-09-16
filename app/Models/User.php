@@ -32,7 +32,6 @@ class User extends Authenticatable
      * $this->attributes['created_at']          - \Illuminate\Support\Carbon - Record creation timestamp
      * $this->attributes['updated_at']          - \Illuminate\Support\Carbon - Record last update timestamp
      */
-    
     protected $fillable = [
         'username',
         'password',
