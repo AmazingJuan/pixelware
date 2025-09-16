@@ -15,10 +15,10 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'username' => 'required|unique:users',
-            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|in:admin,customer',
+            'balance' => 'required|integer|min:0',
         ];
     }
 }
