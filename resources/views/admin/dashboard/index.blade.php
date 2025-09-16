@@ -24,7 +24,7 @@
         <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->getId() }}</td>
                     <td>{{ $user->getUsername() }}</td>
                     <td>{{ $user->getEmail() }}</td>
                     <td>{{ $user->getBalance() }}</td>

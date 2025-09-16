@@ -44,17 +44,17 @@
 
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link text-light" href="{{ route('login') }}">@lang('app.navbar.login')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" href="{{ route('register') }}">Register</a>
+                            <a class="nav-link text-light" href="{{ route('register') }}">@lang('app.navbar.register')</a>
                         </li>
                     @else
                         @if (auth()->user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link btn" style="background-color:#60A5FA; color:#1E3A8A; margin-left:0.5rem;"
                                     href="{{ route('admin.dashboard') }}">
-                                    Admin Dashboard
+                                    @lang('app.navbar.dashboard')
                                 </a>
                             </li>
                         @endif
@@ -63,7 +63,7 @@
                             <form id="logout" action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
                                 <a role="button" class="nav-link text-light"
-                                    onclick="document.getElementById('logout').submit();">Logout</a>
+                                    onclick="document.getElementById('logout').submit();">@lang('app.navbar.logout')</a>
                             </form>
                         </li>
                     @endguest
