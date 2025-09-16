@@ -50,10 +50,10 @@
                             <a class="nav-link text-light" href="{{ route('register') }}">Register</a>
                         </li>
                     @else
-                        @if(auth()->user()->isAdmin())
+                        @if (auth()->user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link btn" style="background-color:#60A5FA; color:#1E3A8A; margin-left:0.5rem;"
-                                   href="{{ route('admin.dashboard') }}">
+                                    href="{{ route('admin.dashboard') }}">
                                     Admin Dashboard
                                 </a>
                             </li>
@@ -63,7 +63,7 @@
                             <form id="logout" action="{{ route('logout') }}" method="POST" class="d-inline">
                                 @csrf
                                 <a role="button" class="nav-link text-light"
-                                   onclick="document.getElementById('logout').submit();">Logout</a>
+                                    onclick="document.getElementById('logout').submit();">Logout</a>
                             </form>
                         </li>
                     @endguest

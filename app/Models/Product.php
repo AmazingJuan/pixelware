@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Product.php
+ * Model for managing products in the application.
+ * Author: Juan Avendaño
+*/
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,19 +15,19 @@ class Product extends Model
     /**
      * Attributes:
      *
-     * $this->attributes['id'] - int - Primary key identifier
-     * $this->attributes['name'] - string - Product name
-     * $this->attributes['description'] - string - Product description
-     * $this->attributes['stock'] - int - Product stock
-     * $this->attributes['price'] - int - Product price
-     * $this->attributes['category'] - string - Product category
-     * $this->attributes['specs'] - array - Product specifications (JSON)
-     * $this->attributes['image_urls'] - array - Product image URLs (JSON)
-     * $this->attributes['created_at'] - \Illuminate\Support\Carbon - Record creation timestamp
-     * $this->attributes['updated_at'] - \Illuminate\Support\Carbon - Record last update timestamp
+     * $this->attributes['id']          - int                        - Primary key identifier
+     * $this->attributes['name']        - string                     - Product name
+     * $this->attributes['description'] - string                     - Product description
+     * $this->attributes['stock']       - int                        - Product stock
+     * $this->attributes['price']       - int                        - Product price
+     * $this->attributes['category']    - string                     - Product category
+     * $this->attributes['specs']       - array                      - Product specifications (JSON)
+     * $this->attributes['image_urls']  - array                      - Product image URLs (JSON)
+     * $this->attributes['average_rating'] - float                  - Average product rating
+     * $this->attributes['reviews_count'] - int                     - Number of reviews
+     * $this->attributes['created_at']  - \Illuminate\Support\Carbon - Record creation timestamp
+     * $this->attributes['updated_at']  - \Illuminate\Support\Carbon - Record last update timestamp
      */
-
-    // Attributes that are mass assignable.
     protected $fillable = [
         'name',
         'description',
@@ -30,15 +36,16 @@ class Product extends Model
         'category',
         'specs',
         'image_urls',
+        'average_rating',
+        'reviews_count',
     ];
 
-    // Attributes that should be cast to native types.
     protected $casts = [
         'specs' => 'array',
         'image_urls' => 'array',
     ];
 
-    // Setters & getters.
+    // Getters.
 
     public function getId(): int
     {
@@ -50,19 +57,9 @@ class Product extends Model
         return $this->attributes['name'];
     }
 
-    public function setName(string $name): void
-    {
-        $this->attributes['name'] = $name;
-    }
-
     public function getDescription(): string
     {
         return $this->attributes['description'];
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->attributes['description'] = $description;
     }
 
     public function getStock(): int
@@ -70,19 +67,9 @@ class Product extends Model
         return $this->attributes['stock'];
     }
 
-    public function setStock(int $stock): void
-    {
-        $this->attributes['stock'] = $stock;
-    }
-
     public function getPrice(): int
     {
         return $this->attributes['price'];
-    }
-
-    public function setPrice(int $price): void
-    {
-        $this->attributes['price'] = $price;
     }
 
     public function getCategory(): string
@@ -90,19 +77,9 @@ class Product extends Model
         return $this->attributes['category'];
     }
 
-    public function setCategory(string $category): void
-    {
-        $this->attributes['category'] = $category;
-    }
-
     public function getSpecs(): array
     {
-        return json_decode($this->attributes['specs'] ?? '[]', true) ?? [];
-    }
-
-    public function setSpecs(array $specs): void
-    {
-        $this->attributes['specs'] = json_encode($specs);
+        return $this->specs ?? [];
     }
 
     public function getImageUrls(): array
@@ -110,12 +87,81 @@ class Product extends Model
         return json_decode($this->attributes['image_urls'] ?? '[]', true) ?? [];
     }
 
+    public function getAverageRating(): float
+    {
+        return $this->attributes['average_rating'];
+    }
+
+    public function getReviewsCount(): int
+    {
+        return $this->attributes['reviews_count'];
+    }
+
+    public function getReviews()
+    {
+        return $this->reviews()->with('user')->get();
+    }
+
+    // Setters.
+
+    public function setId(int $id): void
+    {
+        $this->attributes['id'] = $id;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->attributes['name'] = $name;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->attributes['description'] = $description;
+    }
+
+    public function setStock(int $stock): void
+    {
+        $this->attributes['stock'] = $stock;
+    }
+
+    public function setPrice(int $price): void
+    {
+        $this->attributes['price'] = $price;
+    }
+
+    public function setCategory(string $category): void
+    {
+        $this->attributes['category'] = $category;
+    }
+
+    public function setSpecs(array $specs): void
+    {
+        $this->attributes['specs'] = json_encode($specs);
+    }
+
     public function setImageUrls(array $image_urls): void
     {
         $this->attributes['image_urls'] = json_encode($image_urls);
     }
 
-    // Util methods
+    public function setAverageRating(float $average_rating): void
+    {
+        $this->attributes['average_rating'] = $average_rating;
+    }
+
+    public function setReviewsCount(int $reviews_count): void
+    {
+        $this->attributes['reviews_count'] = $reviews_count;
+    }
+
+    // Relationships.
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // Util methods.
 
     public function getFormattedPriceAttribute(): string
     {

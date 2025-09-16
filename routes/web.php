@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -9,6 +10,7 @@ Route::get('/', 'App\Http\Controllers\User\HomeController@index')->name('home');
 Route::prefix('products')->group(function (): void {
     Route::get('/', 'App\Http\Controllers\User\ProductController@index')->name('products.index');
     Route::get('/{id}', 'App\Http\Controllers\User\ProductController@show')->where('id', '[0-9]+')->name('products.show');
+    Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
