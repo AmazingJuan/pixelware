@@ -15,13 +15,13 @@ return [
     |--------------------------------------------------------------------------
     */
     'navbar' => [
-        'home'      => 'Home',
-        'products'  => 'Products',
-        'contact'   => 'Contact',
+        'home' => 'Home',
+        'products' => 'Products',
+        'contact' => 'Contact',
         'dashboard' => 'Dashboard',
-        'login'     => 'Login',
-        'register'  => 'Register',
-        'logout'    => 'Logout',
+        'login' => 'Login',
+        'register' => 'Register',
+        'logout' => 'Logout',
     ],
 
     /*
@@ -30,7 +30,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'footer' => [
-        'rights'  => 'All rights reserved.',
+        'rights' => 'All rights reserved.',
         'privacy' => 'Privacy Policy',
     ],
 
