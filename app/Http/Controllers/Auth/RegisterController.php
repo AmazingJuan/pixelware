@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Services\UserService;
 
 class RegisterController extends Controller
 {
@@ -30,36 +31,25 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
+    protected $userService;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
         $this->middleware('guest');
+        $this->userService = $userService;
     }
-
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'address' => ['nullable', 'string'],
-            'role' => ['required', 'in:admin,customer'],
-        ]);
+        return $this->userService->validate($data);
     }
 
     protected function create(array $data)
     {
-        return User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'address' => $data['address'] ?? null,
-            'role' => $data['role'],
-            'balance' => 0,
-        ]);
+        return $this->userService->create($data);
     }
 }

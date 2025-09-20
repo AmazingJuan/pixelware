@@ -2,7 +2,7 @@
 
 /*
  *
- * UserController.php
+ * AdminUserController.php
  * Controller for managing users in the admin panel.
  * Author: Santiago Manco
 */
@@ -17,14 +17,17 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use App\Services\UserService;
 
 class AdminUserController extends Controller
 {
     protected $userRepository;
+    protected $userService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, UserService $userService)
     {
         $this->userRepository = $userRepository;
+        $this->userService = $userService;
     }
 
     public function index(): View
@@ -47,9 +50,12 @@ class AdminUserController extends Controller
     {
         $data = $request->validated();
 
-        $data['password'] = Hash::make($data['password']);
+        $validator = $this->userService->validate($data);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        $this->userRepository->create($data);
+        $this->userService->create($data);
 
         return redirect()->route('admin.users')->with('success', __('User created successfully'));
     }
