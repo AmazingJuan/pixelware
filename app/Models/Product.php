@@ -22,7 +22,7 @@ class Product extends Model
      * $this->attributes['price']       - int                        - Product price
      * $this->attributes['category']    - string                     - Product category
      * $this->attributes['specs']       - array                      - Product specifications (JSON)
-     * $this->attributes['image_urls']  - array                      - Product image URLs (JSON)
+     * $this->attributes['image_url']  - string                      - Product image URLs (JSON)
      * $this->attributes['average_rating'] - float                  - Average product rating
      * $this->attributes['reviews_count'] - int                     - Number of reviews
      * $this->attributes['created_at']  - \Illuminate\Support\Carbon - Record creation timestamp
@@ -35,7 +35,7 @@ class Product extends Model
         'price',
         'category',
         'specs',
-        'image_urls',
+        'image_url',
         'average_rating',
         'reviews_count',
     ];
@@ -82,9 +82,9 @@ class Product extends Model
         return $this->specs ?? [];
     }
 
-    public function getImageUrls(): array
+    public function getImageUrl(): string
     {
-        return json_decode($this->attributes['image_urls'] ?? '[]', true) ?? [];
+        return $this->attributes['image_url'] ?? '';
     }
 
     public function getAverageRating(): float
@@ -139,19 +139,19 @@ class Product extends Model
         $this->attributes['specs'] = json_encode($specs);
     }
 
-    public function setImageUrls(array $image_urls): void
+    public function setImageUrl(string $imageUrl): void
     {
-        $this->attributes['image_urls'] = json_encode($image_urls);
+        $this->attributes['image_url'] = $imageUrl;
     }
 
-    public function setAverageRating(float $average_rating): void
+    public function setAverageRating(float $averageRating): void
     {
-        $this->attributes['average_rating'] = $average_rating;
+        $this->attributes['average_rating'] = $averageRating;
     }
 
-    public function setReviewsCount(int $reviews_count): void
+    public function setReviewsCount(int $reviewsCount): void
     {
-        $this->attributes['reviews_count'] = $reviews_count;
+        $this->attributes['reviews_count'] = $reviewsCount;
     }
 
     // Relationships.

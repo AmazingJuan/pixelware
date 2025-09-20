@@ -77,7 +77,7 @@
                     <button class="btn btn-info text-white fw-semibold px-4 py-2">
                         @lang('products.actions.buy')
                     </button>
-                    <a href="{{ route('products.index') }}" class="btn btn-outline-info fw-semibold px-4 py-2">
+                    <a href="{{ route('products') }}" class="btn btn-outline-info fw-semibold px-4 py-2">
                         @lang('products.actions.back')
                     </a>
                 </div>

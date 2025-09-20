@@ -24,10 +24,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'username' => $this->faker->unique()->userName(),
+            'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'address' => [
+                'street' => $this->faker->streetAddress(),
+                'city' => $this->faker->city(),
+                'country' => $this->faker->country(),
+                'zip' => $this->faker->postcode(),
+            ],
+            'chat_history_ai' => [],
+            'balance' => $this->faker->numberBetween(0, 100000),
+            'role' => $this->faker->randomElement(['admin', 'customer']),
             'remember_token' => Str::random(10),
         ];
     }
@@ -39,6 +48,19 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Creates a default admin user.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'username' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('admin'), // clave conocida
+            'role' => 'admin',
         ]);
     }
 }

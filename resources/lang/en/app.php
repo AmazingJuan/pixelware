@@ -1,20 +1,37 @@
 <?php
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | App Information
+    |--------------------------------------------------------------------------
+    */
     'name' => config('app.name'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Navbar
+    |--------------------------------------------------------------------------
+    */
     'navbar' => [
-        'home' => 'Home',
-        'products' => 'Products',
-        'contact' => 'Contact',
+        'home'      => 'Home',
+        'products'  => 'Products',
+        'contact'   => 'Contact',
         'dashboard' => 'Dashboard',
-        'login' => 'Login',
-        'register' => 'Register',
-        'logout' => 'Logout',
+        'login'     => 'Login',
+        'register'  => 'Register',
+        'logout'    => 'Logout',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Footer
+    |--------------------------------------------------------------------------
+    */
     'footer' => [
-        'rights' => 'All rights reserved.',
+        'rights'  => 'All rights reserved.',
         'privacy' => 'Privacy Policy',
     ],
+
 ];

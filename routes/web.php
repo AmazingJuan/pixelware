@@ -8,12 +8,31 @@ Auth::routes();
 Route::get('/', 'App\Http\Controllers\User\HomeController@index')->name('home');
 
 Route::prefix('products')->group(function (): void {
-    Route::get('/', 'App\Http\Controllers\User\ProductController@index')->name('products.index');
+    Route::get('/', 'App\Http\Controllers\User\ProductController@index')->name('products');
     Route::get('/{id}', 'App\Http\Controllers\User\ProductController@show')->where('id', '[0-9]+')->name('products.show');
     Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
-    Route::get('/', 'App\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard');
-    Route::resource('users', 'App\Http\Controllers\Admin\UserController'); // Added resource route for user management
+    Route::get('/', 'App\Http\Controllers\Admin\AdminDashboardController@index')->name('admin.dashboard');
+
+    // Users management routes
+    Route::prefix('users')->group(function (): void {
+        Route::get('/', 'App\Http\Controllers\Admin\AdminUserController@index')->name('admin.users');
+        Route::get('/create', 'App\Http\Controllers\Admin\AdminUserController@create')->name('admin.users.create');
+        Route::post('/', 'App\Http\Controllers\Admin\AdminUserController@store')->name('admin.users.store');
+        Route::get('/{user}/edit', 'App\Http\Controllers\Admin\AdminUserController@edit')->name('admin.users.edit');
+        Route::put('/{user}', 'App\Http\Controllers\Admin\AdminUserController@update')->name('admin.users.update');
+        Route::delete('/{user}', 'App\Http\Controllers\Admin\AdminUserController@destroy')->name('admin.users.destroy');
+    });
+
+    // Products management routes
+    Route::prefix('products')->group(function (): void {
+        Route::get('/', 'App\Http\Controllers\Admin\AdminProductController@index')->name('admin.products');
+        Route::get('/create', 'App\Http\Controllers\Admin\AdminProductController@create')->name('admin.products.create');
+        Route::post('/', 'App\Http\Controllers\Admin\AdminProductController@store')->name('admin.products.store');
+        Route::get('/{product}/edit', 'App\Http\Controllers\Admin\AdminProductController@edit')->name('admin.products.edit');
+        Route::put('/{product}', 'App\Http\Controllers\Admin\AdminProductController@update')->name('admin.products.update');
+        Route::delete('/{product}', 'App\Http\Controllers\Admin\AdminProductController@destroy')->name('admin.products.destroy');
+    });
 });

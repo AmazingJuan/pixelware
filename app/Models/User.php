@@ -11,6 +11,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -21,9 +22,9 @@ class User extends Authenticatable
      *
      * $this->attributes['id']                  - int                        - Primary key identifier
      * $this->attributes['username']            - string                     - Unique username
-     * $this->attributes['password']            - string                     - Hashed password
      * $this->attributes['email']               - string                     - User email
-     * $this->attributes['name']                - string                     - Full name
+     * $this->attributes['email_verified_at']   - \Illuminate\Support\Carbon|null - Email verification timestamp
+     * $this->attributes['password']            - string                     - Hashed password
      * $this->attributes['address']             - array|null                 - User address (JSON)
      * $this->attributes['chat_history_ai']     - array|null                 - AI chat history (JSON)
      * $this->attributes['balance']             - int                        - Account balance
@@ -34,9 +35,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'password',
         'email',
-        'name',
+        'email_verified_at',
+        'password',
         'address',
         'chat_history_ai',
         'balance',
@@ -51,6 +52,7 @@ class User extends Authenticatable
     protected $casts = [
         'address' => 'array',
         'chat_history_ai' => 'array',
+        'email_verified_at' => 'datetime',
     ];
 
     // Getters.
@@ -65,19 +67,19 @@ class User extends Authenticatable
         return $this->attributes['username'];
     }
 
-    public function getPassword(): string
-    {
-        return $this->attributes['password'];
-    }
-
     public function getEmail(): string
     {
         return $this->attributes['email'];
     }
 
-    public function getName(): string
+    public function getEmailVerifiedAt(): ?Carbon
     {
-        return $this->attributes['name'];
+        return $this->attributes['email_verified_at'];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->attributes['password'];
     }
 
     public function getAddress(): ?array
@@ -100,6 +102,21 @@ class User extends Authenticatable
         return $this->attributes['role'];
     }
 
+    public function getRememberToken(): ?string
+    {
+        return $this->attributes['remember_token'];
+    }
+
+    public function getCreatedAt(): Carbon
+    {
+        return $this->attributes['created_at'];
+    }
+
+    public function getUpdatedAt(): Carbon
+    {
+        return $this->attributes['updated_at'];
+    }
+
     // Setters.
 
     public function setId(int $id): void
@@ -112,19 +129,19 @@ class User extends Authenticatable
         $this->attributes['username'] = $username;
     }
 
-    public function setPassword(string $password): void
-    {
-        $this->attributes['password'] = $password;
-    }
-
     public function setEmail(string $email): void
     {
         $this->attributes['email'] = $email;
     }
 
-    public function setName(string $name): void
+    public function setEmailVerifiedAt(?Carbon $email_verified_at): void
     {
-        $this->attributes['name'] = $name;
+        $this->attributes['email_verified_at'] = $email_verified_at;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->attributes['password'] = $password;
     }
 
     public function setAddress(?array $address): void
@@ -145,6 +162,21 @@ class User extends Authenticatable
     public function setRole(string $role): void
     {
         $this->attributes['role'] = $role;
+    }
+
+    public function setRememberToken($value)
+    {
+        $this->attributes['remember_token'] = $value;
+    }
+
+    public function setCreatedAt($value): void
+    {
+        parent::setCreatedAt($value);
+    }
+
+    public function setUpdatedAt($value): void
+    {
+        parent::setUpdatedAt($value);
     }
 
     // Relationships.

@@ -10,15 +10,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\AdminStoreUserRequest;
+use App\Http\Requests\AdminUpdateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
-class UserController extends Controller
+class AdminUserController extends Controller
 {
     protected $userRepository;
 
@@ -27,9 +27,15 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index(): RedirectResponse
+    public function index(): View
     {
-        return redirect()->route('admin.dashboard');
+        $viewData = [];
+
+        $users = $this->userRepository->all();
+
+        $viewData['users'] = $users;
+
+        return view('admin.users.index', compact('viewData'));
     }
 
     public function create(): View
@@ -37,7 +43,7 @@ class UserController extends Controller
         return view('admin.users.create');
     }
 
-    public function store(StoreUserRequest $request): RedirectResponse
+    public function store(AdminStoreUserRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
@@ -45,7 +51,7 @@ class UserController extends Controller
 
         $this->userRepository->create($data);
 
-        return redirect()->route('users.index')->with('success', __('User created successfully'));
+        return redirect()->route('admin.users')->with('success', __('User created successfully'));
     }
 
     public function edit(User $user): View
@@ -53,7 +59,7 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
     {
         $data = $request->validated();
 
@@ -65,13 +71,13 @@ class UserController extends Controller
 
         $this->userRepository->update($data, $user);
 
-        return redirect()->route('users.index')->with('success', __('User updated successfully'));
+        return redirect()->route('admin.users')->with('success', __('User updated successfully'));
     }
 
     public function destroy(User $user): RedirectResponse
     {
         $this->userRepository->delete($user);
 
-        return redirect()->route('users.index')->with('success', __('User deleted successfully'));
+        return redirect()->route('admin.users')->with('success', __('User deleted successfully'));
     }
 }
