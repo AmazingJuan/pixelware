@@ -9,11 +9,10 @@
 namespace App\Http\Controllers\User;
 
 // Laravel / framework
-use Illuminate\View\View;
-
-// App
 use App\Http\Controllers\Controller;
+// App
 use App\Repositories\ProductRepository;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {

@@ -9,18 +9,17 @@
 namespace App\Http\Controllers\Admin;
 
 // Laravel / framework
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\View\View;
-
-// App
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
 use App\Models\User;
+// App
 use App\Repositories\UserRepository;
 use App\Services\UserService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\View\View;
 
 class AdminUserController extends Controller
 {

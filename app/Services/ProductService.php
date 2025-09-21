@@ -69,7 +69,7 @@ class ProductService
             $uploadedImage = $data['image'];
             unset($data['image']);
 
-            // Delete old image 
+            // Delete old image
             $this->imageManagement->deleteDirectory($product->getId());
 
             // Store new image and update path

@@ -16,8 +16,6 @@ class ProductRepository extends BaseRepository
 
     protected array $with = ['reviews'];
 
-
-    
     public function getProductsByIds(array $ids)
     {
         // Get products by an array of IDs.

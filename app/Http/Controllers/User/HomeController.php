@@ -9,10 +9,9 @@
 namespace App\Http\Controllers\User;
 
 // Laravel / framework
-use Illuminate\View\View;
-
-// App
 use App\Http\Controllers\Controller;
+// App
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {

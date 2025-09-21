@@ -25,6 +25,7 @@ class CartService
     {
         // Update the product quantity in the cart
         $sessionCartData[$id] = ($sessionCartData[$id] ?? 0) + $quantity;
+
         return $sessionCartData;
     }
 

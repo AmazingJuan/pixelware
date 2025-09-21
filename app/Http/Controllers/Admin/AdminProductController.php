@@ -9,16 +9,15 @@
 namespace App\Http\Controllers\Admin;
 
 // Laravel / framework
-use Illuminate\Support\Facades\Lang;
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
-
-// App
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreProductRequest;
 use App\Http\Requests\AdminUpdateProductRequest;
+// App
 use App\Repositories\ProductRepository;
 use App\Services\ProductService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\View\View;
 
 class AdminProductController extends Controller
 {
@@ -65,7 +64,7 @@ class AdminProductController extends Controller
     {
         // Gather validated data
         $validatedData = $request->validated();
-        
+
         // Create product using service (which also manages image storage)
         $this->productService->create($validatedData);
 
@@ -96,14 +95,14 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products')->with('success', Lang::get('admin.products.success.deleted'));
     }
 
-    public function edit(int $productId): View | RedirectResponse
+    public function edit(int $productId): View|RedirectResponse
     {
         // Create an array to hold view data
         $viewData = [];
 
         // Retrieve the product by ID
         $product = $this->productRepository->find($productId);
-        
+
         // If product not found, redirect with error
         if (! $product) {
             return redirect()->route('admin.products')->with('error', Lang::get('admin.products.errors.not_found'));

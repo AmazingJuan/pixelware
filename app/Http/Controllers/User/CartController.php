@@ -9,14 +9,13 @@
 namespace App\Http\Controllers\User;
 
 // Laravel / framework
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\View\View;
-
-// App
 use App\Http\Controllers\Controller;
 use App\Services\CartService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+// App
+use Illuminate\Support\Facades\Lang;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {

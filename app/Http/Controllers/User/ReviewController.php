@@ -9,14 +9,13 @@
 namespace App\Http\Controllers\User;
 
 // Laravel / framework
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-
-// App
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
+// App
 use App\Repositories\ReviewRepository;
 use App\Services\ReviewService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {

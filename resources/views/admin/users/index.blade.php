@@ -15,7 +15,7 @@
                 <div class="text-center flex-grow-1">
                     <h2 class="h4 text-info fw-bold mb-1">@lang('admin.users.title')</h2>
                 </div>
-                
+
                 <div class="text-end">
                     <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-lg me-1"></i> @lang('admin.common.create')
