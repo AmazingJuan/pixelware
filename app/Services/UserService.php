@@ -10,15 +10,15 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Repositories\ProductRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserService
 {
-    protected ProductRepository $userRepository;
+    protected UserRepository $userRepository;
 
-    public function __construct(ProductRepository $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }

@@ -36,35 +36,23 @@ class AdminUserController extends Controller
 
     public function index(): View
     {
-        // Create an array to hold view data
         $viewData = [];
 
-        // Retrieve all users from the repository
         $users = $this->userRepository->all();
 
-        // Add users to the view data array
         $viewData['users'] = $users;
 
-        // Return the view with the view data
         return view('admin.users.index', compact('viewData'));
     }
 
     public function create(): View
     {
-        // Return the view for creating a new user
         return view('admin.users.create');
     }
 
     public function store(AdminStoreUserRequest $request): RedirectResponse
     {
-        // Retrieve the validated incoming request data
         $validatedData = $request->validated();
-
-        // Hash the password before storing
-        $validator = $this->userService->validate($validatedData);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
 
         $this->userService->create($validatedData);
 

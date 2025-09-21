@@ -12,6 +12,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 // App
 use App\Repositories\ProductRepository;
+use App\Services\OpenAIService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -19,9 +21,13 @@ class ProductController extends Controller
     // Repository instance for product data access
     protected ProductRepository $productRepository;
 
-    public function __construct(ProductRepository $productRepository)
+    // Service instance for OpenAI interactions
+    protected OpenAIService $openAIService;
+
+    public function __construct(ProductRepository $productRepository, OpenAIService $openAIService)
     {
         $this->productRepository = $productRepository;
+        $this->openAIService = $openAIService;
     }
 
     /**
@@ -64,5 +70,21 @@ class ProductController extends Controller
 
         // Return the product detail view with the prepared data
         return view('user.products.show', compact('viewData'));
+    }
+
+    public function moreInfo(int $productId): JsonResponse
+    {
+        $product = $this->productRepository->find($productId);
+
+        if (! $product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $aiDescription = $this->openAIService->generateProductDescription(
+            $product->getName(),
+            $product->getDescription()
+        );
+
+        return response()->json(['description' => $aiDescription]);
     }
 }

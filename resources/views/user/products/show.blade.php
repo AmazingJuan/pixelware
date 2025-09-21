@@ -160,6 +160,19 @@
                 @else
                     <div class="fw-semibold" style="color: #b6c2cf;">@lang('products.reviews.empty')</div>
                 @endif
+
+                <br>
+                <div class="mb-4">
+                    <button id="btnMoreInfo" 
+                        class="btn btn-outline-light fw-semibold px-4 py-2"
+                        data-id="{{ $viewData['product']->getId() }}">
+                        @lang('products.actions.more_info')
+                    </button>
+                </div>
+
+                <div id="aiDescription" class="mt-3 text-light fst-italic"></div>
+
+                <script src="{{ asset('js/products/product-more-info.js') }}"></script>
             </div>
         </div>
     </section>

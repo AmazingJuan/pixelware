@@ -25,6 +25,7 @@ return [
             'id' => 'ID',
             'username' => 'Username',
             'email' => 'Email',
+            'address' => 'Address',
             'balance' => 'Balance',
             'role' => 'Role',
             'password' => 'Password',

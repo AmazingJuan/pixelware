@@ -11,6 +11,7 @@ Route::prefix('products')->group(function (): void {
     Route::get('/', 'App\Http\Controllers\User\ProductController@index')->name('products');
     Route::get('/{id}', 'App\Http\Controllers\User\ProductController@show')->where('id', '[0-9]+')->name('products.show');
     Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
+    Route::get('/{id}/more-info', 'App\Http\Controllers\User\ProductController@moreInfo')->where('id', '[0-9]+')->name('products.moreInfo');
 });
 
 Route::prefix('cart')->middleware('auth')->group(function (): void {
