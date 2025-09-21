@@ -24,7 +24,7 @@ class CartController extends Controller
         });
 
         $cartProducts = [];
-        $cartProductData = $request->session()->get('cart_product_data', []); 
+        $cartProductData = $request->session()->get('cart_product_data', []);
 
         $total = 0;
         $totalQuantity = 0;
@@ -36,7 +36,7 @@ class CartController extends Controller
                     $subtotal = $product->price * $quantity;
 
                     $cartProducts[] = [
-                        'product'  => $product,
+                        'product' => $product,
                         'quantity' => $quantity,
                         'subtotal' => $subtotal,
                     ];
@@ -48,13 +48,12 @@ class CartController extends Controller
         }
 
         $viewData = [];
-        $viewData['cartProducts']   = $cartProducts;
-        $viewData['total']          = $total;
-        $viewData['totalQuantity']  = $totalQuantity;
+        $viewData['cartProducts'] = $cartProducts;
+        $viewData['total'] = $total;
+        $viewData['totalQuantity'] = $totalQuantity;
 
         return view('user.cart.index')->with('viewData', $viewData);
     }
-
 
     public function add(string $id, Request $request): RedirectResponse
     {
