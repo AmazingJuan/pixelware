@@ -14,14 +14,15 @@ use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
-use App\Services\UserService;
 
 class AdminUserController extends Controller
 {
     protected $userRepository;
+
     protected $userService;
 
     public function __construct(UserRepository $userRepository, UserService $userService)

@@ -13,6 +13,12 @@ Route::prefix('products')->group(function (): void {
     Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
 });
 
+Route::prefix('cart')->middleware('auth')->group(function (): void {
+    Route::get('/', 'App\Http\Controllers\User\CartController@index')->name('cart.index');
+    Route::post('/add/{id}', 'App\Http\Controllers\User\CartController@add')->where('id', '[0-9]+')->name('cart.add');
+    Route::post('/remove-all', 'App\Http\Controllers\User\CartController@removeAll')->name('cart.removeAll');
+});
+
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
     Route::get('/', 'App\Http\Controllers\Admin\AdminDashboardController@index')->name('admin.dashboard');
 

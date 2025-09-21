@@ -33,6 +33,11 @@
                                 @lang('Balance'): ${{ number_format(auth()->user()->getBalance(), 0, ',', '.') }}
                             </span>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('cart.index') }}" class="nav-link position-relative text-light">
+                                @lang('app.navbar.cart')
+                            </a>
+                        </li>
                     @endauth
 
                     <li class="nav-item">

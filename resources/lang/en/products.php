@@ -36,6 +36,7 @@ return [
         'view' => 'View product',
         'buy' => 'Buy',
         'back' => 'Back',
+        'add_to_cart' => 'Add to cart',
     ],
 
     /*
