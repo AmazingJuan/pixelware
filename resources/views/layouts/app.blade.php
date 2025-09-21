@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
+@stack('scripts')
+
 <body class="d-flex flex-column min-vh-100" style="background-color: #0f172a; color: #f8fafc;">
 
     <!-- Navbar -->
@@ -31,13 +33,18 @@
                                 @lang('Balance'): ${{ number_format(auth()->user()->getBalance(), 0, ',', '.') }}
                             </span>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('cart.index') }}" class="nav-link position-relative text-light">
+                                @lang('app.navbar.cart')
+                            </a>
+                        </li>
                     @endauth
 
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link text-light">@lang('app.navbar.home')</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('products.index') }}" class="nav-link text-light">@lang('app.navbar.products')</a>
+                        <a href="{{ route('products') }}" class="nav-link text-light">@lang('app.navbar.products')</a>
                     </li>
 
                     <div class="vr bg-light mx-2 d-none d-lg-block"></div>
@@ -59,18 +66,27 @@
                             </li>
                         @endif
 
-                        <li class="nav-item">
-                            <form id="logout" action="{{ route('logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <a role="button" class="nav-link text-light"
-                                    onclick="document.getElementById('logout').submit();">@lang('app.navbar.logout')</a>
-                            </form>
-                        </li>
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="nav-link btn btn-link text-light">
+                                @lang('app.navbar.logout')
+                            </button>
+                        </form>
                     @endguest
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Admin Header -->
+    @auth
+        @if (auth()->user()->getRole() === 'admin')
+            <header class="py-4 bg-secondary text-center text-light shadow-sm">
+                <h1 class="m-0">@yield('page-title', __('Admin Dashboard'))</h1>
+            </header>
+        @endif
+    @endauth
+
 
     <!-- Main Content -->
     <main class="flex-grow-1 py-4">

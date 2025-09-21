@@ -15,10 +15,15 @@ use App\Utils\MathUtils;
 
 class ReviewService
 {
-    public function __construct(
-        protected ReviewRepository $reviewRepository,
-        protected ProductRepository $productRepository
-    ) {}
+    protected ReviewRepository $reviewRepository;
+
+    protected ProductRepository $productRepository;
+
+    public function __construct(ReviewRepository $reviewRepository, ProductRepository $productRepository)
+    {
+        $this->reviewRepository = $reviewRepository;
+        $this->productRepository = $productRepository;
+    }
 
     public function createReview(array $data): Review
     {

@@ -10,7 +10,7 @@
             <p class="lead mb-4">
                 @lang('home.hero.subtitle')
             </p>
-            <a href="{{ route('products.index') }}" class="btn btn-info btn-lg fw-semibold shadow">
+            <a href="{{ route('products') }}" class="btn btn-info btn-lg fw-semibold shadow">
                 @lang('home.hero.cta')
             </a>
         </div>

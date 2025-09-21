@@ -9,15 +9,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class AdminDashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
     public function index(): View
     {
-        $users = User::all();
 
-        return view('admin.dashboard.index', compact('users'));
+        return view('admin.dashboard.index');
     }
 }
