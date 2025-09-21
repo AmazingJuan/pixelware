@@ -1,30 +1,27 @@
 @extends('layouts.app')
 
+@section('additional-title', __('admin.users.title'))
+
 @section('content')
     <div class="container">
         <div class="bg-dark text-light rounded shadow-lg p-4 p-sm-5">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="d-flex align-items-center gap-3">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div class="d-flex align-items-center gap-2">
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
-                        <i class="bi bi-arrow-left me-1"></i> @lang('admin.common.back', [], null)
+                        <i class="bi bi-arrow-left me-1"></i> @lang('admin.common.back')
                     </a>
-
-                    <div>
-                        <h2 class="h4 text-info fw-bold mb-1">@lang('admin.users.title')</h2>
-                        <p class="mb-0 text-muted small">@lang('admin.users.subtitle', [], null)</p>
-                    </div>
                 </div>
 
+                <div class="text-center flex-grow-1">
+                    <h2 class="h4 text-info fw-bold mb-1">@lang('admin.users.title')</h2>
+                </div>
+                
                 <div class="text-end">
                     <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-lg me-1"></i> @lang('admin.common.create')
                     </a>
                 </div>
             </div>
-
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
 
             @if (count($viewData['users']) === 0)
                 <div class="alert alert-info text-center my-5 py-5">
@@ -63,13 +60,13 @@
                                         <div class="d-flex justify-content-center gap-2">
                                             <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning"
                                                 title="@lang('admin.users.actions.edit')">
-                                                <i class="bi bi-pencil-square">@lang('admin.common.edit')</i>
+                                                <i class="bi bi-pencil-square"></i>
                                             </a>
 
                                             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#confirmDeleteModal-{{ $user->getId() }}"
                                                 title="@lang('admin.users.actions.delete')">
-                                                <i class="bi bi-trash-fill">@lang('admin.common.delete')</i>
+                                                <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </div>
                                     </td>

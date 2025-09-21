@@ -8,6 +8,7 @@
 
 namespace App\Models;
 
+use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -38,11 +39,6 @@ class Product extends Model
         'image_url',
         'average_rating',
         'reviews_count',
-    ];
-
-    protected $casts = [
-        'specs' => 'array',
-        'image_urls' => 'array',
     ];
 
     // Getters.
@@ -79,12 +75,12 @@ class Product extends Model
 
     public function getSpecs(): array
     {
-        return $this->specs ?? [];
+        return json_decode($this->attributes['specs'], true) ?? [];
     }
 
     public function getImageUrl(): string
     {
-        return $this->attributes['image_url'] ?? '';
+        return $this->attributes['image_url'];
     }
 
     public function getAverageRating(): float
@@ -136,6 +132,7 @@ class Product extends Model
 
     public function setSpecs(array $specs): void
     {
+
         $this->attributes['specs'] = json_encode($specs);
     }
 
@@ -165,12 +162,7 @@ class Product extends Model
 
     public function getFormattedPriceAttribute(): string
     {
-        $price = $this->getPrice();
-
-        $priceIntegers = intdiv($price, 100);
-        $priceDecimals = $price % 100;
-
-        return number_format($priceIntegers, 0, '', ',').'.'.str_pad($priceDecimals, 2, '0', STR_PAD_LEFT);
+        return PresentationUtils::formatCurrency($this->getPrice());
     }
 
     public function getFormattedSpecsAttribute(): array

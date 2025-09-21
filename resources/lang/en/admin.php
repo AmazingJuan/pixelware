@@ -53,6 +53,16 @@ return [
         ],
 
         'empty' => 'No users to manage.',
+        'success' => [
+            'created' => 'User created successfully.',
+            'updated' => 'User updated successfully.',
+            'deleted' => 'User deleted successfully.',
+        ],
+        'errors' => [
+            'not_found' => 'User not found.',
+            'delete_failed' => 'Failed to delete user.',
+            'create_failed' => 'Failed to create user.',
+        ],
     ],
 
     /*
@@ -65,12 +75,13 @@ return [
         'description' => 'Create, edit, and delete products.',
 
         'attributes' => [
+            'id' => 'ID',
             'name' => 'Name',
             'price' => 'Price',
             'description' => 'Description',
             'stock' => 'Stock',
             'category' => 'Category',
-            'specs' => 'Specifications (JSON)',
+            'specs' => 'Specifications',
             'image' => 'Product Image',
             'image_hint' => 'Upload a product image (JPEG, PNG).',
         ],
@@ -90,6 +101,23 @@ return [
         ],
 
         'empty' => 'No products to manage.',
+        'out_of_stock' => 'Out of Stock',
+        'success' => [
+            'created' => 'Product created successfully.',
+            'updated' => 'Product updated successfully.',
+            'deleted' => 'Product deleted successfully.',
+        ],
+        'errors' => [
+            'not_found' => 'Product not found.',
+            'delete_failed' => 'Failed to delete product.',
+            'create_failed' => 'Failed to create product.',
+        ],
+        'confirmations' => [
+            'delete' => [
+                'title' => 'Confirm Deletion',
+                'message' => 'Are you sure you want to delete this product? This action cannot be undone.',
+            ],
+        ],
     ],
 
     /*

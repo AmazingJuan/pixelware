@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('additional-title', __('admin.users.title'))
+
 @section('content')
     <h2>@lang('admin.users.sections.edit')</h2>
 

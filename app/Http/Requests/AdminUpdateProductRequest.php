@@ -1,16 +1,16 @@
 <?php
 
 /*
- * AdminStoreReviewRequest.php
- * Request class for validating product reviews.
+ * AdminUpdateProductRequest.php
+ * Request for updating products in the admin panel.
  * Author: Juan Avendaño
- */
+*/
 
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReviewRequest extends FormRequest
+class AdminUpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,13 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'nullable|string|max:1000',
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category' => 'required|string|max:255',
+            'specs' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

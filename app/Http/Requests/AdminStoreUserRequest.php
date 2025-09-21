@@ -1,7 +1,7 @@
 <?php
 
 /*
- * StoreUserRequest.php
+ * AdminStoreUserRequest.php
  * Request class for validating user data.
  * Author: Santiago Manco
  */

@@ -8,18 +8,22 @@
 
 namespace App\Http\Controllers\User;
 
+// Laravel / framework
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+
+// App
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use App\Repositories\ReviewRepository;
 use App\Services\ReviewService;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    protected $reviewRepository;
+    // Repository and Service instances for review management
+    protected ReviewRepository $reviewRepository;
 
-    protected $reviewService;
+    protected ReviewService $reviewService;
 
     public function __construct(ReviewRepository $reviewRepository, ReviewService $reviewService)
     {
@@ -30,11 +34,14 @@ class ReviewController extends Controller
 
     public function store(StoreReviewRequest $request, $productId): RedirectResponse
     {
+        // Retrieve the validated incoming request data
         $validatedData = $request->validated();
 
+        // Add product_id and user_id to the validated data
         $validatedData['product_id'] = $productId;
         $validatedData['user_id'] = Auth::id();
 
+        // Use the ReviewService to create the review (it also handles product rating update)
         $this->reviewService->createReview($validatedData);
 
         return redirect()->back()->with('success', 'Review submitted successfully!');

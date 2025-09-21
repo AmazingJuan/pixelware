@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name') }}</title>
+    <title>{{ config('app.name') }} | @yield('additional-title', 'Home')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
-
-@stack('scripts')
 
 <body class="d-flex flex-column min-vh-100" style="background-color: #0f172a; color: #f8fafc;">
 
@@ -30,11 +29,11 @@
                     @auth
                         <li class="nav-item ms-3">
                             <span class="nav-link text-warning fw-bold">
-                                @lang('Balance'): ${{ number_format(auth()->user()->getBalance(), 0, ',', '.') }}
+                                @lang('app.navbar.balance'): ${{ auth()->user()->getFormattedBalance() }}
                             </span>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('cart.index') }}" class="nav-link position-relative text-light">
+                            <a href="{{ route('cart') }}" class="nav-link position-relative text-light">
                                 @lang('app.navbar.cart')
                             </a>
                         </li>
@@ -80,17 +79,48 @@
 
     <!-- Admin Header -->
     @auth
-        @if (auth()->user()->getRole() === 'admin')
+        @if (auth()->user()->isAdmin() && request()->routeIs('admin.*'))
             <header class="py-4 bg-secondary text-center text-light shadow-sm">
-                <h1 class="m-0">@yield('page-title', __('Admin Dashboard'))</h1>
+                <h1 class="m-0">@lang('app.navbar.admin_dashboard')</h1>
             </header>
         @endif
     @endauth
 
-
     <!-- Main Content -->
     <main class="flex-grow-1 py-4">
         <div class="container">
+
+            {{-- Success message --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="@lang('app.close')"></button>
+                </div>
+            @endif
+
+            {{-- Error message --}}
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="@lang('app.close')"></button>
+                </div>
+            @endif
+
+            {{-- Validation errors --}}
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="@lang('app.close')"></button>
+                </div>
+            @endif
+
             @yield('content')
         </div>
     </main>
@@ -103,5 +133,7 @@
     </footer>
 
 </body>
+
+@stack('scripts')
 
 </html>

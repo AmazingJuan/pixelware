@@ -17,12 +17,13 @@ return [
     'navbar' => [
         'home' => 'Home',
         'products' => 'Products',
-        'contact' => 'Contact',
-        'dashboard' => 'Dashboard',
+        'cart' => 'Cart',
         'login' => 'Login',
         'register' => 'Register',
         'logout' => 'Logout',
-        'cart' => 'Cart',
+        'dashboard' => 'Dashboard',
+        'balance' => 'Balance',
+        'admin_dashboard' => 'Admin Dashboard',
     ],
 
     /*
@@ -35,4 +36,10 @@ return [
         'privacy' => 'Privacy Policy',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | General
+    |--------------------------------------------------------------------------
+    */
+    'close' => 'Close',
 ];

@@ -21,4 +21,12 @@ return [
     'empty_button' => 'Empty cart',
     'checkout' => 'Proceed to checkout',
     'continue_shopping' => 'Continue shopping',
+    'success' => [
+        'added' => 'Product added to cart successfully.',
+        'removed' => 'Product removed from cart successfully.',
+        'removed_all' => 'All products removed from cart successfully.',
+    ],
+    'errors' => [
+        'not_found' => 'Product not found in cart.',
+    ],
 ];

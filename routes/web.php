@@ -14,9 +14,10 @@ Route::prefix('products')->group(function (): void {
 });
 
 Route::prefix('cart')->middleware('auth')->group(function (): void {
-    Route::get('/', 'App\Http\Controllers\User\CartController@index')->name('cart.index');
+    Route::get('/', 'App\Http\Controllers\User\CartController@index')->name('cart');
     Route::post('/add/{id}', 'App\Http\Controllers\User\CartController@add')->where('id', '[0-9]+')->name('cart.add');
-    Route::post('/remove-all', 'App\Http\Controllers\User\CartController@removeAll')->name('cart.removeAll');
+    Route::delete('/', 'App\Http\Controllers\User\CartController@removeAll')->name('cart.removeAll');
+    Route::delete('/{id}', 'App\Http\Controllers\User\CartController@remove')->where('id', '[0-9]+')->name('cart.remove');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {

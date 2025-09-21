@@ -8,6 +8,7 @@
 
 namespace App\Models;
 
+use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -201,5 +202,10 @@ class User extends Authenticatable
     public function isCustomer(): bool
     {
         return $this->role === 'customer';
+    }
+
+    public function getFormattedBalance(): string
+    {
+        return PresentationUtils::formatCurrency($this->getBalance());
     }
 }
