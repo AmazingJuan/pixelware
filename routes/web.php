@@ -44,3 +44,12 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
         Route::delete('/{product}', 'App\Http\Controllers\Admin\AdminProductController@destroy')->name('admin.products.destroy');
     });
 });
+
+Route::prefix('checkout')->middleware('auth')->group(function (): void {
+    Route::get('/', 'App\Http\Controllers\User\CheckoutController@index')->name('checkout');
+});
+
+Route::prefix('orders')->middleware('auth')->group(function (): void {
+    Route::get('/', 'App\Http\Controllers\User\OrderController@index')->name('orders');
+    Route::get('/{order}', 'App\Http\Controllers\User\OrderController@show')->where('order', '[0-9]+')->name('orders.show');
+});

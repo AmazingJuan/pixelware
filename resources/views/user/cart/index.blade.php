@@ -15,6 +15,7 @@
                                 <th>@lang('cart.table.product')</th>
                                 <th class="text-center">@lang('cart.table.quantity')</th>
                                 <th class="text-end">@lang('cart.table.subtotal')</th>
+                                <th class="text-center">@lang('cart.table.actions')</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,15 @@
                                     </td>
                                     <td class="text-end">
                                         ${{ $item['formattedSubtotal'] }}
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="{{ route('cart.remove', ['id' => $item['product']->getId()]) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                @lang('cart.table.remove_item')
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -43,12 +53,19 @@
                     <p><strong>@lang('cart.total_items'):</strong> {{ $viewData['totalQuantity'] }}</p>
 
                     <div class="d-flex gap-2 mt-3">
-                        <a href="#" class="btn btn-success">
+                        <a href="{{ route('checkout') }}" class="btn btn-success">
                             @lang('cart.checkout')
                         </a>
                         <a href="{{ route('products') }}" class="btn btn-outline-secondary">
                             @lang('cart.continue_shopping')
                         </a>
+                        <form action="{{ route('cart.removeAll') }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger">
+                                @lang('cart.clear_cart')
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

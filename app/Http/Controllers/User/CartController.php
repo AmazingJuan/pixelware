@@ -1,8 +1,8 @@
 <?php
 
 /*
- * ProductController.php
- * Controller for managing products in the application.
+ * CartController.php
+ * Controller for managing items in the cart of the application.
  * Author: Juan Jose Gomez
 */
 

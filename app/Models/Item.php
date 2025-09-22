@@ -8,6 +8,7 @@
 
 namespace App\Models;
 
+use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
@@ -92,6 +93,13 @@ class Item extends Model
 
     public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    // Methods
+
+    public function getFormattedPriceAttribute(): string
+    {
+        return PresentationUtils::formatCurrency($this->getPrice());
     }
 }

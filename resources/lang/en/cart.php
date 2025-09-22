@@ -9,9 +9,12 @@ return [
         'price' => 'Price',
         'quantity' => 'Quantity',
         'subtotal' => 'Subtotal',
+        'actions' => 'Actions',
+        'remove_item' => 'Remove',
     ],
 
     'summary' => 'Order summary',
+    'clear_cart' => 'Remove all',
 
     // trans_choice: singular | plural
     'total_label' => 'Total (:count item)|Total (:count items)',

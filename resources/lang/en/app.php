@@ -24,6 +24,7 @@ return [
         'dashboard' => 'Dashboard',
         'balance' => 'Balance',
         'admin_dashboard' => 'Admin Dashboard',
+        'orders' => 'My Orders',
     ],
 
     /*

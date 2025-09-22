@@ -37,13 +37,18 @@
                                 @lang('app.navbar.cart')
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('orders') }}" class="nav-link position-relative text-light">
+                                @lang('app.navbar.orders')
+                            </a>
+                        </li>
                     @endauth
 
                     <li class="nav-item">
-                        <a href="{{ route('home') }}" class="nav-link text-light">@lang('app.navbar.home')</a>
+                        <a href="{{ route('products') }}" class="nav-link text-light">@lang('app.navbar.products')</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('products') }}" class="nav-link text-light">@lang('app.navbar.products')</a>
+                        <a href="{{ route('home') }}" class="nav-link text-light">@lang('app.navbar.home')</a>
                     </li>
 
                     <div class="vr bg-light mx-2 d-none d-lg-block"></div>
