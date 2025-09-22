@@ -30,16 +30,16 @@ class CartController extends Controller
     public function index(Request $request): View
     {
         // Retrieve cart product data from session
-        $cartProductData = $request->session()->get('cart_product_data', []);
+        $sessionCartData = $request->session()->get('cart_product_data', []);
 
         // Get detailed cart products, total price, and total quantity using the CartService
-        $cartProducts = $this->cartService->getCartProducts($cartProductData);
-        $totalPrice = $this->cartService->getTotalPrice($cartProducts);
-        $totalQuantity = $this->cartService->getTotalQuantity($cartProducts);
+        $cartItems = $this->cartService->getCartItems($sessionCartData);
+        $totalPrice = $this->cartService->getTotalPrice($cartItems, true);
+        $totalQuantity = $this->cartService->getTotalQuantity($cartItems);
 
         // Prepare view data elements (cart products, total price, total quantity)
         $viewData = [];
-        $viewData['cartProducts'] = $cartProducts;
+        $viewData['cartItems'] = $cartItems;
         $viewData['totalPrice'] = $totalPrice;
         $viewData['totalQuantity'] = $totalQuantity;
 
@@ -53,13 +53,13 @@ class CartController extends Controller
         $quantity = (int) $request->input('quantity', 1);
 
         // Retrieve existing cart product data from session
-        $cartProductData = $request->session()->get('cart_product_data', []);
+        $sessionCartData = $request->session()->get('cart_product_data', []);
 
         // Use the CartService to add the product to the cart
-        $cartProductData = $this->cartService->add($cartProductData, $id, $quantity);
+        $sessionCartData = $this->cartService->add($sessionCartData, $id, $quantity);
 
         // Update the session with the new cart product data
-        $request->session()->put('cart_product_data', $cartProductData);
+        $request->session()->put('cart_product_data', $sessionCartData);
 
         // Redirect back to the cart page with a success message
         return redirect()->route('cart')->with('success', Lang::get('cart.success.added'));
@@ -77,10 +77,10 @@ class CartController extends Controller
     public function remove(int $id, Request $request): RedirectResponse
     {
         // Retrieve existing cart product data from session
-        $cartProductData = $request->session()->get('cart_product_data', []);
+        $sessionCartData = $request->session()->get('cart_product_data', []);
 
         // Check if the product exists in the cart
-        if (isset($cartProductData[$id])) {
+        if (isset($sessionCartData[$id])) {
             // Remove the product from the cart data
             $request->session()->pull('cart_product_data', $id);
 

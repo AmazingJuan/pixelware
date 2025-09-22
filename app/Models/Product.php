@@ -167,6 +167,7 @@ class Product extends Model
 
     public function getFormattedSpecsAttribute(): array
     {
+        // Format specs for display.
         $formattedSpecs = [];
 
         foreach ($this->getSpecs() ?? [] as $specName => $specValue) {
@@ -174,5 +175,12 @@ class Product extends Model
         }
 
         return $formattedSpecs;
+    }
+
+    public function decreaseStock(int $quantity): void
+    {
+        $newStock = $this->getStock() - $quantity;
+        // Decrease stock by quantity (assumes validation done elsewhere).
+        $this->setStock($newStock);
     }
 }

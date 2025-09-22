@@ -9,14 +9,27 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
+use App\Repositories\ItemRepository;
+use App\Repositories\OrderRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class OrderController extends Controller
 {
+    protected OrderRepository $orderRepository;
+
+    protected ItemRepository $itemRepository;
+
+    public function __construct(OrderRepository $orderRepository, ItemRepository $itemRepository)
+    {
+        $this->orderRepository = $orderRepository;
+        $this->itemRepository = $itemRepository;
+    }
+
     public function index(): View
     {
-        $orders = Order::where('user_id', auth()->id())->with('items.product')->get();
+        $userId = Auth::id();
+        $orders = $this->orderRepository->getOrdersByUserId($userId);
 
         $viewData = [];
         $viewData['orders'] = $orders;
@@ -26,20 +39,9 @@ class OrderController extends Controller
 
     public function show(int $orderId): View
     {
-        $order = Order::with(['items.product', 'user'])->findOrFail($orderId);
+        $order = $this->orderRepository->find($orderId);
 
-        $items = $order->items->map(function ($item) {
-            $qty = $item->getQuantity();
-            $unitPrice = $item->formatted_price;
-            $subtotal = $unitPrice * $qty;
-
-            return [
-                'name' => $item->product->getName(),
-                'quantity' => $qty,
-                'unit_price' => $unitPrice,
-                'subtotal' => $subtotal,
-            ];
-        });
+        $items = $this->itemRepository->getItemsByOrderId($orderId);
 
         $viewData = [];
         $viewData['items'] = $items;

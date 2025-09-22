@@ -77,20 +77,22 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="d-flex flex-column flex-sm-row gap-3">
-                    <form method="POST" action="{{ route('cart.add', ['id' => $viewData['product']->getId()]) }}"
-                        class="d-flex align-items-center gap-2">
-                        @csrf
-                        <input type="number" name="quantity" value="1" min="1"
-                            class="form-control w-auto text-center" style="max-width: 80px;" required>
-                        <button type="submit" class="btn btn-info text-white fw-semibold px-4 py-2">
-                            @lang('products.actions.add_to_cart')
-                        </button>
-                    </form>
-                    <a href="{{ route('products') }}" class="btn btn-outline-info fw-semibold px-4 py-2">
-                        @lang('products.actions.back')
-                    </a>
-                </div>
+                @if ($viewData['product']->getStock() > 0)
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <form method="POST" action="{{ route('cart.add', ['id' => $viewData['product']->getId()]) }}"
+                            class="d-flex align-items-center gap-2">
+                            @csrf
+                            <input type="number" name="quantity" value="1" min="1"
+                                class="form-control w-auto text-center" style="max-width: 80px;" required>
+                            <button type="submit" class="btn btn-info text-white fw-semibold px-4 py-2">
+                                @lang('products.actions.add_to_cart')
+                            </button>
+                        </form>
+                        <a href="{{ route('products') }}" class="btn btn-outline-info fw-semibold px-4 py-2">
+                            @lang('products.actions.back')
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -163,8 +165,7 @@
 
                 <br>
                 <div class="mb-4">
-                    <button id="btnMoreInfo" 
-                        class="btn btn-outline-light fw-semibold px-4 py-2"
+                    <button id="btnMoreInfo" class="btn btn-outline-light fw-semibold px-4 py-2"
                         data-id="{{ $viewData['product']->getId() }}">
                         @lang('products.actions.more_info')
                     </button>

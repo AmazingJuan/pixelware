@@ -208,4 +208,11 @@ class User extends Authenticatable
     {
         return PresentationUtils::formatCurrency($this->getBalance());
     }
+
+    public function decreaseBalance(int $amount): void
+    {
+        $newBalance = $this->getBalance() - $amount;
+        // Decrease balance by amount (assumes validation done elsewhere).
+        $this->setBalance($newBalance);
+    }
 }

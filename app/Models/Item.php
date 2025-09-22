@@ -10,6 +10,7 @@ namespace App\Models;
 
 use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Item extends Model
 {
@@ -17,13 +18,13 @@ class Item extends Model
      * ITEM ATTRIBUTES
      * $this->attributes['id']  - int - contains the item primary key (id)
      * $this->attributes['quantity'] - int - contains the item quantity
-     * $this->attributes['price'] - int - contains the item price
+     * $this->attributes['unit_price'] - int - contains the item price
      * $this->attributes['order_id'] - int - contains the associated order id
      * $this->attributes['product_id'] - int - contains the associated product id
      * $this->attributes['created_at'] - \Illuminate\Support\Carbon - contains the item creation timestamp
      * $this->attributes['updated_at'] - \Illuminate\Support\Carbon - contains the item update timestamp
      */
-    protected $fillable = ['quantity', 'price', 'order_id', 'product_id'];
+    protected $fillable = ['quantity', 'unit_price', 'order_id', 'product_id'];
 
     // Getters
 
@@ -37,9 +38,9 @@ class Item extends Model
         return $this->attributes['quantity'];
     }
 
-    public function getPrice(): int
+    public function getUnitPrice(): int
     {
-        return $this->attributes['price'];
+        return $this->attributes['unit_price'];
     }
 
     public function getOrderId(): int
@@ -52,12 +53,12 @@ class Item extends Model
         return $this->attributes['product_id'];
     }
 
-    public function getCreatedAt(): \Illuminate\Support\Carbon
+    public function getCreatedAt(): Carbon
     {
         return $this->attributes['created_at'];
     }
 
-    public function getUpdatedAt(): \Illuminate\Support\Carbon
+    public function getUpdatedAt(): Carbon
     {
         return $this->attributes['updated_at'];
     }
@@ -98,8 +99,13 @@ class Item extends Model
 
     // Methods
 
-    public function getFormattedPriceAttribute(): string
+    public function getFormattedUnitPrice(): string
     {
-        return PresentationUtils::formatCurrency($this->getPrice());
+        return PresentationUtils::formatCurrency($this->getUnitPrice());
+    }
+
+    public function getFormattedSubtotal(): string
+    {
+        return PresentationUtils::formatCurrency($this->getUnitPrice() * $this->getQuantity());
     }
 }

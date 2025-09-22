@@ -6,7 +6,7 @@
     <div class="container py-4">
         <h2 class="mb-4">@lang('cart.title')</h2>
 
-        @if (count($viewData['cartProducts']) > 0)
+        @if (count($viewData['cartItems']) > 0)
             <div class="card shadow-sm mb-4">
                 <div class="card-body p-0">
                     <table class="table table-striped mb-0 align-middle">
@@ -19,19 +19,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($viewData['cartProducts'] as $item)
+                            @foreach ($viewData['cartItems'] as $cartItem)
                                 <tr>
                                     <td>
-                                        <strong>{{ $item['product']->getName() }}</strong>
+                                        <strong>{{ $cartItem['product']->getName() }}</strong>
                                     </td>
                                     <td class="text-center">
-                                        {{ $item['quantity'] }}
+                                        {{ $cartItem['quantity'] }}
                                     </td>
                                     <td class="text-end">
-                                        ${{ $item['formattedSubtotal'] }}
+                                        ${{ $cartItem['formattedSubtotal'] }}
                                     </td>
                                     <td class="text-center">
-                                        <form action="{{ route('cart.remove', ['id' => $item['product']->getId()]) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('cart.remove', ['id' => $cartItem['product']->getId()]) }}"
+                                            method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">
