@@ -87,4 +87,13 @@ class ProductController extends Controller
 
         return response()->json(['description' => $aiDescription]);
     }
+
+    public function ranking(): View
+    {
+        $viewData = [];
+        $products = $this->productRepository->topThree();
+        $viewData['products'] = $products;
+
+        return view('user.products.ranking', compact('viewData'));
+    }
 }

@@ -4,9 +4,19 @@
 
 @section('content')
     <section class="container py-5">
-        <h2 class="text-center text-info fw-bold mb-5 display-5">
-            @lang('products.list.title')
-        </h2>
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ url()->previous() }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left me-1"></i> @lang('admin.common.back')
+                </a>
+            </div>
+            <h2 class="text-info fw-bold display-5 mb-0 flex-grow-1 text-center">
+                @lang('products.list.title')
+            </h2>
+            <a href="{{ route('user.products.ranking') }}" class="btn btn-outline-info fw-semibold shadow">
+                <i class="bi bi-trophy-fill me-1"></i> @lang('products.ranking.title')
+            </a>
+        </div>
 
         @if (count($viewData['products']) > 0)
             <div class="row g-4">
