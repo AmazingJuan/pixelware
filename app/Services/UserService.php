@@ -10,11 +10,19 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserService
 {
+    protected UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function validate(array $data)
     {
         return Validator::make($data, [
@@ -29,13 +37,11 @@ class UserService
 
     public function create(array $data): User
     {
-        return User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'address' => $data['address'] ?? null,
-            'role' => $data['role'],
-            'balance' => $data['balance'] ?? 0,
-        ]);
+        // Hash the password before storing
+        $hashedPassword = Hash::make($data['password']);
+        $data['password'] = $hashedPassword;
+
+        // Return the created user
+        return $this->userRepository->create($data);
     }
 }

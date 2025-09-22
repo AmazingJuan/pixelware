@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('additional-title', __('products.list.title'))
+
 @section('content')
     <section class="container py-5">
         <h2 class="text-center text-info fw-bold mb-5 display-5">

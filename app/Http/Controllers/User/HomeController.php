@@ -8,13 +8,17 @@
 
 namespace App\Http\Controllers\User;
 
+// Laravel / framework
 use App\Http\Controllers\Controller;
+// App
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
+        // Return the view for the home page
+
         return view('user.home.index');
     }
 }

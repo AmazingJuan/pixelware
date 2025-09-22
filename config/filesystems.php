@@ -60,6 +60,11 @@ return [
             'report' => false,
         ],
 
+        'images' => [
+            'driver' => 'scoped',
+            'disk' => 'public',
+            'prefix' => 'images',
+        ],
     ],
 
     /*

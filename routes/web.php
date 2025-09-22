@@ -11,12 +11,14 @@ Route::prefix('products')->group(function (): void {
     Route::get('/', 'App\Http\Controllers\User\ProductController@index')->name('products');
     Route::get('/{id}', 'App\Http\Controllers\User\ProductController@show')->where('id', '[0-9]+')->name('products.show');
     Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
+    Route::get('/{id}/more-info', 'App\Http\Controllers\User\ProductController@moreInfo')->where('id', '[0-9]+')->name('products.moreInfo');
 });
 
 Route::prefix('cart')->middleware('auth')->group(function (): void {
-    Route::get('/', 'App\Http\Controllers\User\CartController@index')->name('cart.index');
+    Route::get('/', 'App\Http\Controllers\User\CartController@index')->name('cart');
     Route::post('/add/{id}', 'App\Http\Controllers\User\CartController@add')->where('id', '[0-9]+')->name('cart.add');
-    Route::post('/remove-all', 'App\Http\Controllers\User\CartController@removeAll')->name('cart.removeAll');
+    Route::delete('/', 'App\Http\Controllers\User\CartController@removeAll')->name('cart.removeAll');
+    Route::delete('/{id}', 'App\Http\Controllers\User\CartController@remove')->where('id', '[0-9]+')->name('cart.remove');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
@@ -41,4 +43,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (): void {
         Route::put('/{product}', 'App\Http\Controllers\Admin\AdminProductController@update')->name('admin.products.update');
         Route::delete('/{product}', 'App\Http\Controllers\Admin\AdminProductController@destroy')->name('admin.products.destroy');
     });
+});
+
+Route::prefix('checkout')->middleware('auth')->group(function (): void {
+    Route::get('/', 'App\Http\Controllers\User\CheckoutController@index')->name('checkout');
+});
+
+Route::prefix('orders')->middleware('auth')->group(function (): void {
+    Route::get('/', 'App\Http\Controllers\User\OrderController@index')->name('orders');
+    Route::get('/{order}', 'App\Http\Controllers\User\OrderController@show')->where('order', '[0-9]+')->name('orders.show');
 });

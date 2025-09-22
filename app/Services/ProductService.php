@@ -1,45 +1,85 @@
 <?php
 
+/*
+ * ProductService.php
+ * Service for managing products in the application.
+ * Author: Juan Avendaño
+*/
+
 namespace App\Services;
 
+use App\Interfaces\ImageManagement;
 use App\Models\Product;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use App\Repositories\ProductRepository;
 
 class ProductService
 {
-    public function createProduct(array $data): Product
-    {
-        $uploadedImage = $data['images'];
-        $data['images'] = '{}';
-        $product = Product::create($data);
-        $paths = [];
+    protected ProductRepository $productRepository;
 
-        if (! empty($tempImages)) {
-            foreach ($tempImages as $image) {
-                $paths[] = $this->storeImage($image, $product->id);
-            }
-        }
-        $product->images = json_encode($paths);
-        $product->save();
+    protected ImageManagement $imageManagement;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+        $this->imageManagement = app(ImageManagement::class, ['resource' => 'products']);
+    }
+
+    /**
+     * Create a new product with image handling.
+     */
+    public function create(array $data): Product
+    {
+        // Handle uploaded image
+        $uploadedImage = $data['image'];
+        unset($data['image']);
+
+        // Create product and store image
+        $product = $this->productRepository->create($data);
+        $path = $this->imageManagement->store($uploadedImage, $product->getId());
+
+        // Finally update product with his image path
+        $this->productRepository->update(['image_url' => $path], $product);
 
         return $product;
     }
 
-    private function storeImage(UploadedFile $image, int $productId): string
+    /**
+     * Delete a product along with its images.
+     */
+    public function destroy(Product $product): bool
     {
-        return $image->store('images/products/'.$productId, 'public');
+        // Delete product images directory
+        $this->imageManagement->deleteDirectory($product->getId());
+
+        // Delete product record
+        $deletedProduct = $this->productRepository->delete($product);
+
+        // Return true if deletion was successful
+        if (! $deletedProduct) {
+            return false;
+        }
+
+        return true;
     }
 
-    public function destroyProduct(Product $product): bool
+    public function update(array $data, Product $product): Product
     {
-        $this->deleteImages($product->id);
+        // Handle uploaded image if exists
+        if (isset($data['image'])) {
+            $uploadedImage = $data['image'];
+            unset($data['image']);
 
-        return $product->delete();
-    }
+            // Delete old image
+            $this->imageManagement->deleteDirectory($product->getId());
 
-    private function deleteImages(int $productId): void
-    {
-        Storage::disk('public')->deleteDirectory("images/products/{$productId}");
+            // Store new image and update path
+            $path = $this->imageManagement->store($uploadedImage, $product->getId());
+            $data['image_url'] = $path;
+        }
+
+        // Update product record
+        $this->productRepository->update($data, $product);
+
+        return $product;
     }
 }

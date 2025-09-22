@@ -8,7 +8,9 @@
 
 namespace App\Models;
 
+use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Order extends Model
 {
@@ -22,6 +24,11 @@ class Order extends Model
      * $this->attributes['updated_at'] - \Illuminate\Support\Carbon - contains the order update timestamp
      */
     protected $fillable = ['user_id', 'status', 'total'];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     // Getters
 
@@ -42,15 +49,21 @@ class Order extends Model
 
     public function getTotalPrice(): int
     {
-        return $this->attributes['total_price'];
+        return $this->attributes['total'];
     }
 
-    public function getCreatedAt(): \Illuminate\Support\Carbon
+    public function getCreatedAt(): Carbon
     {
-        return $this->attributes['created_at'];
+        $value = $this->getAttribute('created_at');
+
+        if ($value instanceof Carbon) {
+            return $value;
+        }
+
+        return Carbon::parse($value);
     }
 
-    public function getUpdatedAt(): \Illuminate\Support\Carbon
+    public function getUpdatedAt(): Carbon
     {
         return $this->attributes['updated_at'];
     }
@@ -82,5 +95,12 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Methods
+
+    public function getFormattedTotalAttribute(): string
+    {
+        return PresentationUtils::formatCurrency($this->getTotalPrice());
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * UpdateUserRequest.php
+ * AdminUpdateUserRequest.php
  * Request class for updating user data.
  * Author: Santiago Manco
  */

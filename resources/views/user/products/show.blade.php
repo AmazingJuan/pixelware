@@ -1,15 +1,19 @@
 @extends('layouts.app')
 
+@section('additional-title', $viewData['product']->getName())
+
 @section('content')
     <section class="container py-5">
         <div class="row g-4 bg-dark text-light rounded shadow-lg p-4">
-            <!-- Product Images -->
+            <!-- Product Image -->
             <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
                 <div class="w-100 bg-secondary rounded overflow-hidden mb-3 d-flex align-items-center justify-content-center"
                     style="height: 300px;">
-                    {{-- Aquí irá el carrusel o la imagen principal con JS --}}
                     <div id="product-image-gallery" class="w-100 h-100 d-flex align-items-center justify-content-center">
-                        {{-- Imagen principal --}}
+                        <img src="{{ asset($viewData['product']->getImageUrl()) }}"
+                            alt="{{ $viewData['product']->getName() }}" class="img-fluid"
+                            style="max-height: 100%; max-width: 100%;">
+
                     </div>
                 </div>
             </div>
@@ -74,17 +78,11 @@
 
                 <!-- Action Buttons -->
                 <div class="d-flex flex-column flex-sm-row gap-3">
-                    <form method="POST" action="{{ route('cart.add', ['id' => $viewData['product']->getId()]) }}" class="d-flex align-items-center gap-2">
+                    <form method="POST" action="{{ route('cart.add', ['id' => $viewData['product']->getId()]) }}"
+                        class="d-flex align-items-center gap-2">
                         @csrf
-                        <input 
-                                type="number" 
-                                name="quantity" 
-                                value="1" 
-                                min="1" 
-                                class="form-control w-auto text-center"
-                                style="max-width: 80px;"
-                                required
-                        >
+                        <input type="number" name="quantity" value="1" min="1"
+                            class="form-control w-auto text-center" style="max-width: 80px;" required>
                         <button type="submit" class="btn btn-info text-white fw-semibold px-4 py-2">
                             @lang('products.actions.add_to_cart')
                         </button>
@@ -162,6 +160,19 @@
                 @else
                     <div class="fw-semibold" style="color: #b6c2cf;">@lang('products.reviews.empty')</div>
                 @endif
+
+                <br>
+                <div class="mb-4">
+                    <button id="btnMoreInfo" 
+                        class="btn btn-outline-light fw-semibold px-4 py-2"
+                        data-id="{{ $viewData['product']->getId() }}">
+                        @lang('products.actions.more_info')
+                    </button>
+                </div>
+
+                <div id="aiDescription" class="mt-3 text-light fst-italic"></div>
+
+                <script src="{{ asset('js/products/product-more-info.js') }}"></script>
             </div>
         </div>
     </section>

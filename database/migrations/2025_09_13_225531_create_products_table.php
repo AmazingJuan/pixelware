@@ -24,8 +24,8 @@ return new class extends Migration
             $table->integer('stock');
             $table->integer('price');
             $table->string('category');
-            $table->json('specs');
-            $table->json('image_urls');
+            $table->json('specs')->nullable();
+            $table->string('image_url')->default('favicon.ico');
             $table->float('average_rating')->default(0);
             $table->integer('reviews_count')->default(0);
             $table->timestamps();

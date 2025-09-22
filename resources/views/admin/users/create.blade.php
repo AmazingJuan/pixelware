@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('additional-title', __('admin.users.title'))
+
 @section('content')
     <div class="container">
         <div class="bg-dark text-light rounded shadow-lg p-4 p-sm-5">

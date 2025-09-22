@@ -1,13 +1,27 @@
 @extends('layouts.app')
 
+@section('additional-title', __('admin.products.title'))
+
 @section('content')
     <div class="container">
         <div class="bg-dark text-light rounded shadow-lg p-4 p-sm-5">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2 class="h4 text-info fw-bold mb-1">@lang('admin.products.title')</h2>
-                    <p class="mb-0 text-muted small">@lang('admin.products.subtitle', [], null)</p>
+
+            <!-- Header: Go Back, Title, Create -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <!-- Left: Go Back -->
+                <div class="d-flex align-items-center gap-2">
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i> @lang('admin.common.back')
+                    </a>
                 </div>
+
+                <!-- Center: Title & Subtitle -->
+                <div class="text-center flex-grow-1">
+                    <h2 class="h4 text-info fw-bold mb-1">@lang('admin.products.title')</h2>
+                    <p class="mb-0 text-muted small">@lang('admin.products.subtitle')</p>
+                </div>
+
+                <!-- Right: Create Button -->
                 <div class="text-end">
                     <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
                         <i class="bi bi-plus-lg me-1"></i> @lang('admin.common.create')
@@ -15,16 +29,10 @@
                 </div>
             </div>
 
-            @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-
             @if (count($viewData['products']) === 0)
                 <div class="alert alert-info text-center my-5 py-5">
                     <i class="bi bi-box-seam display-4 d-block mb-3 text-info"></i>
                     <div class="fs-5">@lang('admin.products.empty')</div>
-                    <div class="mt-3">
-                    </div>
                 </div>
             @else
                 <div class="table-responsive">
@@ -45,7 +53,7 @@
                                     <td class="text-info fw-semibold">{{ $product->getId() }}</td>
                                     <td>
                                         <div class="fw-semibold">{{ $product->getName() }}</div>
-                                        <div class="small text-muted">{{ Str::limit($product->getDescription(), 60) }}</div>
+                                        <div class="small text-light">{{ Str::limit($product->getDescription(), 60) }}</div>
                                     </td>
                                     <td>
                                         <span class="badge bg-info text-dark">{{ $product->getCategory() }}</span>
@@ -55,7 +63,7 @@
                                         @if ($product->getStock() > 0)
                                             <span class="text-success fw-bold">{{ $product->getStock() }}</span>
                                         @else
-                                            <span class="text-danger fw-semibold">@lang('admin.products.fields.out_of_stock')</span>
+                                            <span class="text-danger fw-semibold">@lang('admin.products.out_of_stock')</span>
                                         @endif
                                     </td>
                                     <td class="text-center">
@@ -65,7 +73,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <a href="{{ route('products.show', $product) }}"
-                                                class="btn btn-sm btn-outline-info">
+                                                class="btn btn-sm btn-outline-info" target="_blank">
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
