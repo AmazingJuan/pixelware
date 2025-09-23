@@ -38,6 +38,11 @@
         </div>
 
         <div class="mb-3">
+            <label for="address">@lang('admin.users.attributes.address')</label>
+            <input type="text" name="address" id="address" value="{{ $user->getAddress() }}" class="form-control">
+        </div>
+
+        <div class="mb-3">
             <label for="role">@lang('admin.users.attributes.role')</label>
             <select name="role" id="role" class="form-select">
                 <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>@lang('admin.users.roles.admin')</option>

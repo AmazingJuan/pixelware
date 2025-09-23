@@ -75,7 +75,7 @@
                         <label class="form-label">@lang('admin.products.attributes.image')</label>
                         @if ($viewData['product']->getImageUrl())
                             <div class="mb-2">
-                                <img src="{{ asset($viewData['product']->getImageUrl()) }}"
+                                <img src="{{ asset('storage/'.$viewData['product']->getImageUrl()) }}"
                                     alt="{{ $viewData['product']->getName() }}" class="img-thumbnail"
                                     style="max-height:150px;">
                             </div>

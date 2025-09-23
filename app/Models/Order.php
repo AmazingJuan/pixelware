@@ -97,9 +97,9 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Methods
+    // Util methods
 
-    public function getFormattedTotalAttribute(): string
+    public function getFormattedTotal(): string
     {
         return PresentationUtils::formatCurrency($this->getTotalPrice());
     }

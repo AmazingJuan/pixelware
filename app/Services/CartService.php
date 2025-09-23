@@ -29,52 +29,61 @@ class CartService
         return $sessionCartData;
     }
 
-    public function getCartProducts($cartProductData)
+    private function getItemsProducts($cartItemData)
     {
-        // Fetch products by IDs present in the cart
-        $productIds = array_keys($cartProductData);
+        // Retrieve cart items and calculate totals
+        $productIds = array_keys($cartItemData);
         $products = $this->productRepository->getProductsByIds($productIds);
 
-        // Prepare detailed cart information
-        $cartInfo = [];
+        return $products;
+    }
 
-        foreach ($products as $product) {
-            $cartInfo[] = [
-                'product' => $product,
-                'quantity' => $cartProductData[$product->id],
-                'subtotal' => $product->price * $cartProductData[$product->id],
-                'formattedSubtotal' => PresentationUtils::formatCurrency($product->getPrice() * $cartProductData[$product->getId()]),
+    public function getCartItems($sessionCartData)
+    {
+        // Fetch products by IDs present in the cart
+        $cartProducts = $this->getItemsProducts($sessionCartData);
+
+        // Prepare detailed cart information
+        $cartItems = [];
+
+        foreach ($cartProducts as $cartProduct) {
+            $cartItems[] = [
+                'product' => $cartProduct,
+                'quantity' => $sessionCartData[$cartProduct->id],
+                'subtotal' => $cartProduct->price * $sessionCartData[$cartProduct->id],
+                'formattedSubtotal' => PresentationUtils::formatCurrency($cartProduct->getPrice() * $sessionCartData[$cartProduct->getId()]),
             ];
         }
 
-        return $cartInfo;
+        return $cartItems;
     }
 
-    public function getTotalPrice($cartInfo)
+    public function getTotalPrice($cartItems, $needsFormatting = false)
     {
         // Calculate total price from cart items
         $totalPrice = 0;
 
         // Sum up subtotals
-        foreach ($cartInfo as $item) {
-            $totalPrice += $item['subtotal'];
-
-            unset($item['subtotal']);
+        foreach ($cartItems as $cartItem) {
+            $totalPrice += $cartItem['subtotal'];
+            unset($cartItem['subtotal']);
         }
 
-        // Format total price for display
-        $formattedTotalPrice = PresentationUtils::formatCurrency($totalPrice);
+        // Format total price if needed
+        if ($needsFormatting) {
+            return PresentationUtils::formatCurrency($totalPrice);
+        }
 
-        return $formattedTotalPrice;
+        return $totalPrice;
     }
 
-    public function getTotalQuantity($cartProducts)
+    public function getTotalQuantity($cartItems)
     {
         // Calculate total quantity from cart items
         $totalQuantity = 0;
 
-        foreach ($cartProducts as $item) {
-            $totalQuantity += $item['quantity'];
+        foreach ($cartItems as $cartItem) {
+            $totalQuantity += $cartItem['quantity'];
         }
 
         return $totalQuantity;

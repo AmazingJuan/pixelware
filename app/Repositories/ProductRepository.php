@@ -21,4 +21,15 @@ class ProductRepository extends BaseRepository
         // Get products by an array of IDs.
         return $this->query()->whereIn('id', $ids)->get();
     }
+
+
+    // Get top 3 products by average review rating.
+    public function topThree()
+    {
+        // Get the top 3 products based on average review ratings.
+        return $this->query()
+            ->orderByDesc('average_rating')
+            ->take(3)
+            ->get();
+    }
 }

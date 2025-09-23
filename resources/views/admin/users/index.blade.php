@@ -55,7 +55,7 @@
                                     <td class="text-center">
                                         <span class="badge bg-info text-dark">{{ ucfirst($user->getRole()) }}</span>
                                     </td>
-                                    <td class="text-end">${{ number_format($user->getBalance(), 0, '', ',') }}</td>
+                                    <td class="text-end">${{ $user->getFormattedBalance() }}</td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
                                             <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning"

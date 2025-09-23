@@ -56,6 +56,14 @@ abstract class BaseRepository
     }
 
     /**
+     * Refresh a model instance with the latest data from the database.
+     */
+    public function refresh(Model $entity): ?Model
+    {
+        return $entity->fresh($this->with);
+    }
+
+    /**
      * Update a record by ID or Model.
      */
     public function update(array $data, ?Model $entity = null, $id = null): ?Model
@@ -68,7 +76,7 @@ abstract class BaseRepository
         if ($entity) {
             $entity->update($data);
 
-            return $entity->fresh($this->with);
+            return $this->refresh($entity);
         }
 
         return null;
@@ -88,5 +96,15 @@ abstract class BaseRepository
         }
 
         return $entity;
+    }
+
+    /**
+     * Save an existing model.
+     */
+    public function save(Model $entity): Model
+    {
+        $entity->save();
+
+        return $this->refresh($entity);
     }
 }

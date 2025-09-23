@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * OpenAIService.php
+ * Service for managing AI description for products.
+ * Author: Santiago Manco
+*/
+
 namespace App\Services;
 
 use League\CommonMark\CommonMarkConverter;

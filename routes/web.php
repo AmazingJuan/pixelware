@@ -12,6 +12,7 @@ Route::prefix('products')->group(function (): void {
     Route::get('/{id}', 'App\Http\Controllers\User\ProductController@show')->where('id', '[0-9]+')->name('products.show');
     Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
     Route::get('/{id}/more-info', 'App\Http\Controllers\User\ProductController@moreInfo')->where('id', '[0-9]+')->name('products.moreInfo');
+    Route::get('/top-3', 'App\Http\Controllers\User\ProductController@ranking')->name('user.products.ranking');
 });
 
 Route::prefix('cart')->middleware('auth')->group(function (): void {
@@ -52,4 +53,5 @@ Route::prefix('checkout')->middleware('auth')->group(function (): void {
 Route::prefix('orders')->middleware('auth')->group(function (): void {
     Route::get('/', 'App\Http\Controllers\User\OrderController@index')->name('orders');
     Route::get('/{order}', 'App\Http\Controllers\User\OrderController@show')->where('order', '[0-9]+')->name('orders.show');
+    Route::get('/{orderId}/pdf', 'App\Http\Controllers\User\OrderController@downloadPdf')->name('orders.pdf');
 });
