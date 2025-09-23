@@ -11,6 +11,7 @@ El sistema cuenta con dos secciones principales:
 ## Instalación y Ejecución
 
 **ANTES DE COMENZAR, TENER INSTALADO XAMPP E INICIALIZAR APACHE Y MYSQL**
+En PHPMyAdmin, crear una base de datos llamada `pixelware` antes de continuar con los siguientes pasos
 
 ### 1. Clonar repositorio
 ```bash
@@ -31,13 +32,13 @@ Copiar el archivo `.env.example` a `.env` y configurar:
 cp .env.example .env
 ```
 
-El archivo .env.example viene con unos valores "recomendados" para la base de datos, en caso de ser necesario, actualizar las variables de conexión:
+El archivo `.env.example` viene con unos valores "recomendados" para la base de datos, en caso de ser necesario, actualizar las variables de conexión:
 
 ```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=nombre_base
+DB_DATABASE=pixelware
 DB_USERNAME=usuario
 DB_PASSWORD=contraseña
 ```
