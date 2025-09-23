@@ -8,13 +8,11 @@
 
 namespace App\Models;
 
-
 // Laravel / Illuminate classes
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-// App
 use App\Utils\PresentationUtils;
+use Illuminate\Database\Eloquent\Model;
+// App
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -169,7 +167,7 @@ class Product extends Model
 
     // Relationships.
 
-    public function reviews() : HasMany
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }

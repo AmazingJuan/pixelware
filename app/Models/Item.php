@@ -8,14 +8,12 @@
 
 namespace App\Models;
 
-
 // Laravel / Illuminate classes
+use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
-
 // App
-use App\Utils\PresentationUtils;
+use Illuminate\Support\Carbon;
 
 class Item extends Model
 {
@@ -92,12 +90,12 @@ class Item extends Model
 
     // Relationships
 
-    public function order() : BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
-    public function product() : BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id');
     }

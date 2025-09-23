@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 // Third-party / packages
 use League\CommonMark\CommonMarkConverter;
 use OpenAI;

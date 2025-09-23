@@ -2,13 +2,11 @@
 
 namespace App\Providers;
 
-
 // Laravel / Illuminate classes
-use Illuminate\Support\ServiceProvider;
-
-// App
 use App\Interfaces\ImageManagement;
+// App
 use App\Utils\ProductImageManagement;
+use Illuminate\Support\ServiceProvider;
 
 class ImageServiceProvider extends ServiceProvider
 {

@@ -10,12 +10,11 @@
 namespace App\Services;
 
 // Laravel / Illuminate classes
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-
-// App
 use App\Models\User;
 use App\Repositories\UserRepository;
+// App
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserService
 {
@@ -47,5 +46,16 @@ class UserService
 
         // Return the created user
         return $this->userRepository->create($data);
+    }
+
+    public function update(array $data, User $user): User
+    {
+        if (! empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
+        return $this->userRepository->update($data, $user);
     }
 }

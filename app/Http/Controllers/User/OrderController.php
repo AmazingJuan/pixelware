@@ -9,16 +9,14 @@
 namespace App\Http\Controllers\User;
 
 // Third-party / packages
-use Barryvdh\DomPDF\Facade\Pdf;
-
-// Laravel / framework
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
-
-// App
 use App\Http\Controllers\Controller;
+// Laravel / framework
 use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
+// App
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {

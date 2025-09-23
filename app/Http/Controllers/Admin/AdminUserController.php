@@ -72,13 +72,7 @@ class AdminUserController extends Controller
         // Gather validated data
         $validatedData = $request->validated();
 
-        if (! empty($validatedData['password'])) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
-        } else {
-            unset($validatedData['password']);
-        }
-
-        $this->userRepository->update($validatedData, $user);
+        $this->userService->update($validatedData, $user);
 
         return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.updated'));
     }

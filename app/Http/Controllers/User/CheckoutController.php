@@ -9,17 +9,15 @@
 namespace App\Http\Controllers\User;
 
 // PHP native / global classes
-use Exception;
-
+use App\Http\Controllers\Controller;
 // Laravel / framework
+use App\Services\OrderService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+// App
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-
-// App
-use App\Http\Controllers\Controller;
-use App\Services\OrderService;
 
 class CheckoutController extends Controller
 {
@@ -55,7 +53,7 @@ class CheckoutController extends Controller
             return redirect()->route('orders.show', ['order' => $order->getId()])->with('success', Lang::get('checkout.success'));
         } catch (Exception $e) {
             // Handle any exceptions that occur during checkout
-            
+
             return back()->withErrors($e->getMessage());
         }
     }

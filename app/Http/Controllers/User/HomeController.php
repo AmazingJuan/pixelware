@@ -10,7 +10,6 @@ namespace App\Http\Controllers\User;
 
 // Laravel / framework
 use App\Http\Controllers\Controller;
-
 // App
 use Illuminate\View\View;
 
