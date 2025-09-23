@@ -26,8 +26,7 @@ class User extends Authenticatable
      * $this->attributes['email']               - string                     - User email
      * $this->attributes['email_verified_at']   - \Illuminate\Support\Carbon|null - Email verification timestamp
      * $this->attributes['password']            - string                     - Hashed password
-     * $this->attributes['address']             - array|null                 - User address (JSON)
-     * $this->attributes['chat_history_ai']     - array|null                 - AI chat history (JSON)
+     * $this->attributes['address']             - string                     - User address
      * $this->attributes['balance']             - int                        - Account balance
      * $this->attributes['role']                - string                     - User role ('admin' or 'customer')
      * $this->attributes['remember_token']      - string|null                - Token for "remember me" sessions
@@ -40,7 +39,6 @@ class User extends Authenticatable
         'email_verified_at',
         'password',
         'address',
-        'chat_history_ai',
         'balance',
         'role',
     ];
@@ -51,8 +49,6 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'address' => 'array',
-        'chat_history_ai' => 'array',
         'email_verified_at' => 'datetime',
     ];
 
@@ -83,14 +79,9 @@ class User extends Authenticatable
         return $this->attributes['password'];
     }
 
-    public function getAddress(): ?array
+    public function getAddress(): string
     {
         return $this->attributes['address'];
-    }
-
-    public function getChatHistoryAi(): ?array
-    {
-        return $this->attributes['chat_history_ai'];
     }
 
     public function getBalance(): int
@@ -145,14 +136,9 @@ class User extends Authenticatable
         $this->attributes['password'] = $password;
     }
 
-    public function setAddress(?array $address): void
+    public function setAddress(string $address): void
     {
         $this->attributes['address'] = $address;
-    }
-
-    public function setChatHistoryAi(?array $chat_history_ai): void
-    {
-        $this->attributes['chat_history_ai'] = $chat_history_ai;
     }
 
     public function setBalance(int $balance): void

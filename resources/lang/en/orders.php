@@ -34,4 +34,5 @@ return [
 
     'back_to_shop' => 'Continue shopping',
     'continue_shopping' => 'Continue shopping',
+    'download_pdf' => 'Download PDF',
 ];

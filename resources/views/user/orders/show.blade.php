@@ -40,8 +40,8 @@
                             <tbody>
                                 @foreach ($viewData['items'] as $item)
                                     <tr>
-                                        <td>{{ $item['name'] }}</td>
-                                        <td class="text-center">{{ $item['quantity'] }}</td>
+                                        <td>{{ $item->product->getName() }}</td>
+                                        <td class="text-center">{{ $item->getQuantity() }}</td>
                                         <td class="text-end">${{ $item->getFormattedUnitPrice() }}</td>
                                         <td class="text-end">${{ $item->getFormattedSubtotal() }}</td>
                                     </tr>
@@ -67,6 +67,13 @@
 
                         <div class="mt-3">
                             <a href="{{ route('products') }}" class="btn btn-primary w-100">@lang('orders.continue_shopping')</a>
+                        </div>
+
+                        <div class="mt-3">
+                            <a href="{{ route('orders.pdf', ['orderId' => $viewData['order']->getId()]) }}" 
+                            class="btn btn-danger w-100">
+                            <i class="bi bi-file-earmark-pdf"></i> @lang('orders.download_pdf')
+                            </a>
                         </div>
                     </div>
                 </div>

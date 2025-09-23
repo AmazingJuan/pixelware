@@ -61,6 +61,14 @@
                             class="form-control form-control-dark border-0 rounded-3 px-3 py-2" required min="0">
                     </div>
                 </div>
+                
+                <div class="col-md-6">
+                    <label for="address" class="form-label fw-semibold text-info">@lang('admin.users.attributes.address')</label>
+                    <textarea id="address" class="form-control @error('address') is-invalid @enderror" name="address">{{ old('address') }}</textarea>
+                    @error('address')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
 
                 <div class="col-md-6">
                     <label for="role" class="form-label fw-semibold text-info">@lang('admin.users.attributes.role')</label>

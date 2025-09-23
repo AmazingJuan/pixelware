@@ -3,7 +3,7 @@
 /*
  * OrderController.php
  * Controller for managing the orders.
- * Author: Juan Jose Gomez
+ * Author: Juan Jose Gomez & Santiago Manco
 */
 
 namespace App\Http\Controllers\User;
@@ -13,6 +13,7 @@ use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -48,5 +49,19 @@ class OrderController extends Controller
         $viewData['order'] = $order;
 
         return view('user.orders.show')->with('viewData', $viewData);
+    }
+
+    public function downloadPdf(int $orderId)
+    {
+        $order = $this->orderRepository->find($orderId);
+        $items = $this->itemRepository->getItemsByOrderId($orderId);
+
+        $viewData = [];
+        $viewData['order'] = $order;
+        $viewData['items'] = $items;
+
+        $pdf = Pdf::loadView('user.orders.pdf', ['viewData' => $viewData]);
+
+        return $pdf->download('order_'.$order->getId().'.pdf');
     }
 }

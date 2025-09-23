@@ -23,6 +23,7 @@ class AdminStoreUserRequest extends FormRequest
             'username' => 'required|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'address' => 'required|string|max:255',
             'role' => 'required|in:admin,customer',
             'balance' => 'required|integer|min:0',
         ];
