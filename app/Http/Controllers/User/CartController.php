@@ -8,12 +8,12 @@
 
 namespace App\Http\Controllers\User;
 
-// Laravel / framework
+// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
 use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-// App
+// Application classes
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 

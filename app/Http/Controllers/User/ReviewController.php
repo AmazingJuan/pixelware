@@ -11,7 +11,7 @@ namespace App\Http\Controllers\User;
 // Laravel / framework
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
-// App
+// Application / App
 use App\Repositories\ReviewRepository;
 use App\Services\ReviewService;
 use Illuminate\Http\RedirectResponse;

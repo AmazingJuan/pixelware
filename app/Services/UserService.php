@@ -12,7 +12,7 @@ namespace App\Services;
 // Laravel / Illuminate classes
 use App\Models\User;
 use App\Repositories\UserRepository;
-// App
+// Application / App
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 

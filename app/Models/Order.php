@@ -13,7 +13,7 @@ use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-// App
+// Application / App
 use Illuminate\Support\Carbon;
 
 class Order extends Model

@@ -12,12 +12,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
+// Application / App
 use App\Models\User;
-// App
 use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 
@@ -72,6 +71,7 @@ class AdminUserController extends Controller
         // Gather validated data
         $validatedData = $request->validated();
 
+        // Update user using service (which also manages password hashing)
         $this->userService->update($validatedData, $user);
 
         return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.updated'));

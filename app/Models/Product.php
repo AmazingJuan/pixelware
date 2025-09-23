@@ -10,8 +10,9 @@ namespace App\Models;
 
 // Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-// App
+// Application / App
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
@@ -102,7 +103,7 @@ class Product extends Model
         return $this->attributes['times_purchased'];
     }
 
-    public function getReviews()
+    public function getReviews(): Collection
     {
         return $this->reviews()->with('user')->get();
     }

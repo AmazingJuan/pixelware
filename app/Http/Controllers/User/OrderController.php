@@ -10,11 +10,12 @@ namespace App\Http\Controllers\User;
 
 // Third-party / packages
 use App\Http\Controllers\Controller;
-// Laravel / framework
+// Laravel / Illuminate classes
 use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
-// App
 use Barryvdh\DomPDF\Facade\Pdf;
+// App
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -64,7 +65,7 @@ class OrderController extends Controller
         return view('user.orders.show')->with('viewData', $viewData);
     }
 
-    public function downloadPdf(int $orderId)
+    public function downloadPdf(int $orderId): Response
     {
         // Find the order and its items
         $order = $this->orderRepository->find($orderId);

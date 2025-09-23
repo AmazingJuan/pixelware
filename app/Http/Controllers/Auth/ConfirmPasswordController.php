@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
+// App
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
 
 class ConfirmPasswordController extends Controller

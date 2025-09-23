@@ -2,9 +2,15 @@
 
 namespace App\Providers;
 
+/*
+ * ImageServiceProvider.php
+ * Service provider for managing image uploads and processing.
+ * Author: Juan Avendaño
+*/
+
 // Laravel / Illuminate classes
 use App\Interfaces\ImageManagement;
-// App
+// Application / App
 use App\Utils\ProductImageManagement;
 use Illuminate\Support\ServiceProvider;
 

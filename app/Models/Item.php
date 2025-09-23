@@ -12,7 +12,7 @@ namespace App\Models;
 use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// App
+// Application / App
 use Illuminate\Support\Carbon;
 
 class Item extends Model

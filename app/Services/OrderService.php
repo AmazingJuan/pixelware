@@ -12,7 +12,7 @@ namespace App\Services;
 use App\Models\Order;
 // Laravel / Illuminate classes
 use App\Models\User;
-// App
+// Application / App
 use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
