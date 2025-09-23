@@ -10,6 +10,8 @@ El sistema cuenta con dos secciones principales:
 
 ## Instalación y Ejecución
 
+**ANTES DE COMENZAR, TENER INSTALADO XAMPP E INICIALIZAR APACHE Y MYSQL**
+
 ### 1. Clonar repositorio
 ```bash
 git clone https://github.com/AmazingJuan/pixelware.git
