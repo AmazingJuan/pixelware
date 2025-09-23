@@ -36,6 +36,7 @@ class AdminUserController extends Controller
 
     public function index(): View
     {
+        // Create an array to hold view data
         $viewData = [];
 
         $users = $this->userRepository->all();
@@ -52,8 +53,10 @@ class AdminUserController extends Controller
 
     public function store(AdminStoreUserRequest $request): RedirectResponse
     {
+        // Validate the request data
         $validatedData = $request->validated();
 
+        // Hash the password before storing (handled in the service)
         $this->userService->create($validatedData);
 
         return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.created'));
@@ -66,23 +69,20 @@ class AdminUserController extends Controller
 
     public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
     {
+        // Gather validated data
         $validatedData = $request->validated();
 
-        if (! empty($validatedData['password'])) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
-        } else {
-            unset($validatedData['password']);
-        }
-
-        $this->userRepository->update($validatedData, $user);
+        $this->userService->update($validatedData, $user);
 
         return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.updated'));
     }
 
     public function destroy(User $user): RedirectResponse
     {
+        // Prevent deletion of the currently authenticated user
         $this->userRepository->delete($user);
 
+        // Redirect to users list with success message
         return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.deleted'));
     }
 }

@@ -8,8 +8,11 @@
 
 namespace App\Models;
 
+// Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+// App
 use Illuminate\Support\Carbon;
 
 class Item extends Model
@@ -70,9 +73,9 @@ class Item extends Model
         $this->attributes['quantity'] = $quantity;
     }
 
-    public function setPrice(int $price): void
+    public function setUnitPrice(int $price): void
     {
-        $this->attributes['price'] = $price;
+        $this->attributes['unit_price'] = $price;
     }
 
     public function setOrderId(int $orderId): void
@@ -87,12 +90,12 @@ class Item extends Model
 
     // Relationships
 
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id');
     }

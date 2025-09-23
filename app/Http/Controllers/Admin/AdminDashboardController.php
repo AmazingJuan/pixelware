@@ -8,19 +8,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+// Laravel / framework
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'admin']);
-    }
-
     public function index(): View
     {
-
+        // Display the admin dashboard
         return view('admin.dashboard.index');
     }
 }

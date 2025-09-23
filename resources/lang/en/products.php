@@ -67,9 +67,10 @@ return [
     */
 
     'ranking' => [
-        'title' => 'Top 3 Products by Rating',
+        'title_rating' => 'Top 3 Products by Rating',
         'empty' => 'No products available for ranking.',
+        'title_sales' => 'Top 3 Products by Sales',
+        'times_purchased' => 'Times Purchased',
+        'sales_empty' => 'No sales data available.',
     ],
-
-
 ];

@@ -21,6 +21,7 @@ use Illuminate\View\View;
 
 class AdminProductController extends Controller
 {
+    // Repository and Service instances for product management
     protected ProductRepository $productRepository;
 
     protected ProductService $productService;
@@ -74,7 +75,6 @@ class AdminProductController extends Controller
 
     public function destroy(int $productId)
     {
-
         // Find product by ID
         $product = $this->productRepository->find($productId);
 

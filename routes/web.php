@@ -12,7 +12,8 @@ Route::prefix('products')->group(function (): void {
     Route::get('/{id}', 'App\Http\Controllers\User\ProductController@show')->where('id', '[0-9]+')->name('products.show');
     Route::post('/{id}/reviews', 'App\Http\Controllers\User\ReviewController@store')->where('id', '[0-9]+')->name('products.reviews.store');
     Route::get('/{id}/more-info', 'App\Http\Controllers\User\ProductController@moreInfo')->where('id', '[0-9]+')->name('products.moreInfo');
-    Route::get('/top-3', 'App\Http\Controllers\User\ProductController@ranking')->name('user.products.ranking');
+    Route::get('/top-3-rating', 'App\Http\Controllers\User\ProductController@rankingRating')->name('user.products.ranking.rating');
+    Route::get('/top-3-sales', 'App\Http\Controllers\User\ProductController@rankingSales')->name('user.products.ranking.sales');
 });
 
 Route::prefix('cart')->middleware('auth')->group(function (): void {

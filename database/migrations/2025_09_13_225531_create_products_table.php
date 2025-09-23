@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('image_url')->default('favicon.ico');
             $table->float('average_rating')->default(0);
             $table->integer('reviews_count')->default(0);
+            $table->integer('times_purchased')->default(0);
             $table->timestamps();
         });
     }

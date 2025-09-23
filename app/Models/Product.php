@@ -8,8 +8,11 @@
 
 namespace App\Models;
 
+// Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
+// App
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -26,6 +29,7 @@ class Product extends Model
      * $this->attributes['image_url']  - string                      - Product image URLs (JSON)
      * $this->attributes['average_rating'] - float                  - Average product rating
      * $this->attributes['reviews_count'] - int                     - Number of reviews
+     * $this->attributes['times_purchased'] - int                   - Number of times the product has been purchased
      * $this->attributes['created_at']  - \Illuminate\Support\Carbon - Record creation timestamp
      * $this->attributes['updated_at']  - \Illuminate\Support\Carbon - Record last update timestamp
      */
@@ -93,6 +97,11 @@ class Product extends Model
         return $this->attributes['reviews_count'];
     }
 
+    public function getTimesPurchased(): int
+    {
+        return $this->attributes['times_purchased'];
+    }
+
     public function getReviews()
     {
         return $this->reviews()->with('user')->get();
@@ -151,9 +160,14 @@ class Product extends Model
         $this->attributes['reviews_count'] = $reviewsCount;
     }
 
+    public function setTimesPurchased(int $timesPurchased): void
+    {
+        $this->attributes['times_purchased'] = $timesPurchased;
+    }
+
     // Relationships.
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
@@ -182,5 +196,12 @@ class Product extends Model
         $newStock = $this->getStock() - $quantity;
         // Decrease stock by quantity (assumes validation done elsewhere).
         $this->setStock($newStock);
+    }
+
+    public function increaseTimesPurchased(int $quantity): void
+    {
+        $newTimesPurchased = $this->getTimesPurchased() + $quantity;
+        // Increase times purchased by quantity.
+        $this->setTimesPurchased($newTimesPurchased);
     }
 }

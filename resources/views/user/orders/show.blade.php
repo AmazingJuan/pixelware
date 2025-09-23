@@ -4,14 +4,6 @@
     <div class="container py-4">
         <h2 class="mb-3">@lang('orders.show.title') #{{ $viewData['order']->getId() }}</h2>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        @if ($errors->any())
-            <div class="alert alert-danger">{{ $errors->first() }}</div>
-        @endif
-
         <div class="row g-4">
             <div class="col-lg-8">
                 <div class="card shadow-sm mb-4">
@@ -70,9 +62,9 @@
                         </div>
 
                         <div class="mt-3">
-                            <a href="{{ route('orders.pdf', ['orderId' => $viewData['order']->getId()]) }}" 
-                            class="btn btn-danger w-100">
-                            <i class="bi bi-file-earmark-pdf"></i> @lang('orders.download_pdf')
+                            <a href="{{ route('orders.pdf', ['orderId' => $viewData['order']->getId()]) }}"
+                                class="btn btn-danger w-100">
+                                <i class="bi bi-file-earmark-pdf"></i> @lang('orders.download_pdf')
                             </a>
                         </div>
                     </div>
