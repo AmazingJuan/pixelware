@@ -8,6 +8,7 @@
 
 namespace App\Interfaces;
 
+// Laravel / framework
 use Illuminate\Http\UploadedFile;
 
 // This interface defines the contract for resource image management classes.

@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+// App
 use App\Models\Review;
 use App\Repositories\ProductRepository;
 use App\Repositories\ReviewRepository;
@@ -15,6 +16,7 @@ use App\Utils\MathUtils;
 
 class ReviewService
 {
+    // Repositories
     protected ReviewRepository $reviewRepository;
 
     protected ProductRepository $productRepository;

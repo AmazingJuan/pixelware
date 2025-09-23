@@ -8,17 +8,23 @@
 
 namespace App\Services;
 
+// PHP native / global classes
+use Exception;
+
+// Laravel / Illuminate classes
+use Illuminate\Support\Facades\DB;
+
+// App
 use App\Models\Order;
 use App\Models\User;
 use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;
-use Exception;
-use Illuminate\Support\Facades\DB;
 
 class OrderService
 {
+    // Repository and Service instances for order management
     protected CartService $cartService;
 
     protected OrderRepository $orderRepository;
@@ -41,17 +47,23 @@ class OrderService
 
     private function validateStock(array $cartItems): void
     {
+        // Validate stock for each item in the cart
         foreach ($cartItems as $cartItem) {
+            // Get quantity and product details
             $qty = $cartItem['quantity'];
 
+            // Get product details
             $product = $cartItem['product'];
 
+            // Validate stock availability
             $stock = $product->getStock();
 
+            // Check for invalid quantity or insufficient stock
             if ($qty <= 0) {
                 throw new Exception("Invalid quantity for product {$product->getName()}.");
             }
 
+            // Check if requested quantity exceeds available stock
             if ($stock < $qty) {
                 throw new Exception("Not enough stock for product {$product->getName()}. Requested: {$qty}, available: {$stock}.");
             }
@@ -60,6 +72,7 @@ class OrderService
 
     private function validateBalance(User $user, int $total): void
     {
+        // Validate if the user has enough balance for the purchase
         $userBalance = $user->getBalance();
 
         if ($userBalance < $total) {
@@ -91,6 +104,7 @@ class OrderService
 
     public function checkout(array $sessionCartData, User $user): Order
     {
+        // Ensure the cart is not empty
         if (empty($sessionCartData)) {
             throw new Exception('Cart is empty.');
         }

@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+// App
 use App\Repositories\ProductRepository;
 use App\Utils\PresentationUtils;
 
@@ -46,6 +47,7 @@ class CartService
         // Prepare detailed cart information
         $cartItems = [];
 
+        // Build cart items with product details, quantity, and subtotal
         foreach ($cartProducts as $cartProduct) {
             $cartItems[] = [
                 'product' => $cartProduct,

@@ -8,11 +8,15 @@
 
 namespace App\Models;
 
-use App\Utils\PresentationUtils;
+// Laravel / Illuminate classes
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+
+// App
+use App\Utils\PresentationUtils;
 
 class User extends Authenticatable
 {
@@ -151,7 +155,7 @@ class User extends Authenticatable
         $this->attributes['role'] = $role;
     }
 
-    public function setRememberToken($value)
+    public function setRememberToken($value) : void
     {
         $this->attributes['remember_token'] = $value;
     }
@@ -168,12 +172,12 @@ class User extends Authenticatable
 
     // Relationships.
 
-    public function orders()
+    public function orders() : HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function reviews()
+    public function reviews() : HasMany
     {
         return $this->hasMany(Review::class);
     }

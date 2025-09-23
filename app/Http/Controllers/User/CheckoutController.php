@@ -8,16 +8,22 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Services\OrderService;
+// PHP native / global classes
 use Exception;
+
+// Laravel / framework
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
+// App
+use App\Http\Controllers\Controller;
+use App\Services\OrderService;
+
 class CheckoutController extends Controller
 {
+    // Service instance for order operations
     protected OrderService $orderService;
 
     public function __construct(OrderService $orderService)
@@ -30,20 +36,26 @@ class CheckoutController extends Controller
         // Retrieve cart product data from session
         $sessionCartData = $request->session()->get('cart_product_data', []);
 
+        // Check if the cart is empty
         if (empty($sessionCartData)) {
             return back()->withErrors(Lang::get('checkout.error.empty_cart'));
         }
 
+        // Get the authenticated user
         $user = Auth::user();
 
         try {
+            // Process the checkout and create the order (remember this is an atomic operation)
             $order = $this->orderService->checkout($sessionCartData, $user);
 
             // Clear cart
             $request->session()->forget('cart_product_data');
 
+            // Redirect to the order details page with a success message
             return redirect()->route('orders.show', ['order' => $order->getId()])->with('success', Lang::get('checkout.success'));
         } catch (Exception $e) {
+            // Handle any exceptions that occur during checkout
+            
             return back()->withErrors($e->getMessage());
         }
     }

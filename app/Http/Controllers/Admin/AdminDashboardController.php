@@ -14,9 +14,9 @@ use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    // Display the admin dashboard
     public function index(): View
     {
+        // Display the admin dashboard
         return view('admin.dashboard.index');
     }
 }

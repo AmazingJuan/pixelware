@@ -69,6 +69,7 @@ class AdminUserController extends Controller
 
     public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
     {
+        // Gather validated data
         $validatedData = $request->validated();
 
         if (! empty($validatedData['password'])) {

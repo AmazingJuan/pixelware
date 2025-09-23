@@ -8,9 +8,15 @@
 
 namespace App\Models;
 
-use App\Utils\PresentationUtils;
+
+// Laravel / Illuminate classes
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+
+// App
+use App\Utils\PresentationUtils;
 
 class Order extends Model
 {
@@ -87,12 +93,12 @@ class Order extends Model
 
     // Relationships
 
-    public function items()
+    public function items() : HasMany
     {
         return $this->hasMany(Item::class);
     }
 
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }

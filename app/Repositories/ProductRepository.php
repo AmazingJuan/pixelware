@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+// App
 use App\Models\Product;
 
 class ProductRepository extends BaseRepository

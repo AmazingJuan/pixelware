@@ -10,6 +10,7 @@ namespace App\Http\Controllers\User;
 
 // Laravel / framework
 use App\Http\Controllers\Controller;
+
 // App
 use App\Repositories\ProductRepository;
 use App\Services\OpenAIService;
@@ -105,10 +106,12 @@ class ProductController extends Controller
 
     public function rankingSales(): View
     {
+        // Create an array to hold view data
         $viewData = [];
         $products = $this->productRepository->topThreeSales();
         $viewData['products'] = $products;
 
+        // Return the view with the view data
         return view('user.products.ranking.sales', compact('viewData'));
     }
 }

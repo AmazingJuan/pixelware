@@ -9,13 +9,17 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Repositories\UserRepository;
+// Laravel / Illuminate classes
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+// App
+use App\Models\User;
+use App\Repositories\UserRepository;
+
 class UserService
 {
+    // Repository instance for user management
     protected UserRepository $userRepository;
 
     public function __construct(UserRepository $userRepository)
