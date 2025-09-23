@@ -15,7 +15,7 @@ use App\Services\OrderService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-// App
+// Application / App
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 

@@ -11,7 +11,7 @@ namespace App\Utils;
 // Laravel / Illuminate classes
 use App\Interfaces\ImageManagement;
 use Illuminate\Http\UploadedFile;
-// App
+// Application / App
 use Illuminate\Support\Facades\Storage;
 
 class ProductImageManagement implements ImageManagement

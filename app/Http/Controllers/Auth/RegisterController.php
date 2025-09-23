@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
+use App\Models\User;
+// App
 use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Validator;
 
 class RegisterController extends Controller
 {
@@ -41,12 +45,12 @@ class RegisterController extends Controller
         $this->userService = $userService;
     }
 
-    protected function validator(array $data)
+    protected function validator(array $data): Validator
     {
         return $this->userService->validate($data);
     }
 
-    protected function create(array $data)
+    protected function create(array $data): User
     {
         return $this->userService->create($data);
     }

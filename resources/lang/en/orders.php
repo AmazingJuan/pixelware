@@ -1,6 +1,12 @@
 <?php
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Orders
+    |--------------------------------------------------------------------------
+    */
     'index' => [
         'title' => 'My Orders',
         'empty' => 'You have not placed any orders yet.',
@@ -32,7 +38,15 @@ return [
         'product_deleted' => 'Product (deleted)',
     ],
 
-    'back_to_shop' => 'Continue shopping',
-    'continue_shopping' => 'Continue shopping',
-    'download_pdf' => 'Download PDF',
+    /*
+    |--------------------------------------------------------------------------
+    | Actions
+    |--------------------------------------------------------------------------
+    */
+    'actions' => [
+        'back_to_shop' => 'Continue shopping',
+        'continue_shopping' => 'Continue shopping',
+        'download_pdf' => 'Download PDF',
+    ],
+
 ];

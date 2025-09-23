@@ -8,10 +8,10 @@
 
 namespace App\Http\Controllers\User;
 
-// Laravel / framework
+// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
-// App
 use App\Repositories\ProductRepository;
+// Application classes
 use App\Services\OpenAIService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;

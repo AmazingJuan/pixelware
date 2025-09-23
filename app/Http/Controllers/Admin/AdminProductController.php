@@ -12,7 +12,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreProductRequest;
 use App\Http\Requests\AdminUpdateProductRequest;
-// App
+// Application / App
 use App\Repositories\ProductRepository;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
@@ -61,7 +61,7 @@ class AdminProductController extends Controller
     /**
      * Store a newly created product record and image using services.
      */
-    public function store(AdminStoreProductRequest $request)
+    public function store(AdminStoreProductRequest $request): RedirectResponse
     {
         // Gather validated data
         $validatedData = $request->validated();
@@ -73,7 +73,7 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products')->with('success', Lang::get('admin.products.success.created'));
     }
 
-    public function destroy(int $productId)
+    public function destroy(int $productId): RedirectResponse
     {
         // Find product by ID
         $product = $this->productRepository->find($productId);
@@ -114,7 +114,7 @@ class AdminProductController extends Controller
         return view('admin.products.edit', compact('viewData'));
     }
 
-    public function update(AdminUpdateProductRequest $request, int $productId)
+    public function update(AdminUpdateProductRequest $request, int $productId): RedirectResponse
     {
         // Retrieve the product by ID
         $product = $this->productRepository->find($productId);
