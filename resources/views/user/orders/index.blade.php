@@ -41,7 +41,7 @@
         @endif
 
         <div class="mt-3">
-            <a href="{{ route('products') }}" class="btn btn-outline-secondary">@lang('orders.back_to_shop')</a>
+            <a href="{{ route('products') }}" class="btn btn-outline-secondary">@lang('orders.actions.back_to_shop')</a>
         </div>
     </div>
 @endsection
