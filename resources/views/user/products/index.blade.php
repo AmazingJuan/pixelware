@@ -13,9 +13,14 @@
             <h2 class="text-info fw-bold display-5 mb-0 flex-grow-1 text-center">
                 @lang('products.list.title')
             </h2>
-            <a href="{{ route('user.products.ranking') }}" class="btn btn-outline-info fw-semibold shadow">
-                <i class="bi bi-trophy-fill me-1"></i> @lang('products.ranking.title')
-            </a>
+            <div class="d-flex gap-2">
+                <a href="{{ route('user.products.ranking.rating') }}" class="btn btn-outline-info fw-semibold shadow">
+                    <i class="bi bi-trophy-fill me-1"></i> @lang('products.ranking.title_rating')
+                </a>
+                <a href="{{ route('user.products.ranking.sales') }}" class="btn btn-outline-success fw-semibold shadow">
+                    <i class="bi bi-bar-chart-fill me-1"></i> @lang('products.ranking.title_sales')
+                </a>
+            </div>
         </div>
 
         @if (count($viewData['products']) > 0)

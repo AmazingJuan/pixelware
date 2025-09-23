@@ -9,7 +9,7 @@
                 <i class="bi bi-arrow-left me-1"></i> @lang('admin.common.back')
             </a>
             <h2 class="text-center text-info fw-bold mb-0 display-5 flex-grow-1">
-                @lang('products.ranking.title', [], null)
+                @lang('products.ranking.title_rating')
             </h2>
             <span></span>
         </div>
@@ -25,11 +25,11 @@
                                 </span>
                             </div>
                             <div class="card-body d-flex flex-column align-items-center">
-                                <div class="mb-3 w-100 d-flex justify-content-center align-items-center" style="height: 180px;">
+                                <div class="mb-3 w-100 d-flex justify-content-center align-items-center"
+                                    style="height: 180px;">
                                     <img src="{{ asset('storage/' . $product->getImageUrl()) }}"
-                                         alt="{{ $product->getName() }}"
-                                         class="img-fluid rounded shadow"
-                                         style="max-height: 100%; max-width: 100%;">
+                                        alt="{{ $product->getName() }}" class="img-fluid rounded shadow"
+                                        style="max-height: 100%; max-width: 100%;">
                                 </div>
                                 <h3 class="h5 fw-bold text-info mb-2 text-center">
                                     {{ $product->getName() }}
@@ -70,7 +70,7 @@
                                     @endif
                                 </div>
                                 <a href="{{ route('products.show', $product->getId()) }}"
-                                   class="btn btn-info fw-semibold text-white px-4 py-2 mt-auto shadow">
+                                    class="btn btn-info fw-semibold text-white px-4 py-2 mt-auto shadow">
                                     @lang('products.actions.view')
                                 </a>
                             </div>

@@ -74,26 +74,41 @@ class ProductController extends Controller
 
     public function moreInfo(int $productId): JsonResponse
     {
+        // Find the product by ID using the repository
         $product = $this->productRepository->find($productId);
 
+        // If the product is not found, return a 404 JSON response
         if (! $product) {
             return response()->json(['error' => 'Product not found'], 404);
         }
 
+        // Generate additional product information using OpenAI service
         $aiDescription = $this->openAIService->generateProductDescription(
             $product->getName(),
             $product->getDescription()
         );
 
+        // Return the AI-generated description as a JSON response
         return response()->json(['description' => $aiDescription]);
     }
 
-    public function ranking(): View
+    public function rankingRating(): View
     {
+        // Create an array to hold view data
         $viewData = [];
-        $products = $this->productRepository->topThree();
+        $products = $this->productRepository->topThreeRating();
         $viewData['products'] = $products;
 
-        return view('user.products.ranking', compact('viewData'));
+        // Return the view with the view data
+        return view('user.products.ranking.rating', compact('viewData'));
+    }
+
+    public function rankingSales(): View
+    {
+        $viewData = [];
+        $products = $this->productRepository->topThreeSales();
+        $viewData['products'] = $products;
+
+        return view('user.products.ranking.sales', compact('viewData'));
     }
 }

@@ -70,10 +70,12 @@ class OrderService
     private function processOrderItems(Order $order, array $cartItems): Order
     {
         foreach ($cartItems as $item) {
-
+            // Reduce stock and increase times purchased
             $item['product']->decreaseStock($item['quantity']);
-            $item['product']->save(); // Here we're not using repository pattern because repo pattern doesn't allow  business logic
+            $item['product']->increaseTimesPurchased($item['quantity']);
+            $this->productRepository->save($item['product']);
 
+            // Create order item
             $this->itemRepository->create([
                 'order_id' => $order->getId(),
                 'product_id' => $item['product']->getId(),

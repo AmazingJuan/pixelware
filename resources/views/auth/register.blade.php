@@ -38,7 +38,8 @@
                             {{-- Address --}}
                             <div class="mb-3">
                                 <label for="address" class="form-label">@lang('admin.users.attributes.address')</label>
-                                <input id="address" class="form-control @error('address') is-invalid @enderror" name="address">{{ old('address') }}</input>
+                                <input id="address" class="form-control @error('address') is-invalid @enderror"
+                                    name="address">{{ old('address') }}</input>
                                 @error('address')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror

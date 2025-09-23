@@ -11,9 +11,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Repositories\ItemRepository;
 use App\Repositories\OrderRepository;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
