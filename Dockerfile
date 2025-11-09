@@ -5,6 +5,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www/html
 COPY ./public/.htaccess /var/www/html/.htaccess
 WORKDIR /var/www/html
+
+RUN git config --global --add safe.directory /var/www/html
 RUN composer install \
     --ignore-platform-reqs \
     --no-interaction \
