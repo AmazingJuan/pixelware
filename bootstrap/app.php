@@ -13,7 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Registrar middleware con alias 'admin'
         $middleware->alias([
             'admin' => CheckAdmin::class,
         ]);

@@ -12,12 +12,14 @@ class ProductApiController extends Controller
     public function index(): JsonResponse
     {
         $products = new ProductCollection(Product::all());
+
         return response()->json($products, 200);
     }
 
     public function paginate(): JsonResponse
     {
         $products = new ProductCollection(Product::paginate(5));
+
         return response()->json($products, 200);
     }
 }

@@ -10,107 +10,67 @@ namespace App\Http\Controllers\User;
 
 // Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
-use App\Repositories\ProductRepository;
-// Application classes
-use App\Services\OpenAIService;
+use App\Models\Product;
+use App\Utils\AIUtils;
+// App
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    // Repository instance for product data access
-    protected ProductRepository $productRepository;
-
-    // Service instance for OpenAI interactions
-    protected OpenAIService $openAIService;
-
-    public function __construct(ProductRepository $productRepository, OpenAIService $openAIService)
-    {
-        $this->productRepository = $productRepository;
-        $this->openAIService = $openAIService;
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
-        // Create an array to hold view data
-        $viewData = [];
+        // Retrieve all products with reviews
+        $products = Product::with('reviews')->get();
+        $viewData = ['products' => $products];
 
-        // Retrieve all products from the repository
-        $products = $this->productRepository->all();
-
-        // Add products to the view data array
-        $viewData['products'] = $products;
-
-        // Return the view with the view data
         return view('user.products.index', compact('viewData'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(int $productId): View
     {
-        // Find the product by ID using the repository
-        $product = $this->productRepository->find($productId);
+        // Find the product by ID with reviews
+        $product = Product::with('reviews')->findOrFail($productId);
 
-        // If the product is not found, abort with a 404 error
-        if ($product === null) {
-            abort(404);
-        }
+        $viewData = [
+            'product' => $product,
+            'productReviews' => $product->getReviews(),
+        ];
 
-        // Prepare view data elements (product details and reviews)
-        $viewData = [];
-        $viewData['product'] = $product;
-
-        // Fetch product associated reviews
-        $viewData['productReviews'] = $product->getReviews();
-
-        // Return the product detail view with the prepared data
         return view('user.products.show', compact('viewData'));
     }
 
     public function moreInfo(int $productId): JsonResponse
     {
-        // Find the product by ID using the repository
-        $product = $this->productRepository->find($productId);
+        $product = Product::find($productId);
 
-        // If the product is not found, return a 404 JSON response
         if (! $product) {
             return response()->json(['error' => 'Product not found'], 404);
         }
 
-        // Generate additional product information using OpenAI service
-        $aiDescription = $this->openAIService->generateProductDescription(
+        $aiDescription = AIUtils::generateProductDescription(
             $product->getName(),
             $product->getDescription()
         );
 
-        // Return the AI-generated description as a JSON response
         return response()->json(['description' => $aiDescription]);
     }
 
     public function rankingRating(): View
     {
-        // Create an array to hold view data
-        $viewData = [];
-        $products = $this->productRepository->topThreeRating();
-        $viewData['products'] = $products;
+        $products = Product::TopThreeRating()->get();
 
-        // Return the view with the view data
+        $viewData = ['products' => $products];
+
         return view('user.products.ranking.rating', compact('viewData'));
     }
 
     public function rankingSales(): View
     {
-        // Create an array to hold view data
-        $viewData = [];
-        $products = $this->productRepository->topThreeSales();
-        $viewData['products'] = $products;
+        $products = Product::TopThreeSales()->get();
 
-        // Return the view with the view data
+        $viewData = ['products' => $products];
+
         return view('user.products.ranking.sales', compact('viewData'));
     }
 }

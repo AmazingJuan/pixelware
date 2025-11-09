@@ -10,9 +10,10 @@ namespace App\Models;
 
 // Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-// Application / App
+// App / Utils
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
@@ -195,6 +196,7 @@ class Product extends Model
     public function decreaseStock(int $quantity): void
     {
         $newStock = $this->getStock() - $quantity;
+
         // Decrease stock by quantity (assumes validation done elsewhere).
         $this->setStock($newStock);
     }
@@ -202,7 +204,18 @@ class Product extends Model
     public function increaseTimesPurchased(int $quantity): void
     {
         $newTimesPurchased = $this->getTimesPurchased() + $quantity;
+
         // Increase times purchased by quantity.
         $this->setTimesPurchased($newTimesPurchased);
+    }
+
+    public function scopeTopThreeRating(Builder $query): Builder
+    {
+        return $query->orderByDesc('average_rating')->take(3);
+    }
+
+    public function scopeTopThreeSales(Builder $query): Builder
+    {
+        return $query->orderByDesc('times_purchased')->take(3);
     }
 }

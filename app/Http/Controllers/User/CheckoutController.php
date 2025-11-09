@@ -9,51 +9,45 @@
 namespace App\Http\Controllers\User;
 
 // PHP native / global classes
+use App\Helpers\CheckoutHelper;
+// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
-// Laravel / framework
-use App\Services\OrderService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-// Application / App
+// App
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
 class CheckoutController extends Controller
 {
-    // Service instance for order operations
-    protected OrderService $orderService;
+    protected CheckoutHelper $checkoutHelper;
 
-    public function __construct(OrderService $orderService)
+    public function __construct(CheckoutHelper $checkoutHelper)
     {
-        $this->orderService = $orderService;
+        $this->checkoutHelper = $checkoutHelper;
     }
 
     public function index(Request $request): RedirectResponse
     {
-        // Retrieve cart product data from session
-        $sessionCartData = $request->session()->get('cart_product_data', []);
+        $cartData = $request->session()->get('cart_product_data', []);
 
-        // Check if the cart is empty
-        if (empty($sessionCartData)) {
+        if (empty($cartData)) {
             return back()->withErrors(Lang::get('checkout.error.empty_cart'));
         }
 
-        // Get the authenticated user
         $user = Auth::user();
+        if (! $user) {
+            return back()->withErrors(Lang::get('checkout.error.unauthenticated'));
+        }
 
         try {
-            // Process the checkout and create the order (remember this is an atomic operation)
-            $order = $this->orderService->checkout($sessionCartData, $user);
+            $order = $this->checkoutHelper->checkout($cartData, $user);
 
-            // Clear cart
-            $request->session()->forget('cart_product_data');
-
-            // Redirect to the order details page with a success message
-            return redirect()->route('orders.show', ['order' => $order->getId()])->with('success', Lang::get('checkout.success'));
+            return redirect()
+                ->route('orders.show', ['order' => $order->getId()])
+                ->with('success', Lang::get('checkout.success'));
         } catch (Exception $e) {
-            // Handle any exceptions that occur during checkout
-
             return back()->withErrors($e->getMessage());
         }
     }
