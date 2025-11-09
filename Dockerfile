@@ -21,5 +21,9 @@ RUN php artisan migrate --seed --force
 RUN php artisan storage:link
 RUN php artisan migrate
 RUN chmod -R 777 storage
+
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's|/var/www/|/var/www/html/public|g' /etc/apache2/apache2.conf
+
 RUN a2enmod rewrite
 RUN service apache2 restart
