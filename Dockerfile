@@ -14,7 +14,10 @@ RUN composer install \
     --no-scripts \
     --prefer-dist
 
+RUN cp .env.example.prod .env  
+RUN mkdir -p database && touch database/database.sqlite  
 RUN php artisan key:generate
+RUN php artisan migrate --seed --force
 RUN php artisan storage:link
 RUN php artisan migrate
 RUN chmod -R 777 storage
