@@ -3,34 +3,33 @@
 /*
  * ProductHelper.php
  * Handles product creation, update, and deletion logic including image management.
- * Author: Juan Avendaño
+ * Author: Juan Avendaño & Juan José Gómez
  */
 
 namespace App\Helpers;
 
-// Laravel / Illuminate classes
 use Illuminate\Http\UploadedFile;
-
-// Models
 use App\Models\Product;
-
-// Utils / Helpers
-use App\Utils\StorageUtils;
+use App\Interfaces\ImageStorageInterface;
 
 class ProductHelper
 {
+    protected static function storage(): ImageStorageInterface
+    {
+        // Laravel inyecta automáticamente la implementación configurada (local o gcp)
+        return app(ImageStorageInterface::class);
+    }
+
     public static function create(array $data): Product
     {
         $uploadedImage = $data['image'] ?? null;
         unset($data['image']);
 
-        $product = new Product($data);
-        $product->save();
+        $product = Product::create($data);
 
         if ($uploadedImage instanceof UploadedFile) {
-            $path = StorageUtils::store($uploadedImage, "products/{$product->id}", 'images');
-            $product->image_url = $path;
-            $product->save();
+            $path = self::storage()->store($uploadedImage, "products/{$product->id}");
+            $product->update(['image_url' => $path]);
         }
 
         return $product;
@@ -38,15 +37,15 @@ class ProductHelper
 
     public static function update(array $data, Product $product): Product
     {
-        if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-            $uploadedImage = $data['image'];
-            unset($data['image']);
+        $uploadedImage = $data['image'] ?? null;
+        unset($data['image']);
 
+        if ($uploadedImage instanceof UploadedFile) {
             if ($product->image_url) {
-                StorageUtils::deleteDirectory("products/{$product->id}", 'images');
+                self::storage()->delete($product->image_url);
             }
 
-            $path = StorageUtils::store($uploadedImage, "products/{$product->id}", 'images');
+            $path = self::storage()->store($uploadedImage, "products/{$product->id}");
             $data['image_url'] = $path;
         }
 
@@ -58,7 +57,7 @@ class ProductHelper
     public static function destroy(Product $product): bool
     {
         if ($product->image_url) {
-            StorageUtils::deleteDirectory("products/{$product->id}", 'images');
+            self::storage()->delete($product->image_url);
         }
 
         return $product->delete();
