@@ -27,7 +27,7 @@ class CheckoutController extends Controller
         $cartData = CartHelper::all();
 
         if (empty($cartData)) {
-            return back()->withErrors(Lang::get('checkout.error.empty_cart'));
+            return back()->withErrors(Lang::get('checkout.errors.empty_cart'));
         }
 
         $user = Auth::user();

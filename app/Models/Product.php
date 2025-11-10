@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
 class Product extends Model
 {
     /**
@@ -102,17 +101,17 @@ class Product extends Model
 
         // 3) Si el archivo existe en el storage local (disk "public"), usar esa URL
         if (Storage::disk('public')->exists(ltrim($path, '/'))) {
-            return asset('storage/' . ltrim($path, '/'));
+            return asset('storage/'.ltrim($path, '/'));
         }
 
         // 4) Si no está local, asumir que está en GCP y construir la URL pública del bucket
         $bucket = env('GCP_BUCKET', null);
         if ($bucket) {
-            return 'https://storage.googleapis.com/' . $bucket . '/' . ltrim($path, '/');
+            return 'https://storage.googleapis.com/'.$bucket.'/'.ltrim($path, '/');
         }
 
         // 5) Fallback: devolver la ruta local por defecto
-        return asset('storage/' . ltrim($path, '/'));
+        return asset('storage/'.ltrim($path, '/'));
     }
 
     public function getAverageRating(): float

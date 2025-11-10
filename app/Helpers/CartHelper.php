@@ -9,13 +9,11 @@
 namespace App\Helpers;
 
 // Laravel / framework
-use Illuminate\Support\Facades\Session;
-
-// Models
 use App\Models\Product;
-
-// Utils / Helpers
+// Models
 use App\Utils\PresentationUtils;
+// Utils / Helpers
+use Illuminate\Support\Facades\Session;
 
 class CartHelper
 {

@@ -2,14 +2,15 @@
 
 namespace App\Utils;
 
+use App\Interfaces\ImageStorageInterface;
 use Google\Cloud\Storage\StorageClient;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use App\Interfaces\ImageStorageInterface;
 
 class GcpImageStorage implements ImageStorageInterface
 {
     protected StorageClient $client;
+
     protected string $bucketName;
 
     public function __construct()
@@ -17,12 +18,11 @@ class GcpImageStorage implements ImageStorageInterface
         $gcp = config('image_storage.gcp', []);
         $options = [];
 
-        if (!empty($gcp['key_file'])) {
+        if (! empty($gcp['key_file'])) {
             $options['keyFilePath'] = base_path($gcp['key_file']);
         }
 
-
-        if (!empty($gcp['project_id'])) {
+        if (! empty($gcp['project_id'])) {
             $options['projectId'] = $gcp['project_id'];
         }
 
@@ -33,11 +33,11 @@ class GcpImageStorage implements ImageStorageInterface
     public function store(UploadedFile $file, string $folder = ''): string
     {
         $folder = trim($folder ?: config('image_storage.local_path', 'products'), '/');
-        $filename = now()->format('YmdHis') . '_' . Str::random(6) . '.' . $file->getClientOriginalExtension();
-        $objectName = ($folder ? $folder . '/' : '') . $filename;
+        $filename = now()->format('YmdHis').'_'.Str::random(6).'.'.$file->getClientOriginalExtension();
+        $objectName = ($folder ? $folder.'/' : '').$filename;
 
         $bucket = $this->client->bucket($this->bucketName);
-        if (!$bucket->exists()) {
+        if (! $bucket->exists()) {
             throw new \RuntimeException("El bucket {$this->bucketName} no existe en GCP.");
         }
 
@@ -62,8 +62,8 @@ class GcpImageStorage implements ImageStorageInterface
             if (str_starts_with($pathOrUrl, 'http')) {
                 $parts = parse_url($pathOrUrl);
                 $objectName = ltrim($parts['path'] ?? '', '/');
-                
-                if (str_starts_with($objectName, $this->bucketName . '/')) {
+
+                if (str_starts_with($objectName, $this->bucketName.'/')) {
                     $objectName = substr($objectName, strlen($this->bucketName) + 1);
                 }
             }
@@ -73,6 +73,7 @@ class GcpImageStorage implements ImageStorageInterface
         $object = $bucket->object($objectName);
         if ($object->exists()) {
             $object->delete();
+
             return true;
         }
 

@@ -10,7 +10,6 @@ namespace App\Helpers;
 
 // Models
 use App\Models\User;
-
 // Laravel / framework
 use Illuminate\Support\Facades\Hash;
 

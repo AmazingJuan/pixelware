@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 // Laravel / framework
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\RegistersUsers;
-
-// Application / Models
-use App\Models\User;
-
-// Application / Utils & Helpers
 use App\Helpers\UserHelper;
+use App\Http\Controllers\Controller;
+// Application / Models
 use App\Http\Requests\RegisterUserRequest;
+// Application / Utils & Helpers
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -48,7 +46,6 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \App\Http\Requests\RegisterUserRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function register(RegisterUserRequest $request)
@@ -63,9 +60,6 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param  \App\Http\Requests\RegisterUserRequest  $request
-     * @return \App\Models\User
      */
     protected function create(RegisterUserRequest $request): User
     {

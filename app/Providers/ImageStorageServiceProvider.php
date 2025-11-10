@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Interfaces\ImageStorageInterface;
-use App\Utils\LocalImageStorage;
 use App\Utils\GcpImageStorage;
+use App\Utils\LocalImageStorage;
+use Illuminate\Support\ServiceProvider;
 
 class ImageStorageServiceProvider extends ServiceProvider
 {
@@ -15,8 +15,8 @@ class ImageStorageServiceProvider extends ServiceProvider
             $driver = config('image_storage.driver', env('IMAGE_STORAGE_DRIVER', 'local'));
 
             return match ($driver) {
-                'gcp' => new GcpImageStorage(),
-                default => new LocalImageStorage(),
+                'gcp' => new GcpImageStorage,
+                default => new LocalImageStorage,
             };
         });
     }

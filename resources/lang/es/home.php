@@ -8,9 +8,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'hero' => [
-        'title' => 'Welcome to :app',
-        'subtitle' => 'Innovation, technology, and digital solutions for your world. Discover the latest in hardware.',
-        'cta' => 'View products',
+        'title' => 'Bienvenido a :app',
+        'subtitle' => 'Innovación, tecnología y soluciones digitales para tu mundo. Descubre lo último en hardware.',
+        'cta' => 'Ver productos',
     ],
 
     /*
@@ -20,16 +20,16 @@ return [
     */
     'features' => [
         'fast' => [
-            'title' => 'Fast Delivery',
-            'description' => 'Get your products delivered quickly and efficiently.',
+            'title' => 'Entrega Rápida',
+            'description' => 'Recibe tus productos de forma rápida y eficiente.',
         ],
         'secure' => [
-            'title' => 'Secure Payments',
-            'description' => 'Your transactions are safe and protected.',
+            'title' => 'Pagos Seguros',
+            'description' => 'Tus transacciones están seguras y protegidas.',
         ],
         'quality' => [
-            'title' => 'Premium Quality',
-            'description' => 'Only the best products for our customers.',
+            'title' => 'Calidad Premium',
+            'description' => 'Solo los mejores productos para nuestros clientes.',
         ],
     ],
 
@@ -39,9 +39,9 @@ return [
     |--------------------------------------------------------------------------
     */
     'cta' => [
-        'title' => 'Ready to start shopping?',
-        'description' => 'Explore our catalog and find the perfect products for you.',
-        'shop_now' => 'Shop Now',
+        'title' => '¿Listo para empezar a comprar?',
+        'description' => 'Explora nuestro catálogo y encuentra los productos perfectos para ti.',
+        'shop_now' => 'Comprar Ahora',
     ],
 
 ];

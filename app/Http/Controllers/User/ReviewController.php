@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReviewRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 
 class ReviewController extends Controller
 {
@@ -21,6 +22,6 @@ class ReviewController extends Controller
 
         ReviewHelper::createReview($validatedData);
 
-        return redirect()->back()->with('success', 'Review submitted successfully!');
+        return redirect()->back()->with('success', Lang::get('reviews.success'));
     }
 }

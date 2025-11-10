@@ -7,11 +7,10 @@ return [
     | Checkout
     |--------------------------------------------------------------------------
     */
-
-    'success' => 'Order placed successfully.',
+    'success' => 'Pedido realizado con éxito.',
 
     'errors' => [
-        'empty_cart' => 'Your cart is empty.',
+        'empty_cart' => 'Tu carrito está vacío.',
     ],
 
 ];

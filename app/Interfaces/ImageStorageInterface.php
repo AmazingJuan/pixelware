@@ -15,5 +15,5 @@ interface ImageStorageInterface
 {
     public function store(UploadedFile $file, string $folder = ''): string;
 
-    public function delete(string $pathOrUrl): bool; 
+    public function delete(string $pathOrUrl): bool;
 }

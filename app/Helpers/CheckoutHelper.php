@@ -9,15 +9,13 @@
 namespace App\Helpers;
 
 // PHP native / global classes
-use Exception;
-
+use App\Models\Order;
 // Laravel / framework
+use App\Models\User;
+use Exception;
+// Models
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
-
-// Models
-use App\Models\Order;
-use App\Models\User;
 
 class CheckoutHelper
 {
@@ -60,7 +58,7 @@ class CheckoutHelper
 
             if ($qty <= 0) {
                 throw new Exception(Lang::get('exceptions.invalid_quantity', [
-                    'product' => $product->getName()
+                    'product' => $product->getName(),
                 ]));
             }
 
@@ -68,7 +66,7 @@ class CheckoutHelper
                 throw new Exception(Lang::get('exceptions.not_enough_stock', [
                     'product' => $product->getName(),
                     'qty' => $qty,
-                    'stock' => $stock
+                    'stock' => $stock,
                 ]));
             }
         }

@@ -8,9 +8,9 @@
 
 namespace App\Helpers;
 
-use Illuminate\Http\UploadedFile;
-use App\Models\Product;
 use App\Interfaces\ImageStorageInterface;
+use App\Models\Product;
+use Illuminate\Http\UploadedFile;
 
 class ProductHelper
 {

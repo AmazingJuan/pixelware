@@ -22,11 +22,13 @@ class AIUtils
         }
 
         // Build prompt
-        $prompt = "Provide a detailed, engaging product description in English for the following product:\n\n"
+        $prompt = 'Provide a detailed, engaging product description in the language specified by the variable APP_LOCALE (current value: '
+            .env('APP_LOCALE').").\n\n"
+            ."Product details:\n"
             ."Name: {$productName}\n"
             ."Description: {$productDescription}\n\n"
             ."{$specsText}\n"
-            .'Make it attractive for potential buyers.';
+            .'Make it appealing and persuasive for potential buyers. Ensure the entire output strictly follows the specified language.';
 
         // Call OpenAI API
         $response = $client->chat()->create([
