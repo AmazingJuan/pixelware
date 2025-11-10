@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('additional-title', __('admin.products.sections.edit'))
 

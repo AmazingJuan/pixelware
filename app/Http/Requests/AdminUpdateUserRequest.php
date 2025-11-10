@@ -21,7 +21,7 @@ class AdminUpdateUserRequest extends FormRequest
 
     public function rules(): array
     {
-        $userId = $this->route('user')->getId();
+        $userId = $this->route('user');
 
         return [
             'username' => 'required|unique:users,username,'.$userId,
