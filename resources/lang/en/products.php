@@ -15,6 +15,13 @@ return [
         'total_products' => 'Showing :count products',
     ],
 
+    'allied_list' => [
+        'title' => 'Allied Products - Arslonga',
+        'arslonga_link' => 'See more at Arslonga',
+        'empty' => 'No allied products available at the moment.',
+        'total_products' => 'Showing :count products',
+    ],
+
     'show' => [
         'title' => 'Product Details',
         'description' => 'Description',

@@ -60,6 +60,13 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('allied.products') }}"
+                                class="nav-link text-light d-flex align-items-center gap-1 {{ request()->routeIs('allied.products') ? 'active' : '' }}">
+                                <i class="bi bi-globe2"></i> @lang('products.allied_list.title')
+                            </a>
+                        </li>
+
                         <li class="nav-item d-none d-lg-block">
                             <div class="vr bg-light mx-2" style="height:24px;"></div>
                         </li>
