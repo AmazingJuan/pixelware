@@ -13,8 +13,10 @@ use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-// App / Utils
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class Product extends Model
 {
@@ -86,7 +88,31 @@ class Product extends Model
 
     public function getImageUrl(): string
     {
-        return $this->attributes['image_url'];
+        $path = $this->attributes['image_url'] ?? null;
+
+        // 1) Si no hay imagen, devolver una por defecto (pon este archivo en public/images/)
+        if (empty($path)) {
+            return asset('images/default-product.png');
+        }
+
+        // 2) Si ya es una URL completa (por ejemplo: https://storage.googleapis.com/...) devolver tal cual
+        if (Str::startsWith($path, ['http://', 'https://'])) {
+            return $path;
+        }
+
+        // 3) Si el archivo existe en el storage local (disk "public"), usar esa URL
+        if (Storage::disk('public')->exists(ltrim($path, '/'))) {
+            return asset('storage/' . ltrim($path, '/'));
+        }
+
+        // 4) Si no está local, asumir que está en GCP y construir la URL pública del bucket
+        $bucket = env('GCP_BUCKET', null);
+        if ($bucket) {
+            return 'https://storage.googleapis.com/' . $bucket . '/' . ltrim($path, '/');
+        }
+
+        // 5) Fallback: devolver la ruta local por defecto
+        return asset('storage/' . ltrim($path, '/'));
     }
 
     public function getAverageRating(): float
