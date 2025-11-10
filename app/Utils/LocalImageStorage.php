@@ -31,7 +31,7 @@ class LocalImageStorage implements ImageStorageInterface
             throw new \RuntimeException('Error al almacenar la imagen localmente.');
         }
 
-        return Storage::disk($this->disk)->url($path);
+        return str_replace('public/', '', $path);
     }
 
     public function delete(string $pathOrUrl): bool
