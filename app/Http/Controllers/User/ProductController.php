@@ -12,8 +12,10 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Utils\AIUtils;
-// App
 use Illuminate\Http\JsonResponse;
+// Models
+use Illuminate\Support\Facades\Lang;
+// Utils / Helpers
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -45,7 +47,7 @@ class ProductController extends Controller
         $product = Product::find($productId);
 
         if (! $product) {
-            return response()->json(['error' => 'Product not found'], 404);
+            return response()->json(['error' => Lang::get('exceptions.product_not_found')], 404);
         }
 
         $aiDescription = AIUtils::generateProductDescription(

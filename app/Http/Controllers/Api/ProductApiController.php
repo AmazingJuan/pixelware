@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+// Laravel / framework
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
+// Application / App
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 

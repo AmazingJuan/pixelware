@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-// Laravel / Illuminate classes
+// Laravel / framework
 use App\Http\Controllers\Controller;
-// Application classes
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller

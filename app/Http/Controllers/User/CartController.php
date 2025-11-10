@@ -8,28 +8,23 @@
 
 namespace App\Http\Controllers\User;
 
+// Laravel / framework
 use App\Helpers\CartHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
+// Application / App
 use Illuminate\View\View;
 
 class CartController extends Controller
 {
-    protected CartHelper $cartHelper;
-
-    public function __construct(CartHelper $cartHelper)
-    {
-        $this->cartHelper = $cartHelper;
-    }
-
     public function index(): View
     {
         $viewData = [
-            'cartItems' => $this->cartHelper->items(),
-            'totalPrice' => $this->cartHelper->totalPrice(true),
-            'totalQuantity' => $this->cartHelper->totalQuantity(),
+            'cartItems' => CartHelper::items(),
+            'totalPrice' => CartHelper::totalPrice(true),
+            'totalQuantity' => CartHelper::totalQuantity(),
         ];
 
         return view('user.cart.index', compact('viewData'));
@@ -37,8 +32,8 @@ class CartController extends Controller
 
     public function add(int $id, Request $request): RedirectResponse
     {
-        $quantity = (int) $request->input('quantity', 1);
-        $this->cartHelper->add($id, $quantity);
+        $quantity = $request->input('quantity', 1);
+        CartHelper::add($id, $quantity);
 
         return redirect()
             ->route('cart')
@@ -47,7 +42,7 @@ class CartController extends Controller
 
     public function remove(int $id): RedirectResponse
     {
-        $this->cartHelper->remove($id);
+        CartHelper::remove($id);
 
         return redirect()
             ->route('cart')
@@ -56,7 +51,7 @@ class CartController extends Controller
 
     public function removeAll(): RedirectResponse
     {
-        $this->cartHelper->clear();
+        CartHelper::clear();
 
         return redirect()
             ->route('cart')

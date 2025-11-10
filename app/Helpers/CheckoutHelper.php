@@ -8,19 +8,23 @@
 
 namespace App\Helpers;
 
-// Laravel / Illuminate classes
-use App\Models\Order;
-// App
-use App\Models\User;
+// PHP native / global classes
 use Exception;
+
+// Laravel / framework
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
+
+// Models
+use App\Models\Order;
+use App\Models\User;
 
 class CheckoutHelper
 {
     public static function checkout(array $sessionCartData, User $user): Order
     {
         if (empty($sessionCartData)) {
-            throw new Exception('Cart is empty.');
+            throw new Exception(Lang::get('exceptions.cart_empty'));
         }
 
         return DB::transaction(function () use ($sessionCartData, $user): Order {
@@ -55,11 +59,17 @@ class CheckoutHelper
             $stock = $product->getStock();
 
             if ($qty <= 0) {
-                throw new Exception("Invalid quantity for product {$product->getName()}.");
+                throw new Exception(Lang::get('exceptions.invalid_quantity', [
+                    'product' => $product->getName()
+                ]));
             }
 
             if ($stock < $qty) {
-                throw new Exception("Not enough stock for product {$product->getName()}. Requested: {$qty}, available: {$stock}.");
+                throw new Exception(Lang::get('exceptions.not_enough_stock', [
+                    'product' => $product->getName(),
+                    'qty' => $qty,
+                    'stock' => $stock
+                ]));
             }
         }
     }
@@ -67,7 +77,7 @@ class CheckoutHelper
     private static function validateBalance(User $user, float $total): void
     {
         if ($user->getBalance() < $total) {
-            throw new Exception('Insufficient balance to complete the purchase.');
+            throw new Exception(Lang::get('exceptions.insufficient_balance'));
         }
     }
 

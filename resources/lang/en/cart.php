@@ -7,7 +7,7 @@ return [
     | Cart
     |--------------------------------------------------------------------------
     */
-    
+
     'title' => 'Your cart',
     'empty' => 'Your cart is empty.',
 
@@ -41,6 +41,5 @@ return [
     'errors' => [
         'not_found' => 'Product not found in cart.',
     ],
-    
 
 ];

@@ -14,7 +14,7 @@ class AIUtils
 
         // Build specs text
         $specsText = '';
-        if (!empty($productSpecs)) {
+        if (! empty($productSpecs)) {
             $specsText = "Specifications:\n";
             foreach ($productSpecs as $key => $value) {
                 $specsText .= "- {$key}: {$value}\n";
@@ -23,10 +23,10 @@ class AIUtils
 
         // Build prompt
         $prompt = "Provide a detailed, engaging product description in English for the following product:\n\n"
-            . "Name: {$productName}\n"
-            . "Description: {$productDescription}\n\n"
-            . "{$specsText}\n"
-            . "Make it attractive for potential buyers.";
+            ."Name: {$productName}\n"
+            ."Description: {$productDescription}\n\n"
+            ."{$specsText}\n"
+            .'Make it attractive for potential buyers.';
 
         // Call OpenAI API
         $response = $client->chat()->create([

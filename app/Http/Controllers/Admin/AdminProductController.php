@@ -13,12 +13,14 @@ use App\Helpers\ProductHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreProductRequest;
 use App\Http\Requests\AdminUpdateProductRequest;
-use App\Models\Product;
 // Requests
+use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+// Models
 use Illuminate\Http\RedirectResponse;
-// Models & Helpers
+// Helpers
 use Illuminate\Support\Facades\Lang;
+// Exceptions
 use Illuminate\View\View;
 
 class AdminProductController extends Controller
@@ -51,7 +53,7 @@ class AdminProductController extends Controller
         $product = Product::find($productId);
 
         if (! $product) {
-            throw new ModelNotFoundException("Product with ID {$productId} not found.");
+            throw new ModelNotFoundException(Lang::get('exceptions.product_not_found'));
         }
 
         $viewData = ['product' => $product];
@@ -64,7 +66,7 @@ class AdminProductController extends Controller
         $product = Product::find($productId);
 
         if (! $product) {
-            throw new ModelNotFoundException("Product with ID {$productId} not found.");
+            throw new ModelNotFoundException(Lang::get('exceptions.product_not_found'));
         }
 
         $validatedData = $request->validated();
@@ -80,7 +82,7 @@ class AdminProductController extends Controller
         $product = Product::find($productId);
 
         if (! $product) {
-            throw new ModelNotFoundException("Product with ID {$productId} not found.");
+            throw new ModelNotFoundException(Lang::get('exceptions.product_not_found'));
         }
 
         ProductHelper::destroy($product);

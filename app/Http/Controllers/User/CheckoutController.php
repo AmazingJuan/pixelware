@@ -9,28 +9,22 @@
 namespace App\Http\Controllers\User;
 
 // PHP native / global classes
+use App\Helpers\CartHelper;
+// Laravel / framework
 use App\Helpers\CheckoutHelper;
-// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-// App
+// Application / App
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
 class CheckoutController extends Controller
 {
-    protected CheckoutHelper $checkoutHelper;
-
-    public function __construct(CheckoutHelper $checkoutHelper)
-    {
-        $this->checkoutHelper = $checkoutHelper;
-    }
-
     public function index(Request $request): RedirectResponse
     {
-        $cartData = $request->session()->get('cart_product_data', []);
+        $cartData = CartHelper::all();
 
         if (empty($cartData)) {
             return back()->withErrors(Lang::get('checkout.error.empty_cart'));
@@ -42,7 +36,7 @@ class CheckoutController extends Controller
         }
 
         try {
-            $order = $this->checkoutHelper->checkout($cartData, $user);
+            $order = CheckoutHelper::checkout($cartData, $user);
 
             return redirect()
                 ->route('orders.show', ['order' => $order->getId()])

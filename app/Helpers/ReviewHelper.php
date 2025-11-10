@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * ReviewHelper.php
+ * Handles review creation logic.
+ * Author: Juan Avendaño
+ */
+
 namespace App\Helpers;
 
+// Models
 use App\Models\Product;
 use App\Models\Review;
+
+// Utils / Helpers
 use App\Utils\MathUtils;
 
 class ReviewHelper

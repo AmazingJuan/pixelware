@@ -8,8 +8,10 @@
 
 namespace App\Helpers;
 
-// Laravel / Illuminate
+// Models
 use App\Models\User;
+
+// Laravel / framework
 use Illuminate\Support\Facades\Hash;
 
 class UserHelper

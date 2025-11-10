@@ -8,10 +8,14 @@
 
 namespace App\Helpers;
 
-// Laravel / Illuminate
-use App\Models\Product;
-use App\Utils\StorageUtils;
+// Laravel / Illuminate classes
 use Illuminate\Http\UploadedFile;
+
+// Models
+use App\Models\Product;
+
+// Utils / Helpers
+use App\Utils\StorageUtils;
 
 class ProductHelper
 {

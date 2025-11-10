@@ -14,10 +14,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
 use App\Models\User;
-// Requests
+// Application / App
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
-// Models & Helpers
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 
@@ -51,7 +50,7 @@ class AdminUserController extends Controller
         $user = User::find($userId);
 
         if (! $user) {
-            throw new ModelNotFoundException("User with ID {$userId} not found.");
+            throw new ModelNotFoundException(Lang::get('exceptions.user_not_found'));
         }
 
         return view('admin.users.edit', compact('user'));
@@ -62,7 +61,7 @@ class AdminUserController extends Controller
         $user = User::find($userId);
 
         if (! $user) {
-            throw new ModelNotFoundException("User with ID {$userId} not found.");
+            throw new ModelNotFoundException(Lang::get('exceptions.user_not_found'));
         }
 
         $validatedData = $request->validated();
@@ -70,7 +69,7 @@ class AdminUserController extends Controller
         UserHelper::update($validatedData, $user);
 
         return redirect()->route('admin.users')
-            ->with('success', Lang::get('admin.users.success.updated'));
+            ->with('success', Lang::get(Lang::get('exceptions.user_not_found')));
     }
 
     public function destroy(int $userId): RedirectResponse
@@ -78,7 +77,7 @@ class AdminUserController extends Controller
         $user = User::find($userId);
 
         if (! $user) {
-            throw new ModelNotFoundException("User with ID {$userId} not found.");
+            throw new ModelNotFoundException(Lang::get('exceptions.user_not_found'));
         }
 
         $user->delete();

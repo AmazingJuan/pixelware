@@ -16,14 +16,14 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-// App
+// Application / App
+use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 
 class OrderController extends Controller
 {
     public function index(): View
     {
-        // Get orders for the authenticated
         $orders = Order::with(['items.product'])
             ->where('user_id', Auth::id())
             ->get();
@@ -36,7 +36,6 @@ class OrderController extends Controller
     public function show(int $orderId): View
     {
         try {
-            // Retrieve order with its items and products
             $order = Order::with(['items.product'])->findOrFail($orderId);
 
             $viewData = [
@@ -46,7 +45,7 @@ class OrderController extends Controller
 
             return view('user.orders.show', compact('viewData'));
         } catch (Exception $e) {
-            abort(404, 'Order not found.');
+            abort(404, Lang::get('exceptions.order_not_found'));
         }
     }
 
@@ -64,7 +63,7 @@ class OrderController extends Controller
 
             return $pdf->download('order_'.$order->id.'.pdf');
         } catch (Exception $e) {
-            abort(404, 'Order not found.');
+            abort(404, Lang::get('exceptions.order_not_found'));
         }
     }
 }
