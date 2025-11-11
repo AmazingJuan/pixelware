@@ -35,7 +35,8 @@ class Product extends Model
      * $this->attributes['storage_driver'] - string                     - Storage driver used for images ('local' or 'gcp')
      * $this->attributes['created_at']     - \Illuminate\Support\Carbon - Record creation timestamp
      * $this->attributes['updated_at']     - \Illuminate\Support\Carbon - Record last update timestamp
-     * $this->reviews                       - Review[]                   - Collection of reviews associated with this product
+     * $this->reviews                      - Review[]                   - Collection of reviews associated with this product
+     * $this->items                        - Item[]                     - Collection of items associated with this product
      */
     protected $fillable = [
         'name',
@@ -112,17 +113,7 @@ class Product extends Model
         return $this->attributes['storage_driver'];
     }
 
-    public function setStorageDriver(string $storageDriver): void
-    {
-        $this->attributes['storage_driver'] = $storageDriver;
-    }
-
     // Setters.
-
-    public function setId(int $id): void
-    {
-        $this->attributes['id'] = $id;
-    }
 
     public function setName(string $name): void
     {
@@ -173,6 +164,11 @@ class Product extends Model
     public function setTimesPurchased(int $timesPurchased): void
     {
         $this->attributes['times_purchased'] = $timesPurchased;
+    }
+
+    public function setStorageDriver(string $storageDriver): void
+    {
+        $this->attributes['storage_driver'] = $storageDriver;
     }
 
     // Relationships.

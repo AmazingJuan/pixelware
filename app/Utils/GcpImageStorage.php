@@ -5,8 +5,8 @@ namespace App\Utils;
 use App\Interfaces\ImageStorageInterface;
 use Google\Cloud\Storage\StorageClient;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Str;
 use RuntimeException;
 
 class GcpImageStorage implements ImageStorageInterface

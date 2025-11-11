@@ -21,8 +21,8 @@ class Review extends Model
      * $this->attributes['id']         - int                        - Primary key identifier
      * $this->attributes['comment']    - string                     - Review comment
      * $this->attributes['rating']     - int                        - Review rating (1-5)
-     * $this->attributes['user_id']    - int                        - Reviewer user ID
-     * $this->attributes['product_id'] - int                        - Reviewed product ID
+     * $this->attributes['user']       - User                       - Associated user
+     * $this->attributes['product']    - Product                     - Associated product
      * $this->attributes['created_at'] - \Illuminate\Support\Carbon - Review creation timestamp
      */
     protected $fillable = [
@@ -67,11 +67,6 @@ class Review extends Model
     }
 
     // Setters.
-
-    public function setId(int $id): void
-    {
-        $this->attributes['id'] = $id;
-    }
 
     public function setComment(string $comment): void
     {
