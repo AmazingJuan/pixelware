@@ -38,7 +38,7 @@
                             {{-- Image area --}}
                             @if (method_exists($product, 'getImageUrl') && $product->getImageUrl())
                                 <div class="ratio ratio-4x3 overflow-hidden">
-                                    <img src="{{ asset($product->getImageUrl()) }}" alt="{{ $product->getName() }}"
+                                    <img src="{{ asset($product->publicUrl()) }}" alt="{{ $product->getName() }}"
                                         class="card-img-top object-fit-cover">
                                 </div>
                             @else

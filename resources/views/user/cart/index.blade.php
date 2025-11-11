@@ -52,7 +52,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex align-items-center gap-3">
-                                                        <img src="{{ $p->getImageUrl() ? asset('storage/' . $p->getImageUrl()) : asset('images/placeholder.png') }}"
+                                                        <img src="{{ $p->publicUrl() ? asset($p->publicUrl()) : asset('images/placeholder.png') }}"
                                                             alt="{{ $p->getName() }}" class="rounded shadow-sm"
                                                             style="width:64px; height:64px; object-fit:cover;">
                                                         <div>
