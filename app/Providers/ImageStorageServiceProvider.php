@@ -11,13 +11,14 @@ class ImageStorageServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->singleton(ImageStorageInterface::class, function ($app) {
-            $driver = config('image_storage.driver', env('IMAGE_STORAGE_DRIVER', 'local'));
+        $this->app->singleton(ImageStorageInterface::class, function ($app, $params) {
+            $storageDriver = $params['storage_driver'];
 
-            return match ($driver) {
-                'gcp' => new GcpImageStorage,
-                default => new LocalImageStorage,
-            };
+            if ($storageDriver == 'gcp') {
+                return new GcpImageStorage;
+            } else {
+                return new LocalImageStorage;
+            }
         });
     }
 

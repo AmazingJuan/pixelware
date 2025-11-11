@@ -8,7 +8,6 @@
 
 namespace App\Http\Requests;
 
-// Laravel / framework
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Lang;
 

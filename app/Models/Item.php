@@ -1,18 +1,10 @@
 <?php
 
-/*
- * Item.php
- * Model for managing items in the application.
- * Author: Juan Jose Gomez
-*/
-
 namespace App\Models;
 
-// Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// Application / App
 use Illuminate\Support\Carbon;
 
 class Item extends Model
@@ -26,11 +18,23 @@ class Item extends Model
      * $this->attributes['product_id'] - int - contains the associated product id
      * $this->attributes['created_at'] - \Illuminate\Support\Carbon - contains the item creation timestamp
      * $this->attributes['updated_at'] - \Illuminate\Support\Carbon - contains the item update timestamp
+     * $this->order - Order - contains the associated Order
+     * $this->product - Product - contains the associated Product
      */
     protected $fillable = ['quantity', 'unit_price', 'order_id', 'product_id'];
 
-    // Getters
+    // Validation method
+    public static function validate($request)
+    {
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+            'unit_price' => 'required|numeric|min:0',
+            'order_id' => 'required|exists:orders,id',
+            'product_id' => 'required|exists:products,id',
+        ]);
+    }
 
+    // Getters
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -67,7 +71,6 @@ class Item extends Model
     }
 
     // Setters
-
     public function setQuantity(int $quantity): void
     {
         $this->attributes['quantity'] = $quantity;
@@ -88,11 +91,30 @@ class Item extends Model
         $this->attributes['product_id'] = $productId;
     }
 
-    // Relationships
+    public function updateUpdatedAt(Carbon $updatedAt): void
+    {
+        $this->attributes['updated_at'] = $updatedAt;
+    }
 
+    public function updateCreatedAt(Carbon $createdAt): void
+    {
+        $this->attributes['created_at'] = $createdAt;
+    }
+
+    // Relationships
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(Order $order): void
+    {
+        $this->order = $order;
     }
 
     public function product(): BelongsTo
@@ -100,8 +122,17 @@ class Item extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-    // Methods
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
 
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
+    }
+
+    // Custom Methods
     public function getFormattedUnitPrice(): string
     {
         return PresentationUtils::formatCurrency($this->getUnitPrice());

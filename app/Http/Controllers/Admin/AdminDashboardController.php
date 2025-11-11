@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-// Laravel / framework
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 

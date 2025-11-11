@@ -10,9 +10,6 @@ namespace App\Utils;
 
 class PresentationUtils
 {
-    /**
-     * Format raw price (in cents) to a human-readable string with two decimal places (remember we don't use float in our app).
-     */
     public static function formatCurrency(int $rawPrice): string
     {
         // Gather decimals and integers

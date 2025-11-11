@@ -20,23 +20,19 @@
         </a>
 
         <div class="nav flex-column">
-            <a href="{{ route('home') }}"
-                class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
                 <i class="bi bi-house"></i> @lang('app.navbar.home')
             </a>
 
-            <a href="{{ route('products') }}"
-                class="nav-link {{ request()->routeIs('products*') ? 'active' : '' }}">
+            <a href="{{ route('products') }}" class="nav-link {{ request()->routeIs('products*') ? 'active' : '' }}">
                 <i class="bi bi-grid"></i> @lang('app.navbar.products')
             </a>
 
-            <a href="{{ route('cart') }}"
-                class="nav-link {{ request()->routeIs('cart') ? 'active' : '' }}">
+            <a href="{{ route('cart') }}" class="nav-link {{ request()->routeIs('cart') ? 'active' : '' }}">
                 <i class="bi bi-cart3"></i> @lang('app.navbar.cart')
             </a>
 
-            <a href="{{ route('orders') }}"
-                class="nav-link {{ request()->routeIs('orders*') ? 'active' : '' }}">
+            <a href="{{ route('orders') }}" class="nav-link {{ request()->routeIs('orders*') ? 'active' : '' }}">
                 <i class="bi bi-receipt"></i> @lang('app.navbar.orders')
             </a>
 
@@ -118,4 +114,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

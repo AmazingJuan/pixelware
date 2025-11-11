@@ -85,11 +85,18 @@ return [
             'specs' => 'Specifications',
             'image' => 'Product Image',
             'image_hint' => 'Upload a product image (JPEG, PNG).',
+            'storage_driver' => 'Storage Driver',
         ],
 
         'placeholders' => [
             'spec_key' => 'GPU',
             'spec_value' => 'NVIDIA RTX 3080',
+            'storage_driver' => 'Select a storage driver',
+        ],
+
+        'storage_drivers' => [
+            'local' => 'Local',
+            'gcs' => 'Google Cloud Storage',
         ],
 
         'sections' => [

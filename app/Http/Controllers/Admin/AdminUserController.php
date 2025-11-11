@@ -8,13 +8,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-// Laravel / framework
 use App\Helpers\UserHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
 use App\Models\User;
-// Application / App
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Lang;

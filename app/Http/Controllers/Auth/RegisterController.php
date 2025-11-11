@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-// Laravel / framework
 use App\Helpers\UserHelper;
 use App\Http\Controllers\Controller;
-// Application / Models
 use App\Http\Requests\RegisterUserRequest;
-// Application / Utils & Helpers
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

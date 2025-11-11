@@ -8,19 +8,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-// Laravel / framework
 use App\Helpers\ProductHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreProductRequest;
 use App\Http\Requests\AdminUpdateProductRequest;
-// Requests
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-// Models
 use Illuminate\Http\RedirectResponse;
-// Helpers
 use Illuminate\Support\Facades\Lang;
-// Exceptions
 use Illuminate\View\View;
 
 class AdminProductController extends Controller

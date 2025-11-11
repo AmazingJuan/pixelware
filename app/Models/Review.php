@@ -61,16 +61,6 @@ class Review extends Model
         return $this->attributes['product_id'];
     }
 
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    public function getProduct(): Product
-    {
-        return $this->product;
-    }
-
     public function getCreatedAt(): Carbon
     {
         return Carbon::parse($this->attributes['created_at']);
@@ -93,25 +83,37 @@ class Review extends Model
         $this->attributes['rating'] = $rating;
     }
 
-    public function setUserId(int $user_id): void
-    {
-        $this->attributes['user_id'] = $user_id;
-    }
-
-    public function setProductId(int $product_id): void
-    {
-        $this->attributes['product_id'] = $product_id;
-    }
-
     // Relationships.
 
+    // User
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    // Product
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): void
+    {
+        $this->product = $product;
     }
 }

@@ -8,12 +8,9 @@
 
 namespace App\Helpers;
 
-// PHP native / global classes
 use App\Models\Order;
-// Laravel / framework
 use App\Models\User;
 use Exception;
-// Models
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 

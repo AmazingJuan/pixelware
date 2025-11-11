@@ -8,14 +8,11 @@
 
 namespace App\Http\Controllers\User;
 
-// Laravel / Illuminate classes
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Utils\AIUtils;
 use Illuminate\Http\JsonResponse;
-// Models
 use Illuminate\Support\Facades\Lang;
-// Utils / Helpers
 use Illuminate\View\View;
 
 class ProductController extends Controller

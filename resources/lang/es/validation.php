@@ -2,12 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    */
-
     'accepted' => 'El campo :attribute debe ser aceptado.',
     'accepted_if' => 'El campo :attribute debe ser aceptado cuando :other es :value.',
     'active_url' => 'El campo :attribute no es una URL válida.',
@@ -69,11 +63,6 @@ return [
     'unique' => 'El campo :attribute ya ha sido tomado.',
     'url' => 'El formato de :attribute no es válido.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Messages
-    |--------------------------------------------------------------------------
-    */
     'custom' => [
         // Users
         'username' => [
@@ -142,6 +131,11 @@ return [
             'mimes' => 'La imagen del producto debe ser un archivo de tipo: :values.',
             'max' => 'La imagen del producto no puede ser mayor que :max kilobytes.',
         ],
+        'storage_driver' => [
+            'required' => 'El tipo de almacenamiento es obligatorio.',
+            'string' => 'El tipo de almacenamiento debe ser texto.',
+            'in' => 'El tipo de almacenamiento debe ser local o gcs.',
+        ],
 
         // Reviews
         'rating' => [
@@ -157,11 +151,6 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    */
     'attributes' => [
         // Users
         'username' => 'nombre de usuario',
@@ -179,6 +168,7 @@ return [
         'category' => 'categoría',
         'specs' => 'especificaciones',
         'image' => 'imagen del producto',
+        'storage_driver' => 'tipo de almacenamiento',
 
         // Reviews
         'rating' => 'calificación',

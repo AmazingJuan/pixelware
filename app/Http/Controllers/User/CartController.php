@@ -8,13 +8,11 @@
 
 namespace App\Http\Controllers\User;
 
-// Laravel / framework
 use App\Helpers\CartHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
-// Application / App
 use Illuminate\View\View;
 
 class CartController extends Controller

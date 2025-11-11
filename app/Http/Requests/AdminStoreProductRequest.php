@@ -8,25 +8,16 @@
 
 namespace App\Http\Requests;
 
-// Laravel / framework
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Lang;
 
 class AdminStoreProductRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -37,23 +28,19 @@ class AdminStoreProductRequest extends FormRequest
             'category' => 'required|string|max:100',
             'specs' => 'nullable|json',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'storage_driver' => 'required|string|in:local,gcp',
         ];
     }
 
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array<string, string>
-     */
     public function messages(): array
     {
         return [
-            // Product name
+            // Name
             'name.required' => Lang::get('validation.custom.name.required'),
             'name.string' => Lang::get('validation.custom.name.string'),
             'name.max' => Lang::get('validation.custom.name.max'),
 
-            // Product description
+            // Description
             'description.required' => Lang::get('validation.custom.description.required'),
             'description.string' => Lang::get('validation.custom.description.string'),
 
@@ -81,14 +68,14 @@ class AdminStoreProductRequest extends FormRequest
             'image.image' => Lang::get('validation.custom.image.image'),
             'image.mimes' => Lang::get('validation.custom.image.mimes'),
             'image.max' => Lang::get('validation.custom.image.max'),
+
+            // Storage driver
+            'storage_driver.required' => Lang::get('validation.custom.storage_driver.required'),
+            'storage_driver.string' => Lang::get('validation.custom.storage_driver.string'),
+            'storage_driver.in' => Lang::get('validation.custom.storage_driver.in'),
         ];
     }
 
-    /**
-     * Get custom attribute names.
-     *
-     * @return array<string, string>
-     */
     public function attributes(): array
     {
         return [
@@ -99,6 +86,7 @@ class AdminStoreProductRequest extends FormRequest
             'category' => Lang::get('validation.attributes.category'),
             'specs' => Lang::get('validation.attributes.specs'),
             'image' => Lang::get('validation.attributes.image'),
+            'storage_driver' => Lang::get('validation.attributes.storage_driver'),
         ];
     }
 }

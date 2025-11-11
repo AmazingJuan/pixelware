@@ -8,15 +8,12 @@
 
 namespace App\Http\Controllers\User;
 
-// PHP native / global classes
 use App\Helpers\CartHelper;
-// Laravel / framework
 use App\Helpers\CheckoutHelper;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-// Application / App
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
