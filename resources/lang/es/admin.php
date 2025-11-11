@@ -85,6 +85,8 @@ return [
             'specs' => 'Especificaciones',
             'image' => 'Imagen del producto',
             'image_hint' => 'Sube una imagen del producto (JPEG, PNG).',
+            'storage_driver' => 'Almacenamiento',
+            'storage_driver_help' => 'Selecciona dónde quieres guardar la imagen: local o en GCP.',
         ],
 
         'placeholders' => [

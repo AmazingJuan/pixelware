@@ -85,6 +85,8 @@ return [
             'specs' => 'Specifications',
             'image' => 'Product Image',
             'image_hint' => 'Upload a product image (JPEG, PNG).',
+            'storage_driver' => 'Storage',
+            'storage_driver_help' => 'Where do you want to store the image?: local o en GCP.',
         ],
 
         'placeholders' => [

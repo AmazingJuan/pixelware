@@ -63,6 +63,16 @@
                         <input type="hidden" name="specs" id="specs-json" value="{{ old('specs') }}">
                     </div>
 
+                    <!-- Método de almacenamiento -->
+                    <div class="mb-3">
+                        <label class="form-label">@lang('admin.products.attributes.storage_driver')</label>
+                        <select name="storage_driver" class="form-select">
+                            <option value="local" {{ old('storage_driver', 'local') === 'local' ? 'selected' : '' }}>Local</option>
+                            <option value="gcp" {{ old('storage_driver') === 'gcp' ? 'selected' : '' }}>Google Cloud Storage</option>
+                        </select>
+                        <small class="text-muted">@lang('admin.products.attributes.storage_driver_help')</small>
+                    </div>
+
                     {{-- Imagen --}}
                     <div class="mb-3">
                         <label class="form-label">@lang('admin.products.attributes.image')</label>

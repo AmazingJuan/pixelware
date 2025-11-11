@@ -11,24 +11,26 @@ namespace App\Helpers;
 use App\Interfaces\ImageStorageInterface;
 use App\Models\Product;
 use Illuminate\Http\UploadedFile;
+use App\Utils\StorageUtils;
 
 class ProductHelper
 {
     protected static function storage(): ImageStorageInterface
     {
-        // Laravel inyecta automáticamente la implementación configurada (local o gcp)
         return app(ImageStorageInterface::class);
     }
 
     public static function create(array $data): Product
     {
         $uploadedImage = $data['image'] ?? null;
-        unset($data['image']);
+        $driverChoice = $data['storage_driver'] ?? config('image_storage.driver', env('IMAGE_STORAGE_DRIVER', 'local'));
+        unset($data['image'], $data['storage_driver']);
 
         $product = Product::create($data);
 
         if ($uploadedImage instanceof UploadedFile) {
-            $path = self::storage()->store($uploadedImage, "products/{$product->id}");
+            $storage = StorageUtils::getDriverInstance($driverChoice);
+            $path = $storage->store($uploadedImage, "products/{$product->id}");
             $product->update(['image_url' => $path]);
         }
 
@@ -41,11 +43,12 @@ class ProductHelper
         unset($data['image']);
 
         if ($uploadedImage instanceof UploadedFile) {
-            if ($product->image_url) {
-                self::storage()->delete($product->image_url);
+            if (!empty($product->image_url)) {
+                StorageUtils::deleteAny($product->image_url);
             }
 
-            $path = self::storage()->store($uploadedImage, "products/{$product->id}");
+            $storage = self::storage();
+            $path = $storage->store($uploadedImage, "products/{$product->id}");
             $data['image_url'] = $path;
         }
 
@@ -57,7 +60,7 @@ class ProductHelper
     public static function destroy(Product $product): bool
     {
         if ($product->image_url) {
-            self::storage()->delete($product->image_url);
+            StorageUtils::deleteAny($product->image_url);
         }
 
         return $product->delete();

@@ -37,6 +37,7 @@ class AdminStoreProductRequest extends FormRequest
             'category' => 'required|string|max:100',
             'specs' => 'nullable|json',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'storage_driver' => 'nullable|in:local,gcp',
         ];
     }
 
