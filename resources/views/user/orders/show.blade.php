@@ -84,7 +84,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     @if (method_exists($item->product, 'getImageUrl') && $item->product->getImageUrl())
-                                                        <img src="{{ asset($item->product->getImageUrl()) }}"
+                                                        <img src="{{ asset($item->product->publicUrl()) }}"
                                                             alt="{{ $item->product->getName() }}"
                                                             style="width:56px;height:56px;object-fit:cover;"
                                                             class="rounded">
