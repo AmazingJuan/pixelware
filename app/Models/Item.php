@@ -14,25 +14,12 @@ class Item extends Model
      * $this->attributes['id']  - int - contains the item primary key (id)
      * $this->attributes['quantity'] - int - contains the item quantity
      * $this->attributes['unit_price'] - int - contains the item price
-     * $this->attributes['order_id'] - int - contains the associated order id
-     * $this->attributes['product_id'] - int - contains the associated product id
      * $this->attributes['created_at'] - \Illuminate\Support\Carbon - contains the item creation timestamp
      * $this->attributes['updated_at'] - \Illuminate\Support\Carbon - contains the item update timestamp
      * $this->order - Order - contains the associated Order
      * $this->product - Product - contains the associated Product
      */
     protected $fillable = ['quantity', 'unit_price', 'order_id', 'product_id'];
-
-    // Validation method
-    public static function validate($request)
-    {
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-            'unit_price' => 'required|numeric|min:0',
-            'order_id' => 'required|exists:orders,id',
-            'product_id' => 'required|exists:products,id',
-        ]);
-    }
 
     // Getters
     public function getId(): int
@@ -48,16 +35,6 @@ class Item extends Model
     public function getUnitPrice(): int
     {
         return $this->attributes['unit_price'];
-    }
-
-    public function getOrderId(): int
-    {
-        return $this->attributes['order_id'];
-    }
-
-    public function getProductId(): int
-    {
-        return $this->attributes['product_id'];
     }
 
     public function getCreatedAt(): Carbon
@@ -81,16 +58,6 @@ class Item extends Model
         $this->attributes['unit_price'] = $price;
     }
 
-    public function setOrderId(int $orderId): void
-    {
-        $this->attributes['order_id'] = $orderId;
-    }
-
-    public function setProductId(int $productId): void
-    {
-        $this->attributes['product_id'] = $productId;
-    }
-
     public function updateUpdatedAt(Carbon $updatedAt): void
     {
         $this->attributes['updated_at'] = $updatedAt;
@@ -102,6 +69,7 @@ class Item extends Model
     }
 
     // Relationships
+    // Order
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -117,6 +85,7 @@ class Item extends Model
         $this->order = $order;
     }
 
+    // Product
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id');

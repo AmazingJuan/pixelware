@@ -28,7 +28,6 @@ class ProductController extends Controller
 
     public function show(int $productId): View
     {
-        // Find the product by ID with reviews
         $product = Product::with('reviews')->findOrFail($productId);
 
         $viewData = [

@@ -34,6 +34,8 @@ class User extends Authenticatable
      * $this->attributes['balance']             - int                        - Account balance
      * $this->attributes['role']                - string                     - User role ('admin' or 'customer')
      * $this->attributes['remember_token']      - string|null                - Token for "remember me" sessions
+     * $this->attributes['orders']              - Order[]                    - Associated user orders
+     * $this->attributes['reviews']             - Review[]                    - Associated user reviews
      * $this->attributes['created_at']          - \Illuminate\Support\Carbon - Record creation timestamp
      * $this->attributes['updated_at']          - \Illuminate\Support\Carbon - Record last update timestamp
      */
@@ -114,11 +116,6 @@ class User extends Authenticatable
     }
 
     // Setters.
-
-    public function setId(int $id): void
-    {
-        $this->attributes['id'] = $id;
-    }
 
     public function setUsername(string $username): void
     {
@@ -222,7 +219,7 @@ class User extends Authenticatable
     public function decreaseBalance(int $amount): void
     {
         $newBalance = $this->getBalance() - $amount;
-        // Decrease balance by amount (assumes validation done elsewhere).
+
         $this->setBalance($newBalance);
     }
 }
