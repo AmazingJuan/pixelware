@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-// Laravel / framework
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
 

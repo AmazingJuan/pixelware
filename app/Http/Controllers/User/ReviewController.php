@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
-// Laravel / Illuminate classes
 use App\Helpers\ReviewHelper;
 use App\Http\Controllers\Controller;
-// Application / App
 use App\Http\Requests\StoreReviewRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;

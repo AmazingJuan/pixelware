@@ -63,6 +63,18 @@
                         <input type="hidden" name="specs" id="specs-json" value="{{ old('specs') }}">
                     </div>
 
+                    {{-- Storage Driver --}}
+                    <div class="mb-3">
+                        <label class="form-label">@lang('admin.products.attributes.storage_driver')</label>
+                        <select name="storage_driver" class="form-select">
+                            <option value="" disabled selected>@lang('admin.products.placeholders.storage_driver')</option>
+                            <option value="local" {{ old('storage_driver') == 'local' ? 'selected' : '' }}>
+                                @lang('admin.products.storage_drivers.local')</option>
+                            <option value="gcp" {{ old('storage_driver') == 'gcs' ? 'selected' : '' }}>
+                                @lang('admin.products.storage_drivers.gcs')</option>
+                        </select>
+                    </div>
+
                     {{-- Imagen --}}
                     <div class="mb-3">
                         <label class="form-label">@lang('admin.products.attributes.image')</label>

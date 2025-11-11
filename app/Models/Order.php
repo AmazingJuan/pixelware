@@ -1,32 +1,16 @@
 <?php
 
-/*
- * Order.php
- * Model for managing orders in the application.
- * Author: Juan Jose Gomez
-*/
-
 namespace App\Models;
 
-// Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-// Application / App
 use Illuminate\Support\Carbon;
 
 class Order extends Model
 {
-    /**
-     * ORDER ATTRIBUTES
-     * $this->attributes['id'] - int - contains the order primary key (id)
-     * $this->attributes['user_id'] - int - contains the associated user id
-     * $this->attributes['status'] - string - contains the order status
-     * $this->attributes['total'] - int - contains the total price of the order
-     * $this->attributes['created_at'] - \Illuminate\Support\Carbon - contains the order creation timestamp
-     * $this->attributes['updated_at'] - \Illuminate\Support\Carbon - contains the order update timestamp
-     */
     protected $fillable = ['user_id', 'status', 'total'];
 
     protected $casts = [
@@ -35,7 +19,6 @@ class Order extends Model
     ];
 
     // Getters
-
     public function getId(): int
     {
         return $this->attributes['id'];
@@ -58,22 +41,19 @@ class Order extends Model
 
     public function getCreatedAt(): Carbon
     {
-        $value = $this->getAttribute('created_at');
-
-        if ($value instanceof Carbon) {
-            return $value;
-        }
-
-        return Carbon::parse($value);
+        return $this->attributes['created_at'] instanceof Carbon
+            ? $this->attributes['created_at']
+            : Carbon::parse($this->attributes['created_at']);
     }
 
     public function getUpdatedAt(): Carbon
     {
-        return $this->attributes['updated_at'];
+        return $this->attributes['updated_at'] instanceof Carbon
+            ? $this->attributes['updated_at']
+            : Carbon::parse($this->attributes['updated_at']);
     }
 
     // Setters
-
     public function setUserId(int $userId): void
     {
         $this->attributes['user_id'] = $userId;
@@ -90,10 +70,19 @@ class Order extends Model
     }
 
     // Relationships
-
     public function items(): HasMany
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function getItems(): HasMany
+    {
+        return $this->items();
+    }
+
+    public function setItems(Collection $items): void
+    {
+        $this->items = $items;
     }
 
     public function user(): BelongsTo
@@ -101,8 +90,18 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Util methods
+    public function getUser(): BelongsTo
+    {
+        return $this->user();
+    }
 
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+        $this->user_id = $user->getId();
+    }
+
+    // Utilities
     public function getFormattedTotal(): string
     {
         return PresentationUtils::formatCurrency($this->getTotalPrice());

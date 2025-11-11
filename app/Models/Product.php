@@ -10,31 +10,32 @@ namespace App\Models;
 
 // Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
+use App\Utils\ProductImageUtils;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class Product extends Model
 {
     /**
      * Attributes:
      *
-     * $this->attributes['id']          - int                        - Primary key identifier
-     * $this->attributes['name']        - string                     - Product name
-     * $this->attributes['description'] - string                     - Product description
-     * $this->attributes['stock']       - int                        - Product stock
-     * $this->attributes['price']       - int                        - Product price
-     * $this->attributes['category']    - string                     - Product category
-     * $this->attributes['specs']       - array                      - Product specifications (JSON)
-     * $this->attributes['image_url']  - string                      - Product image URLs (JSON)
-     * $this->attributes['average_rating'] - float                  - Average product rating
-     * $this->attributes['reviews_count'] - int                     - Number of reviews
-     * $this->attributes['times_purchased'] - int                   - Number of times the product has been purchased
-     * $this->attributes['created_at']  - \Illuminate\Support\Carbon - Record creation timestamp
-     * $this->attributes['updated_at']  - \Illuminate\Support\Carbon - Record last update timestamp
+     * $this->attributes['id']             - int                        - Primary key identifier
+     * $this->attributes['name']           - string                     - Product name
+     * $this->attributes['description']    - string                     - Product description
+     * $this->attributes['stock']          - int                        - Product stock quantity
+     * $this->attributes['price']          - int                        - Product price
+     * $this->attributes['category']       - string                     - Product category
+     * $this->attributes['specs']          - array|null                 - Product specifications (stored as JSON)
+     * $this->attributes['image_url']      - string                     - URL or path of product image
+     * $this->attributes['average_rating'] - float                      - Average product rating
+     * $this->attributes['reviews_count']  - int                        - Number of reviews
+     * $this->attributes['times_purchased']- int                        - Number of times product has been purchased
+     * $this->attributes['storage_driver'] - string                     - Storage driver used for images ('local' or 'gcp')
+     * $this->attributes['created_at']     - \Illuminate\Support\Carbon - Record creation timestamp
+     * $this->attributes['updated_at']     - \Illuminate\Support\Carbon - Record last update timestamp
+     * $this->reviews                       - Review[]                   - Collection of reviews associated with this product
      */
     protected $fillable = [
         'name',
@@ -46,6 +47,7 @@ class Product extends Model
         'image_url',
         'average_rating',
         'reviews_count',
+        'storage_driver',
     ];
 
     // Getters.
@@ -87,31 +89,7 @@ class Product extends Model
 
     public function getImageUrl(): string
     {
-        $path = $this->attributes['image_url'] ?? null;
-
-        // 1) Si no hay imagen, devolver una por defecto (pon este archivo en public/images/)
-        if (empty($path)) {
-            return asset('images/default-product.png');
-        }
-
-        // 2) Si ya es una URL completa (por ejemplo: https://storage.googleapis.com/...) devolver tal cual
-        if (Str::startsWith($path, ['http://', 'https://'])) {
-            return $path;
-        }
-
-        // 3) Si el archivo existe en el storage local (disk "public"), usar esa URL
-        if (Storage::disk('public')->exists(ltrim($path, '/'))) {
-            return asset('storage/'.ltrim($path, '/'));
-        }
-
-        // 4) Si no está local, asumir que está en GCP y construir la URL pública del bucket
-        $bucket = env('GCP_BUCKET', null);
-        if ($bucket) {
-            return 'https://storage.googleapis.com/'.$bucket.'/'.ltrim($path, '/');
-        }
-
-        // 5) Fallback: devolver la ruta local por defecto
-        return asset('storage/'.ltrim($path, '/'));
+        return $this->attributes['image_url'];
     }
 
     public function getAverageRating(): float
@@ -129,9 +107,14 @@ class Product extends Model
         return $this->attributes['times_purchased'];
     }
 
-    public function getReviews(): Collection
+    public function getStorageDriver(): string
     {
-        return $this->reviews()->with('user')->get();
+        return $this->attributes['storage_driver'];
+    }
+
+    public function setStorageDriver(string $storageDriver): void
+    {
+        $this->attributes['storage_driver'] = $storageDriver;
     }
 
     // Setters.
@@ -194,9 +177,36 @@ class Product extends Model
 
     // Relationships.
 
+    // Reviews
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews()->with('user')->get();
+    }
+
+    public function setReviews(Collection $reviews): void
+    {
+        $this->reviews = $reviews;
+    }
+
+    // Items
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function getItems(): Collection
+    {
+        return $this->items()->get();
+    }
+
+    public function setItems(Collection $items): void
+    {
+        $this->items = $items;
     }
 
     // Util methods.
@@ -208,7 +218,6 @@ class Product extends Model
 
     public function getFormattedSpecsAttribute(): array
     {
-        // Format specs for display.
         $formattedSpecs = [];
 
         foreach ($this->getSpecs() ?? [] as $specName => $specValue) {
@@ -222,7 +231,6 @@ class Product extends Model
     {
         $newStock = $this->getStock() - $quantity;
 
-        // Decrease stock by quantity (assumes validation done elsewhere).
         $this->setStock($newStock);
     }
 
@@ -230,8 +238,12 @@ class Product extends Model
     {
         $newTimesPurchased = $this->getTimesPurchased() + $quantity;
 
-        // Increase times purchased by quantity.
         $this->setTimesPurchased($newTimesPurchased);
+    }
+
+    public function publicUrl(): string
+    {
+        return ProductImageUtils::publicUrl($this->getImageUrl());
     }
 
     public function scopeTopThreeRating(Builder $query): Builder

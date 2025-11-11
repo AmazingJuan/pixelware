@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Http;
+
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
+use Illuminate\View\View;
 
 class AlliedProductController extends Controller
 {

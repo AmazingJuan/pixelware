@@ -14,7 +14,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Users
+    | Usuarios
     |--------------------------------------------------------------------------
     */
     'users' => [
@@ -23,13 +23,13 @@ return [
 
         'attributes' => [
             'id' => 'ID',
-            'username' => 'Nombre de usuario',
-            'email' => 'Correo electrónico',
+            'username' => 'Nombre de Usuario',
+            'email' => 'Correo Electrónico',
             'address' => 'Dirección',
             'balance' => 'Saldo',
             'role' => 'Rol',
             'password' => 'Contraseña',
-            'password_confirmation' => 'Confirmar contraseña',
+            'password_confirmation' => 'Confirmar Contraseña',
         ],
 
         'roles' => [
@@ -44,13 +44,13 @@ return [
 
         'confirmations' => [
             'delete' => [
-                'title' => 'Confirmar eliminación',
-                'message' => '¿Estás seguro de que quieres eliminar este usuario? Esta acción no se puede deshacer.',
+                'title' => 'Confirmar Eliminación',
+                'message' => '¿Seguro que quieres eliminar este usuario? Esta acción no se puede deshacer.',
             ],
         ],
 
         'reminders' => [
-            'keep_blank' => 'Dejar en blanco para mantener el actual',
+            'keep_blank' => 'Dejar en blanco para mantener el valor actual',
         ],
 
         'empty' => 'No hay usuarios para gestionar.',
@@ -68,7 +68,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Products
+    | Productos
     |--------------------------------------------------------------------------
     */
     'products' => [
@@ -83,13 +83,20 @@ return [
             'stock' => 'Stock',
             'category' => 'Categoría',
             'specs' => 'Especificaciones',
-            'image' => 'Imagen del producto',
+            'image' => 'Imagen del Producto',
             'image_hint' => 'Sube una imagen del producto (JPEG, PNG).',
+            'storage_driver' => 'Almacenamiento',
         ],
 
         'placeholders' => [
             'spec_key' => 'GPU',
             'spec_value' => 'NVIDIA RTX 3080',
+            'storage_driver' => 'Selecciona un almacenamiento',
+        ],
+
+        'storage_drivers' => [
+            'local' => 'Local',
+            'gcs' => 'Google Cloud Storage',
         ],
 
         'sections' => [
@@ -98,7 +105,7 @@ return [
         ],
 
         'actions' => [
-            'add_spec' => 'Agregar especificación',
+            'add_spec' => 'Agregar Especificación',
         ],
 
         'empty' => 'No hay productos para gestionar.',
@@ -115,15 +122,15 @@ return [
         ],
         'confirmations' => [
             'delete' => [
-                'title' => 'Confirmar eliminación',
-                'message' => '¿Estás seguro de que quieres eliminar este producto? Esta acción no se puede deshacer.',
+                'title' => 'Confirmar Eliminación',
+                'message' => '¿Seguro que quieres eliminar este producto? Esta acción no se puede deshacer.',
             ],
         ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Common
+    | Común
     |--------------------------------------------------------------------------
     */
     'common' => [

@@ -4,8 +4,10 @@ namespace App\Utils;
 
 use App\Interfaces\ImageStorageInterface;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use RuntimeException;
 
 class LocalImageStorage implements ImageStorageInterface
 {
@@ -28,7 +30,7 @@ class LocalImageStorage implements ImageStorageInterface
         $stored = Storage::disk($this->disk)->putFileAs($folder, $file, $filename);
 
         if (! $stored) {
-            throw new \RuntimeException('Error al almacenar la imagen localmente.');
+            throw new RuntimeException(Lang::get('exceptions.image_local_store_failed'));
         }
 
         return str_replace('public/', '', $path);

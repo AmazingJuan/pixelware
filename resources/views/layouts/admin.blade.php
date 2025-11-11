@@ -20,34 +20,25 @@
         </a>
 
         <div class="nav flex-column">
+
             <a href="{{ route('home') }}"
-                class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+               class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
                 <i class="bi bi-house"></i> @lang('app.navbar.home')
             </a>
 
-            <a href="{{ route('products') }}"
-                class="nav-link {{ request()->routeIs('products*') ? 'active' : '' }}">
-                <i class="bi bi-grid"></i> @lang('app.navbar.products')
-            </a>
-
-            <a href="{{ route('cart') }}"
-                class="nav-link {{ request()->routeIs('cart') ? 'active' : '' }}">
-                <i class="bi bi-cart3"></i> @lang('app.navbar.cart')
-            </a>
-
-            <a href="{{ route('orders') }}"
-                class="nav-link {{ request()->routeIs('orders*') ? 'active' : '' }}">
-                <i class="bi bi-receipt"></i> @lang('app.navbar.orders')
-            </a>
-
-            <a href="{{ route('allied.products') }}"
-                class="nav-link {{ request()->routeIs('allied.products') ? 'active' : '' }}">
-                <i class="bi bi-globe2"></i> @lang('products.allied_list.title')
-            </a>
-
-            <a href="{{ route('admin.dashboard') }}"
-                class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}" 
+               class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="bi bi-speedometer2"></i> @lang('app.navbar.dashboard')
+            </a>
+
+            <a href="{{ route('admin.users') }}" 
+               class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                <i class="bi bi-people"></i> @lang('admin.users.title')
+            </a>
+
+            <a href="{{ route('admin.products') }}" 
+               class="nav-link {{ request()->routeIs('admin.products*') ? 'active' : '' }}">
+                <i class="bi bi-box-seam"></i> @lang('admin.products.title')
             </a>
         </div>
 
@@ -118,4 +109,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

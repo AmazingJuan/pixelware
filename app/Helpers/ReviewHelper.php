@@ -8,10 +8,8 @@
 
 namespace App\Helpers;
 
-// Models
 use App\Models\Product;
 use App\Models\Review;
-// Utils / Helpers
 use App\Utils\MathUtils;
 
 class ReviewHelper

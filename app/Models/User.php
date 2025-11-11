@@ -10,6 +10,7 @@ namespace App\Models;
 
 // Laravel / Illuminate classes
 use App\Utils\PresentationUtils;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -176,9 +177,29 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function getOrders(): Collection
+    {
+        return $this->orders()->get();
+    }
+
+    public function setOrders(Collection $orders): void
+    {
+        $this->orders = $orders;
+    }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews()->get();
+    }
+
+    public function setReviews(Collection $reviews): void
+    {
+        $this->reviews = $reviews;
     }
 
     // Util methods.

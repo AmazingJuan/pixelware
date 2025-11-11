@@ -2,16 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Default error messages used by the validator class. Some rules have multiple versions
-    | such as size rules. You can tweak each of these messages here.
-    |
-    */
-
     'accepted' => 'The :attribute field must be accepted.',
     'accepted_if' => 'The :attribute field must be accepted when :other is :value.',
     'active_url' => 'The :attribute field must be a valid URL.',
@@ -73,14 +63,6 @@ return [
     'unique' => 'The :attribute has already been taken.',
     'url' => 'The :attribute format is invalid.',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Messages
-    |--------------------------------------------------------------------------
-    |
-    | Define messages for attributes using "attribute.rule" convention
-    |
-    */
     'custom' => [
         // Users
         'username' => [
@@ -149,6 +131,11 @@ return [
             'mimes' => 'Product image must be a file of type: :values.',
             'max' => 'Product image may not be greater than :max kilobytes.',
         ],
+        'storage_driver' => [
+            'required' => 'Storage driver is required.',
+            'string' => 'Storage driver must be a string.',
+            'in' => 'Storage driver must be either local or gcs.',
+        ],
 
         // Reviews
         'rating' => [
@@ -164,14 +151,6 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | Replace :attribute placeholder with readable names
-    |
-    */
     'attributes' => [
         // Users
         'username' => 'username',
@@ -189,6 +168,7 @@ return [
         'category' => 'category',
         'specs' => 'specifications',
         'image' => 'product image',
+        'storage_driver' => 'storage driver',
 
         // Reviews
         'rating' => 'rating',

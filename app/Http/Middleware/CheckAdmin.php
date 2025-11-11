@@ -8,9 +8,7 @@
 
 namespace App\Http\Middleware;
 
-// PHP Native / global
 use Closure;
-// Laravel / framework
 use Illuminate\Http\Request;
 
 class CheckAdmin

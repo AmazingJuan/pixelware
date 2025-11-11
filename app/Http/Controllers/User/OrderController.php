@@ -8,15 +8,12 @@
 
 namespace App\Http\Controllers\User;
 
-// PHP native / global classes
 use App\Http\Controllers\Controller;
-// Laravel / Illuminate classes
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-// Application / App
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 

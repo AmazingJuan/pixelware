@@ -14,4 +14,6 @@ return [
     'invalid_quantity' => 'Invalid quantity for product :product.',
     'not_enough_stock' => 'Not enough stock for product :product. Requested: :qty, available: :stock.',
     'insufficient_balance' => 'Insufficient balance to complete the purchase.',
+    'image_local_store_failed' => 'Failed to store the image locally.',
+    'image_bucket_not_found' => 'The bucket :bucket does not exist on GCP.',
 ];
