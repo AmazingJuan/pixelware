@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-// Laravel / Illuminate classes
+// Laravel / framework
+use App\Helpers\UserHelper;
 use App\Http\Controllers\Controller;
+// Application / Models
+use App\Http\Requests\RegisterUserRequest;
+// Application / Utils & Helpers
 use App\Models\User;
-// App
-use App\Services\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Validation\Validator;
 
 class RegisterController extends Controller
 {
@@ -32,26 +33,38 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
-    protected $userService;
-
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UserService $userService)
+    public function __construct()
     {
         $this->middleware('guest');
-        $this->userService = $userService;
     }
 
-    protected function validator(array $data): Validator
+    /**
+     * Handle a registration request for the application.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function register(RegisterUserRequest $request)
     {
-        return $this->userService->validate($data);
+        // Create the user using UserHelper
+        $user = $this->create($request);
+
+        $this->guard()->login($user);
+
+        return redirect($this->redirectPath());
     }
 
-    protected function create(array $data): User
+    /**
+     * Create a new user instance after a valid registration.
+     */
+    protected function create(RegisterUserRequest $request): User
     {
-        return $this->userService->create($data);
+        $validated = $request->validated();
+
+        return UserHelper::create($validated);
     }
 }

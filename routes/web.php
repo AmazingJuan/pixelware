@@ -56,3 +56,5 @@ Route::prefix('orders')->middleware('auth')->group(function (): void {
     Route::get('/{order}', 'App\Http\Controllers\User\OrderController@show')->where('order', '[0-9]+')->name('orders.show');
     Route::get('/{orderId}/pdf', 'App\Http\Controllers\User\OrderController@downloadPdf')->name('orders.pdf');
 });
+
+Route::get('/allied-products', 'App\Http\Controllers\User\AlliedProductController@index')->name('allied.products');

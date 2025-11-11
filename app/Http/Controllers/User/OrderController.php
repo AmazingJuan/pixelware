@@ -8,77 +8,62 @@
 
 namespace App\Http\Controllers\User;
 
-// Third-party / packages
+// PHP native / global classes
 use App\Http\Controllers\Controller;
 // Laravel / Illuminate classes
-use App\Repositories\ItemRepository;
-use App\Repositories\OrderRepository;
+use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
-// App
+use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+// Application / App
+use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-    // Repository instances for order and item management
-    protected OrderRepository $orderRepository;
-
-    protected ItemRepository $itemRepository;
-
-    public function __construct(OrderRepository $orderRepository, ItemRepository $itemRepository)
-    {
-        $this->orderRepository = $orderRepository;
-        $this->itemRepository = $itemRepository;
-    }
-
     public function index(): View
     {
-        // Get the authenticated user's ID
-        $userId = Auth::id();
+        $orders = Order::with(['items.product'])
+            ->where('user_id', Auth::id())
+            ->get();
 
-        // Retrieve orders for the authenticated user
-        $orders = $this->orderRepository->getOrdersByUserId($userId);
+        $viewData = ['orders' => $orders];
 
-        // Prepare view data
-        $viewData = [];
-        $viewData['orders'] = $orders;
-
-        // Return the orders view with the prepared data
-        return view('user.orders.index')->with('viewData', $viewData);
+        return view('user.orders.index', compact('viewData'));
     }
 
     public function show(int $orderId): View
     {
-        // Find the order by ID using the repository
-        $order = $this->orderRepository->find($orderId);
+        try {
+            $order = Order::with(['items'])->findOrFail($orderId);
 
-        // Get items associated with the order
-        $items = $this->itemRepository->getItemsByOrderId($orderId);
+            $viewData = [
+                'order' => $order,
+                'items' => $order->items,
+            ];
 
-        // Prepare view data
-        $viewData = [];
-        $viewData['items'] = $items;
-        $viewData['order'] = $order;
-
-        // Return the order details view with the prepared data
-        return view('user.orders.show')->with('viewData', $viewData);
+            return view('user.orders.show', compact('viewData'));
+        } catch (Exception $e) {
+            abort(404, Lang::get('exceptions.order_not_found'));
+        }
     }
 
     public function downloadPdf(int $orderId): Response
     {
-        // Find the order and its items
-        $order = $this->orderRepository->find($orderId);
-        $items = $this->itemRepository->getItemsByOrderId($orderId);
+        try {
+            $order = Order::with(['items.product'])->findOrFail($orderId);
 
-        // Prepare view data for the PDF
-        $viewData = [];
-        $viewData['order'] = $order;
-        $viewData['items'] = $items;
+            $viewData = [
+                'order' => $order,
+                'items' => $order->items,
+            ];
 
-        // Generate the PDF from the view
-        $pdf = Pdf::loadView('user.orders.pdf', ['viewData' => $viewData]);
+            $pdf = Pdf::loadView('user.orders.pdf', compact('viewData'));
 
-        return $pdf->download('order_'.$order->getId().'.pdf');
+            return $pdf->download('order_'.$order->id.'.pdf');
+        } catch (Exception $e) {
+            abort(404, Lang::get('exceptions.order_not_found'));
+        }
     }
 }

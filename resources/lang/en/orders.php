@@ -1,24 +1,21 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Orders
-    |--------------------------------------------------------------------------
-    */
     'index' => [
         'title' => 'My Orders',
         'empty' => 'You have not placed any orders yet.',
+        'total_orders' => 'Total: :count orders',
     ],
 
     'show' => [
         'title' => 'Order',
-        'order_details' => 'Order details',
+        'order_details' => 'Order Details',
+        'reference' => 'Order reference',
         'items' => 'Items',
-        'summary' => 'Order summary',
+        'summary' => 'Order Summary',
         'paid_by' => 'Paid by',
         'back_to_list' => 'Back to orders',
+        'footer_note' => 'Thank you for your purchase',
     ],
 
     'table' => [
@@ -38,15 +35,10 @@ return [
         'product_deleted' => 'Product (deleted)',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Actions
-    |--------------------------------------------------------------------------
-    */
     'actions' => [
         'back_to_shop' => 'Continue shopping',
         'continue_shopping' => 'Continue shopping',
         'download_pdf' => 'Download PDF',
+        'print' => 'Print',
     ],
-
 ];

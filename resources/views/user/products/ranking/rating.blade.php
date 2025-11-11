@@ -27,7 +27,7 @@
                             <div class="card-body d-flex flex-column align-items-center">
                                 <div class="mb-3 w-100 d-flex justify-content-center align-items-center"
                                     style="height: 180px;">
-                                    <img src="{{ asset('storage/' . $product->getImageUrl()) }}"
+                                    <img src="{{ asset($product->getImageUrl()) }}"
                                         alt="{{ $product->getName() }}" class="img-fluid rounded shadow"
                                         style="max-height: 100%; max-width: 100%;">
                                 </div>

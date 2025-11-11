@@ -1,27 +1,17 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Order PDF
-    |--------------------------------------------------------------------------
-    */
-    'order' => 'Order #',
+    'order' => 'Order',
+    'orderDetails' => 'Order Details',
     'date' => 'Date',
     'status' => 'Status',
     'total' => 'Total',
-    'user' => 'Username',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Items
-    |--------------------------------------------------------------------------
-    */
-    'items' => 'Items',
+    'user' => 'Customer',
+    'items' => 'Order Items',
     'product' => 'Product',
-    'quantity' => 'Quantity',
-    'unit_price' => 'Unit Price',
+    'quantity' => 'Qty',
+    'unitPrice' => 'Unit Price',
     'subtotal' => 'Subtotal',
-
+    'thankYou' => 'Thank you for your purchase!',
+    'generatedAt' => 'Generated at',
 ];

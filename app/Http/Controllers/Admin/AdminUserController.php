@@ -4,43 +4,28 @@
  * AdminUserController.php
  * Controller for managing users in the admin panel.
  * Author: Santiago Manco
-*/
+ */
 
 namespace App\Http\Controllers\Admin;
 
 // Laravel / framework
+use App\Helpers\UserHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
-// Application / App
 use App\Models\User;
-use App\Repositories\UserRepository;
-use App\Services\UserService;
+// Application / App
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\View\View;
 
 class AdminUserController extends Controller
 {
-    // Repository and Service instances for user management
-    protected UserRepository $userRepository;
-
-    protected UserService $userService;
-
-    public function __construct(UserRepository $userRepository, UserService $userService)
-    {
-        $this->userRepository = $userRepository;
-        $this->userService = $userService;
-    }
-
     public function index(): View
     {
-        // Create an array to hold view data
-        $viewData = [];
-
-        $users = $this->userRepository->all();
-
-        $viewData['users'] = $users;
+        $users = User::all();
+        $viewData = ['users' => $users];
 
         return view('admin.users.index', compact('viewData'));
     }
@@ -52,37 +37,52 @@ class AdminUserController extends Controller
 
     public function store(AdminStoreUserRequest $request): RedirectResponse
     {
-        // Validate the request data
         $validatedData = $request->validated();
 
-        // Hash the password before storing (handled in the service)
-        $this->userService->create($validatedData);
+        UserHelper::create($validatedData);
 
-        return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.created'));
+        return redirect()->route('admin.users')
+            ->with('success', Lang::get('admin.users.success.created'));
     }
 
-    public function edit(User $user): View
+    public function edit(int $userId): View
     {
+        $user = User::find($userId);
+
+        if (! $user) {
+            throw new ModelNotFoundException(Lang::get('exceptions.user_not_found'));
+        }
+
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(AdminUpdateUserRequest $request, User $user): RedirectResponse
+    public function update(AdminUpdateUserRequest $request, int $userId): RedirectResponse
     {
-        // Gather validated data
+        $user = User::find($userId);
+
+        if (! $user) {
+            throw new ModelNotFoundException(Lang::get('exceptions.user_not_found'));
+        }
+
         $validatedData = $request->validated();
 
-        // Update user using service (which also manages password hashing)
-        $this->userService->update($validatedData, $user);
+        UserHelper::update($validatedData, $user);
 
-        return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.updated'));
+        return redirect()->route('admin.users')
+            ->with('success', Lang::get(Lang::get('exceptions.user_not_found')));
     }
 
-    public function destroy(User $user): RedirectResponse
+    public function destroy(int $userId): RedirectResponse
     {
-        // Prevent deletion of the currently authenticated user
-        $this->userRepository->delete($user);
+        $user = User::find($userId);
 
-        // Redirect to users list with success message
-        return redirect()->route('admin.users')->with('success', Lang::get('admin.users.success.deleted'));
+        if (! $user) {
+            throw new ModelNotFoundException(Lang::get('exceptions.user_not_found'));
+        }
+
+        $user->delete();
+
+        return redirect()->route('admin.users')
+            ->with('success', Lang::get('admin.users.success.deleted'));
     }
 }

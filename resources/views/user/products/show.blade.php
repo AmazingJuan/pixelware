@@ -10,9 +10,8 @@
                 <div class="w-100 bg-secondary rounded overflow-hidden mb-3 d-flex align-items-center justify-content-center"
                     style="height: 300px;">
                     <div id="product-image-gallery" class="w-100 h-100 d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('storage/' . $viewData['product']->getImageUrl()) }}"
-                            alt="{{ $viewData['product']->getName() }}" class="img-fluid"
-                            style="max-height: 100%; max-width: 100%;">
+                        <img src="{{ $viewData['product']->getImageUrl() }}" alt="{{ $viewData['product']->getName() }}"
+                            class="img-fluid" style="max-height: 100%; max-width: 100%;">
 
                     </div>
                 </div>

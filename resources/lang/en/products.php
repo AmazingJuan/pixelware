@@ -4,47 +4,58 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Product List
+    | Products
     |--------------------------------------------------------------------------
     */
+
     'list' => [
-        'title' => 'Product List',
-        'empty' => 'No products available.',
+        'title' => 'Products',
+        'empty' => 'No products available at the moment.',
+        'low_stock' => 'Low stock',
+        'total_products' => 'Showing :count products',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Product Fields
-    |--------------------------------------------------------------------------
-    */
+    'allied_list' => [
+        'title' => 'Allied Products - Arslonga',
+        'arslonga_link' => 'See more at Arslonga',
+        'empty' => 'No allied products available at the moment.',
+        'total_products' => 'Showing :count products',
+    ],
+
+    'show' => [
+        'title' => 'Product Details',
+        'description' => 'Description',
+        'price' => 'Price',
+        'stock' => 'Stock',
+        'available' => 'Available',
+        'out_of_stock' => 'Out of stock',
+        'category' => 'Category',
+        'add_to_cart' => 'Add to Cart',
+        'specs' => 'Specifications',
+        'no_specs' => 'No specifications available.',
+        'out_of_stock_message' => 'This product is currently unavailable.',
+        'reviews' => 'reviews',
+        'no_image' => 'No image available',
+    ],
+
     'fields' => [
         'name' => 'Name',
         'price' => 'Price',
         'stock' => 'Stock',
-        'out_of_stock' => 'Out of stock',
-        'specs' => 'Specifications',
         'category' => 'Category',
-        'no_specs' => 'No specifications available.',
+        'specs' => 'Specifications',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Actions
-    |--------------------------------------------------------------------------
-    */
     'actions' => [
-        'view' => 'View product',
+        'view' => 'View',
+        'view_details' => 'View Details',
+        'add_to_cart' => 'Add to Cart',
         'buy' => 'Buy',
         'back' => 'Back',
-        'add_to_cart' => 'Add to cart',
+        'go_home' => 'Go Home',
         'more_info' => 'Get AI Powered Description',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Reviews
-    |--------------------------------------------------------------------------
-    */
     'reviews' => [
         'title' => 'Reviews',
         'empty' => 'No reviews yet.',
@@ -53,24 +64,24 @@ return [
             'rating' => 'Rating',
             'select_rating' => 'Select a rating',
             'comment' => 'Comment',
+            'comment_placeholder' => 'Write your review here...',
+            'max_characters' => 'Maximum 1000 characters.',
         ],
 
         'actions' => [
             'submit' => 'Submit Review',
         ],
+
+        'write_review' => 'Write a Review',
+        'login_required' => 'You must log in to leave a review.',
+        'login_link' => 'Log in',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Ranking
-    |--------------------------------------------------------------------------
-    */
-
     'ranking' => [
-        'title_rating' => 'Top 3 Products by Rating',
-        'empty' => 'No products available for ranking.',
-        'title_sales' => 'Top 3 Products by Sales',
+        'title_rating' => 'Top Rated',
+        'title_sales' => 'Best Sellers',
         'times_purchased' => 'Times Purchased',
+        'empty' => 'No products available for ranking.',
         'sales_empty' => 'No sales data available.',
     ],
 ];

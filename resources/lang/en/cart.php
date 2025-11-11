@@ -7,7 +7,7 @@ return [
     | Cart
     |--------------------------------------------------------------------------
     */
-    
+
     'title' => 'Your cart',
     'empty' => 'Your cart is empty.',
 
@@ -22,15 +22,24 @@ return [
 
     'summary' => 'Order summary',
     'clear_cart' => 'Remove all',
-
-    // trans_choice: singular | plural
-    'total_label' => 'Total (:count item)|Total (:count items)',
     'total' => 'Total',
     'total_items' => 'Total items',
-
-    'empty_button' => 'Empty cart',
     'checkout' => 'Proceed to checkout',
     'continue_shopping' => 'Continue shopping',
+    'tips' => 'Secure checkout with encrypted payment',
+
+    'modals' => [
+        'remove_item' => [
+            'title' => 'Remove Product',
+            'message' => 'Are you sure you want to remove ":product" from your cart?',
+        ],
+        'clear_cart' => [
+            'title' => 'Clear Cart',
+            'message' => 'Are you sure you want to remove all products from your cart? This action cannot be undone.',
+        ],
+        'confirm' => 'Confirm',
+        'cancel' => 'Cancel',
+    ],
 
     'success' => [
         'added' => 'Product added to cart successfully.',
@@ -41,6 +50,5 @@ return [
     'errors' => [
         'not_found' => 'Product not found in cart.',
     ],
-    
 
 ];

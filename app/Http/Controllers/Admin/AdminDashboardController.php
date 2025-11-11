@@ -16,7 +16,6 @@ class AdminDashboardController extends Controller
 {
     public function index(): View
     {
-        // Display the admin dashboard
         return view('admin.dashboard.index');
     }
 }
