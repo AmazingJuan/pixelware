@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Utils\MathUtils;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 class MathUtilsTest extends TestCase
 {

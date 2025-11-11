@@ -6,6 +6,8 @@ use App\Interfaces\ImageStorageInterface;
 use Google\Cloud\Storage\StorageClient;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Lang;
+use RuntimeException;
 
 class GcpImageStorage implements ImageStorageInterface
 {
@@ -38,7 +40,9 @@ class GcpImageStorage implements ImageStorageInterface
 
         $bucket = $this->client->bucket($this->bucketName);
         if (! $bucket->exists()) {
-            throw new \RuntimeException("El bucket {$this->bucketName} no existe en GCP.");
+            throw new RuntimeException(Lang::get('exceptions.image_bucket_not_found', [
+                'bucket' => $this->bucketName,
+            ]));
         }
 
         $stream = fopen($file->getPathname(), 'r');
